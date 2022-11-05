@@ -8,8 +8,8 @@ const App = () => {
   return (
     <View>
       {/* <SplashScreen /> */}
-      {/* <LendingPage /> */}
-      <HomePage />
+      <LendingPage />
+      {/* <HomePage /> */}
     </View>
   );
 };

@@ -7,7 +7,7 @@ const LendingPage = () => {
   return (
     <View style={styles.wrapper}>
       <View style={styles.imageContainer}>
-        <Image source={cover} />
+        <Image source={cover} style={{width: '100%'}} />
       </View>
       <View style={styles.titleContainer}>
         <Text style={styles.textTitleEatzy}>Eatzy</Text>
