@@ -3,13 +3,15 @@ import React from 'react';
 import SplashScreen from './pages/SplashScreen';
 import LendingPage from './pages/LendingPage';
 import HomePage from './pages/HomePage';
+import RestauranList from './pages/RestaurantList';
 
 const App = () => {
   return (
     <View>
       {/* <SplashScreen /> */}
-      <LendingPage />
+      {/* <LendingPage /> */}
       {/* <HomePage /> */}
+      <RestauranList />
     </View>
   );
 };
