@@ -6,7 +6,7 @@ const Button = props => {
     <View>
       <TouchableOpacity onPress="">
         <View style={styles.buttonWrap}>
-          <Text style={{textAlign: 'center', fontWeight: 'bold', fontSize: 18}}>
+          <Text style={{textAlign: 'center', fontWeight: '600', fontSize: 18, color: '#353535'}}>
             {props.btnText}
           </Text>
         </View>
@@ -20,10 +20,11 @@ export default Button;
 const styles = StyleSheet.create({
   buttonWrap: {
     backgroundColor: '#FCCC0A',
-    padding: 20,
+    // padding: 20,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 25,
     width: 325,
+    height: 50,
   },
 });
