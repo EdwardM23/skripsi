@@ -13,7 +13,7 @@ const LendingPage = () => {
         <Text style={styles.textTitleEatzy}>Eatzy</Text>
       </View>
       <View style={styles.btnContainer}>
-        <Button btnText="Get Started"}/>
+        <Button btnText="Get Started"/>
         <TouchableOpacity onPress="">
           <Text style={{textAlign: 'center', fontSize: 18, marginTop: 15, color: '#353535'}}>
             I already have account
