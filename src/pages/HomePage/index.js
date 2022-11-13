@@ -96,14 +96,14 @@ const HomePage = () => {
       <View style={styles.containerListStation}>
         <TitleComp text="List Stasiun" />
 
-        <SafeAreaView style={styles.containerFlatList}>
+        <View style={styles.containerFlatList}>
           <FlatList
             data={DATA}
             renderItem={renderItem}
             keyExtractor={item => item.id}
             nestedScrollEnabled
           />
-        </SafeAreaView>
+        </View>
       </View>
     </View>
   );
