@@ -21,13 +21,16 @@ const RestauranList = () => {
         <View style={styles.containerList}>
           <View style={styles.containerFlatList}>
             <View style={styles.item}>
-              <View>
+              <View style={{position: 'relative', width: '100%'}}>
                 <Image
                   source={{
                     uri: 'https://awsimages.detik.net.id/community/media/visual/2020/10/20/bukan-romantis-lampu-remang-remang-di-restoran-bikin-makanan-tak-enak_169.png?w=700&q=90',
                   }}
                   style={{height: 150, borderRadius: 10}}
                 />
+                <View style={styles.rating_review}>
+                  <Text>Rating / review</Text>
+                </View>
                 {/* <Text style={{fontSize: 18, fontWeight: 'bold'}}>{imageSource}</Text> */}
               </View>
               <View style={{width: '100%'}}>
@@ -100,5 +103,14 @@ const styles = StyleSheet.create({
   },
   containerFlatList: {
     flex: 1,
+  },
+  rating_review: {
+    position: 'absolute',
+    backgroundColor: '#FFFFFF',
+    top: '8%',
+    left: '65%',
+    borderRadius: 5,
+    padding: 2,
+    textAlign: 'right',
   },
 });

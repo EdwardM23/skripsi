@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage';
 import RestauranList from './pages/RestaurantList';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
+import RestoDetail from './pages/RestoDetail';
 
 const App = () => {
   return (
@@ -13,9 +14,10 @@ const App = () => {
       {/* <SplashScreen /> */}
       {/* <LendingPage /> */}
       {/* <HomePage /> */}
-      <RestauranList />
+      {/* <RestauranList /> */}
       {/* <SignUp /> */}
       {/* <Login /> */}
+      <RestoDetail />
     </View>
   );
 };
