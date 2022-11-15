@@ -19,6 +19,7 @@ const RestauranList = () => {
         {/* List resto */}
         {/* <TitleComp text="Filter" /> */}
         <View style={styles.containerList}>
+          {/* Item Resto */}
           <View style={styles.containerFlatList}>
             <View style={styles.item}>
               <View style={{position: 'relative', width: '100%'}}>
@@ -31,7 +32,6 @@ const RestauranList = () => {
                 <View style={styles.rating_review}>
                   <Text>Rating / review</Text>
                 </View>
-                {/* <Text style={{fontSize: 18, fontWeight: 'bold'}}>{imageSource}</Text> */}
               </View>
               <View style={{width: '100%'}}>
                 <View style={styles.row}>
