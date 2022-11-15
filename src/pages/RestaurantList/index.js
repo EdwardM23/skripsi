@@ -35,7 +35,7 @@ const RestauranList = () => {
               </View>
               <View style={{width: '100%'}}>
                 <View style={styles.row}>
-                  <View>
+                  <View style={{textAlign: 'right'}}>
                     <Text style={{fontSize: 18, fontWeight: 'bold'}}>
                       Wingheng
                     </Text>
@@ -111,6 +111,5 @@ const styles = StyleSheet.create({
     left: '65%',
     borderRadius: 5,
     padding: 2,
-    textAlign: 'right',
   },
 });

@@ -14,10 +14,10 @@ const App = () => {
       {/* <SplashScreen /> */}
       {/* <LendingPage /> */}
       {/* <HomePage /> */}
-      {/* <RestauranList /> */}
+      <RestauranList />
       {/* <SignUp /> */}
       {/* <Login /> */}
-      <RestoDetail />
+      {/* <RestoDetail /> */}
     </View>
   );
 };
