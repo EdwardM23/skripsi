@@ -7,6 +7,8 @@ import RestauranList from './pages/RestaurantList';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 import RestoDetail from './pages/RestoDetail';
+import Profile from './pages/Profile';
+import AddReview from './pages/AddReview';
 
 const App = () => {
   return (
@@ -17,7 +19,9 @@ const App = () => {
       {/* <RestauranList /> */}
       {/* <SignUp /> */}
       {/* <Login /> */}
-      <RestoDetail />
+      {/* <RestoDetail /> */}
+      {/* <Profile /> */}
+      <AddReview />
     </View>
   );
 };

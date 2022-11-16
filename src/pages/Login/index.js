@@ -1,4 +1,4 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View, TextInput} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View, TextInput, ScrollView} from 'react-native';
 import React, {useState} from 'react';
 import smallCover from '../../images/smallCover.png';
 import Button from '../../component/Button';
@@ -6,7 +6,7 @@ import Button from '../../component/Button';
 const Login = () => {
     const [value, setValue] = useState('');
     return (
-       <View style={styles.wrapper}>
+       <ScrollView style={styles.wrapper}>
           <View style={styles.imageContainer}>
              <Image source={smallCover} style={{width: '100%'}} />
           </View>
@@ -56,7 +56,7 @@ const Login = () => {
                </Text>
              </TouchableOpacity>
           </View>
-        </View>
+        </ScrollView>
     );
   };
  
@@ -82,13 +82,14 @@ const Login = () => {
        flex: 1,
        alignItems: 'flex-start',
        justifyContent: 'flex-start',
+       marginTop: 20
     },
  
     formContainer: {
        flex: 4,
        alignItems: 'flex-start',
        justifyContent: 'flex-start',
-       marginTop: -30,
+       marginTop: 30,
        marginBottom: 10
     },
  

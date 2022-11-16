@@ -2,10 +2,13 @@ import {Image, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import TitleComp from '../../component/TitleComp';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+import Header from '../../component/Header'
 
 const RestauranList = () => {
   return (
     <View>
+      <Header title = "Restaurant"/>
+
       <MapView
         provider={PROVIDER_GOOGLE} // remove if not using Google Maps
         style={{height: '40%'}}
@@ -14,7 +17,9 @@ const RestauranList = () => {
           longitude: -122.4324,
           latitudeDelta: 0.015,
           longitudeDelta: 0.0121,
-        }}></MapView>
+        }}>
+      </MapView>
+
       <View style={styles.wrapper}>
         {/* List resto */}
         {/* <TitleComp text="Filter" /> */}

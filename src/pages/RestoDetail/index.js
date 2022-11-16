@@ -11,6 +11,7 @@ import TitleComp from '../../component/TitleComp';
 import imgPrice from '../../images/Price.png';
 import imgCuisine from '../../images/Cuisine.png';
 import imgHour from '../../images/Hour.png';
+import Header from '../../component/Header'
 
 const RestoDetail = () => {
   return (
@@ -35,6 +36,8 @@ const RestoDetail = () => {
     // {/* </ScrollView> */}
     // </View>
     <ScrollView vertical={true}>
+      <Header title = "Restaurant"/>
+
       {/* Reastauran Image */}
       <Image
         source={{

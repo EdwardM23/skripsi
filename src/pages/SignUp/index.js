@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   View,
   TextInput,
+  ScrollView
 } from 'react-native';
 import React, {useState} from 'react';
 import smallCover from '../../images/smallCover.png';
@@ -105,7 +106,7 @@ class SignUp extends Component {
 const SignUp = () => {
   const [value, setValue] = useState('');
   return (
-    <View style={styles.wrapper}>
+    <ScrollView style={styles.wrapper}>
       <View style={styles.imageContainer}>
         <Image source={smallCover} style={{width: '100%'}} />
       </View>
@@ -209,7 +210,7 @@ const SignUp = () => {
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -235,13 +236,14 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
+    marginTop: 20
   },
 
   formContainer: {
     flex: 4,
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    marginTop: -30,
+    marginTop: 30,
     marginBottom: 10,
   },
 
