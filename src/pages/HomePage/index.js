@@ -1,60 +1,24 @@
 import {
+  ActivityIndicator,
   FlatList,
   Image,
-  SafeAreaView,
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import cover from '../../images/smallCover.png';
 import TitleComp from '../../component/TitleComp';
-
-const DATA = [
-  {
-    id: '1',
-    stasiunName: 'Senayan',
-    tipeTransportasi: 'MRT',
-    imageSource:
-      'https://toppng.com//public/uploads/preview/mrt-jakarta-graphic-desi-11563131435lo3ybgblf2.png',
-  },
-  {
-    id: '2',
-    stasiunName: 'ASEAN',
-    tipeTransportasi: 'MRT',
-    imageSource:
-      'https://toppng.com//public/uploads/preview/mrt-jakarta-graphic-desi-11563131435lo3ybgblf2.png',
-  },
-  {
-    id: '3',
-    stasiunName: 'Gambir',
-    tipeTransportasi: 'KRL',
-    imageSource:
-      'https://toppng.com//public/uploads/preview/mrt-jakarta-graphic-desi-11563131435lo3ybgblf2.png',
-  },
-  {
-    id: '4',
-    stasiunName: 'Tosari',
-    tipeTransportasi: 'Transajakrta',
-    imageSource:
-      'https://toppng.com//public/uploads/preview/mrt-jakarta-graphic-desi-11563131435lo3ybgblf2.png',
-  },
-  {
-    id: '5',
-    stasiunName: 'Gambir',
-    tipeTransportasi: 'Transajakrta',
-    imageSource:
-      'https://toppng.com//public/uploads/preview/mrt-jakarta-graphic-desi-11563131435lo3ybgblf2.png',
-  },
-];
+import axios from 'axios';
 
 const Item = ({stasiunName, tipeTransportasi, imageSource}) => (
-  <View style={styles.item}>
+  <TouchableOpacity style={styles.item}>
     <View>
       <Image
         source={{uri: imageSource}}
-        style={{width: 50, height: 50, borderRadius: 50, marginRight: 20}}
+        style={{width: 50, height: 50, marginRight: 20}}
       />
       {/* <Text style={{fontSize: 18, fontWeight: 'bold'}}>{imageSource}</Text> */}
     </View>
@@ -62,26 +26,44 @@ const Item = ({stasiunName, tipeTransportasi, imageSource}) => (
       <Text style={{fontSize: 18, fontWeight: 'bold'}}>{stasiunName}</Text>
       <Text style={{fontSize: 14}}>{tipeTransportasi}</Text>
     </View>
-  </View>
+  </TouchableOpacity>
 );
 
 const HomePage = () => {
+  const [isLoading, setLoading] = useState(true);
   const [text, onChangeText] = React.useState('');
+  const [data, serData] = useState();
+
+  const getData = async () => {
+    try {
+      const res = await axios.get('https://eatzyapp.herokuapp.com/station');
+      serData(res.data);
+      //   console.log(res.data);
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   const renderItem = ({item}) => (
     <Item
-      stasiunName={item.stasiunName}
-      tipeTransportasi={item.tipeTransportasi}
-      imageSource={item.imageSource}
+      stasiunName={item.name}
+      tipeTransportasi={item.station_category.name}
+      imageSource={item.station_category.image}
     />
   );
 
   return (
     <View style={styles.wrapper}>
       {/* <View style={styles.header}>
-        <Text>Hello I am Kelly</Text>
-        <Text>Gamabr</Text>
-      </View> */}
+          <Text>Hello I am Kelly</Text>
+          <Text>Gamabr</Text>
+        </View> */}
       <View style={styles.containerCover}>
         <Image source={cover} />
       </View>
@@ -97,12 +79,16 @@ const HomePage = () => {
         <TitleComp text="List Stasiun" />
 
         <View style={styles.containerFlatList}>
-          <FlatList
-            data={DATA}
-            renderItem={renderItem}
-            keyExtractor={item => item.id}
-            nestedScrollEnabled
-          />
+          {isLoading ? (
+            <ActivityIndicator size="large" style={{marginTop: 20}} />
+          ) : (
+            <FlatList
+              data={data}
+              renderItem={renderItem}
+              keyExtractor={({id}, index) => id}
+              nestedScrollEnabled
+            />
+          )}
         </View>
       </View>
     </View>
