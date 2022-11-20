@@ -4,9 +4,15 @@ import React from 'react';
 const Button = props => {
   return (
     <View>
-      <TouchableOpacity onPress="">
+      <TouchableOpacity onPress={props.onBtnPress}>
         <View style={styles.buttonWrap}>
-          <Text style={{textAlign: 'center', fontWeight: '600', fontSize: 18, color: '#353535'}}>
+          <Text
+            style={{
+              textAlign: 'center',
+              fontWeight: '600',
+              fontSize: 18,
+              color: '#353535',
+            }}>
             {props.btnText}
           </Text>
         </View>

@@ -2,8 +2,10 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import cover from '../../images/cover.png';
 import Button from '../../component/Button';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-const LendingPage = () => {
+const LendingPage = ({navigation}) => {
   return (
     <View style={styles.wrapper}>
       <View style={styles.imageContainer}>
@@ -13,11 +15,12 @@ const LendingPage = () => {
         <Text style={styles.textTitleEatzy}>Eatzy</Text>
       </View>
       <View style={styles.btnContainer}>
-        <Button btnText="Get Started"/>
-        <TouchableOpacity onPress="">
-          <Text style={{textAlign: 'center', fontSize: 18, marginTop: 15, color: '#353535'}}>
-            I already have account
-          </Text>
+        <Button
+          btnText="Get Started"
+          onBtnPress={() => navigation.navigate('SignUp')}
+        />
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.alreadyHave}>I already have account</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -55,5 +58,11 @@ const styles = StyleSheet.create({
     flex: 2,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  alreadyHave: {
+    textAlign: 'center',
+    fontSize: 18,
+    marginTop: 15,
+    color: '#353535',
   },
 });
