@@ -12,6 +12,7 @@ import React, {useEffect, useState} from 'react';
 import cover from '../../images/smallCover.png';
 import TitleComp from '../../component/TitleComp';
 import axios from 'axios';
+import {colors} from "../../global/styles"
 
 const Item = ({stasiunName, tipeTransportasi, imageSource}) => (
   <TouchableOpacity style={styles.item}>
@@ -22,6 +23,7 @@ const Item = ({stasiunName, tipeTransportasi, imageSource}) => (
       />
       {/* <Text style={{fontSize: 18, fontWeight: 'bold'}}>{imageSource}</Text> */}
     </View>
+
     <View>
       <Text style={{fontSize: 18, fontWeight: 'bold'}}>{stasiunName}</Text>
       <Text style={{fontSize: 14}}>{tipeTransportasi}</Text>
@@ -64,9 +66,11 @@ const HomePage = () => {
           <Text>Hello I am Kelly</Text>
           <Text>Gamabr</Text>
         </View> */}
+
       <View style={styles.containerCover}>
         <Image source={cover} />
       </View>
+
       <View style={styles.containerSearch}>
         <TextInput
           style={styles.input}
@@ -75,8 +79,12 @@ const HomePage = () => {
           placeholder="Search..."
         />
       </View>
+
       <View style={styles.containerListStation}>
-        <TitleComp text="List Stasiun" />
+        {/* <TitleComp text="Station List"/> */}
+        <Text style={styles.titleFont}>
+          Station List
+        </Text>
 
         <View style={styles.containerFlatList}>
           {isLoading ? (
@@ -90,6 +98,7 @@ const HomePage = () => {
             />
           )}
         </View>
+
       </View>
     </View>
   );
@@ -102,44 +111,66 @@ const styles = StyleSheet.create({
     padding: 20,
     display: 'flex',
     height: '100%',
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.white,
   },
+
   header: {
     display: 'flex',
     justifyContent: 'space-between',
     flexDirection: 'row',
   },
-  textTitle: {
-    fontSize: 20,
-  },
+
   input: {
-    height: 40,
+    height: 50,
     borderStyle: 'solid',
     borderWidth: 1,
-    borderRadius: 12,
+    borderRadius: 15,
     padding: 10,
+    fontSize: 16,
+    borderColor: colors.blue,
   },
-  containerCover: {flex: 3, zIndex: -1},
+
+  containerCover: {
+    flex: 3, zIndex: -1
+  },
+
   containerSearch: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.white,
     justifyContent: 'center',
   },
+
   containerListStation: {
     flex: 6,
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.white,
   },
+
   containerFlatList: {
     flex: 1,
   },
+
   item: {
-    backgroundColor: '#f9c2ff',
+    backgroundColor: colors.white,
     padding: 20,
     marginVertical: 8,
     display: 'flex',
     flexDirection: 'row',
+    shadowColor: colors.grey,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    borderRadius: 15
   },
-  title: {
-    fontSize: 32,
-  },
+
+  titleFont:{
+    fontSize: 24,
+    fontWeight: '700',
+    color: colors.blue,
+    marginTop: 20,
+    marginBottom: 20
+  }
 });
