@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import SplashScreen from './pages/SplashScreen';
-import LendingPage from './pages/LendingPage';
+import LandingPage from './pages/LandingPage';
 import HomePage from './pages/HomePage';
 import RestauranList from './pages/RestaurantList';
 import SignUp from './pages/SignUp';
@@ -16,25 +16,26 @@ const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        {/* <Stack.Screen name="Lending" component={LendingPage} />
-        <Stack.Screen name="SignUp" component={SignUp} />
-        <Stack.Screen name="Login" component={Login} /> */}
-        <Stack.Screen name="HomePage" component={HomePage} />
-      </Stack.Navigator>
-    </NavigationContainer>
-    // <View>
-    //   <SplashScreen />
-    //   <LendingPage />
-    //   <HomePage />
-    //   <RestauranList />
-    //   <SignUp />
-    //   <Login />
-    //   <RestoDetail />
-    //   <Profile />
-    //   <AddReview />
-    // </View>
+    // <NavigationContainer>
+    //   <Stack.Navigator>
+    //     <Stack.Screen name="Eatzy" component={LandingPage} />
+    //     <Stack.Screen name="Register" component={SignUp} />
+    //     <Stack.Screen name="Login" component={Login} />
+    //     <Stack.Screen name="Home" component={HomePage} />
+    //   </Stack.Navigator>
+    // </NavigationContainer>
+
+    <View>
+      {/* <SplashScreen /> */}
+      {/* <LandingPage /> */}
+      <HomePage />
+      {/* <RestauranList /> */}
+      {/* <SignUp /> */}
+      {/* <Login /> */}
+      {/* <RestoDetail /> */}
+      {/* <Profile /> */}
+      {/* <AddReview /> */}
+    </View>
   );
 };
 
