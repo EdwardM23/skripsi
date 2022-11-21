@@ -2,6 +2,7 @@ import {
   ActivityIndicator,
   FlatList,
   Image,
+  PermissionsAndroid,
   StyleSheet,
   Text,
   TextInput,
@@ -12,7 +13,8 @@ import React, {useEffect, useState} from 'react';
 import cover from '../../images/smallCover.png';
 import TitleComp from '../../component/TitleComp';
 import axios from 'axios';
-import {colors} from "../../global/styles"
+import {colors} from '../../global/styles';
+import Geolocation from '@react-native-community/geolocation';
 
 const Item = ({stasiunName, tipeTransportasi, imageSource}) => (
   <TouchableOpacity style={styles.item}>
@@ -35,6 +37,49 @@ const HomePage = () => {
   const [isLoading, setLoading] = useState(true);
   const [text, onChangeText] = React.useState('');
   const [data, serData] = useState();
+  const [currLongitude, setcurrLongitude] = useState('');
+  const [currLatitude, setcurrLatitude] = useState('');
+
+  const requestLocationPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: 'Izinkan Mengambil Data Lokasi ?',
+          message: 'Izinkan mengambil data lokasi untuk Testing',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log('You can use the lcoation');
+        // Geolocation.getCurrentPosition(info =>
+        //   console.log(info.coords.latitude),
+        // );
+        console.log('Lokasi sudah didapatkan');
+        Geolocation.getCurrentPosition(
+          posisi => {
+            let currLongitude = JSON.stringify(posisi.coords.longitude);
+            let currLatitud1e = JSON.stringify(posisi.coords.latitude);
+            setcurrLongitude(currLongitude);
+            setcurrLatitude(currLatitud1e);
+            console.log(currLatitud1e);
+            console.log(currLatitud1e);
+          },
+          error =>
+            Alert.alert(
+              'error posisi tidak bisa ditemukan',
+              JSON.stringify(error),
+            ),
+        );
+      } else {
+        console.log('Location permission denied');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
 
   const getData = async () => {
     try {
@@ -49,6 +94,7 @@ const HomePage = () => {
   };
 
   useEffect(() => {
+    requestLocationPermission();
     getData();
   }, []);
 
@@ -72,6 +118,9 @@ const HomePage = () => {
       </View>
 
       <View style={styles.containerSearch}>
+        <Text>
+          Longi: {currLatitude} Lati: {currLatitude}
+        </Text>
         <TextInput
           style={styles.input}
           onChangeText={onChangeText}
@@ -81,10 +130,7 @@ const HomePage = () => {
       </View>
 
       <View style={styles.containerListStation}>
-        {/* <TitleComp text="Station List"/> */}
-        <Text style={styles.titleFont}>
-          Station List
-        </Text>
+        <TitleComp text="Station List" style={styles.titleFont} />
 
         <View style={styles.containerFlatList}>
           {isLoading ? (
@@ -98,7 +144,6 @@ const HomePage = () => {
             />
           )}
         </View>
-
       </View>
     </View>
   );
@@ -121,7 +166,7 @@ const styles = StyleSheet.create({
   },
 
   input: {
-    height: 50,
+    height: 40,
     borderStyle: 'solid',
     borderWidth: 1,
     borderRadius: 15,
@@ -131,7 +176,8 @@ const styles = StyleSheet.create({
   },
 
   containerCover: {
-    flex: 3, zIndex: -1
+    flex: 3,
+    zIndex: -1,
   },
 
   containerSearch: {
@@ -163,14 +209,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    borderRadius: 15
+    borderRadius: 15,
   },
-
-  titleFont:{
-    fontSize: 24,
-    fontWeight: '700',
-    color: colors.blue,
-    marginTop: 20,
-    marginBottom: 20
-  }
 });
