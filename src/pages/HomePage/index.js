@@ -16,6 +16,8 @@ import axios from 'axios';
 import {colors} from '../../global/styles';
 import Geolocation from '@react-native-community/geolocation';
 
+// Geolocation.getCurrentPosition(info => console.log(info));
+
 const Item = ({stasiunName, tipeTransportasi, imageSource}) => (
   <TouchableOpacity style={styles.item}>
     <View>

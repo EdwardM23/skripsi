@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   View,
   TextInput,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 import React, {useState} from 'react';
 import smallCover from '../../images/smallCover.png';
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    marginTop: 20
+    marginTop: 20,
   },
 
   formContainer: {

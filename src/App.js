@@ -11,31 +11,38 @@ import Profile from './pages/Profile';
 import AddReview from './pages/AddReview';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
+import PDFViewer from './pages/PDFViewer';
+import RestoMenu from './pages/RestoMenu';
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
-    // <NavigationContainer>
-    //   <Stack.Navigator>
-    //     <Stack.Screen name="Eatzy" component={LandingPage} />
-    //     <Stack.Screen name="Register" component={SignUp} />
-    //     <Stack.Screen name="Login" component={Login} />
-    //     <Stack.Screen name="Home" component={HomePage} />
-    //   </Stack.Navigator>
-    // </NavigationContainer>
+    <NavigationContainer>
+      <Stack.Navigator>
+        {/* <Stack.Screen name="Eatzy" component={LandingPage} />
+        <Stack.Screen name="Register" component={SignUp} />
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Home" component={HomePage} />
+        <Stack.Screen name="RestoMenu" component={RestoMenu} /> */}
+        {/* <Stack.Screen name="SignUp" component={SignUp} /> */}
+        <Stack.Screen name="Login" component={Login} />
+      </Stack.Navigator>
+    </NavigationContainer>
 
-    <View>
-      {/* <SplashScreen /> */}
-      {/* <LandingPage /> */}
-      <HomePage />
-      {/* <RestauranList /> */}
-      {/* <SignUp /> */}
-      {/* <Login /> */}
-      {/* <RestoDetail /> */}
-      {/* <Profile /> */}
-      {/* <AddReview /> */}
-    </View>
+    // <View>
+    //   {/* <PDFViewer /> */}
+    //   {/* <MenuViewer /> */}
+    //   {/* <SplashScreen /> */}
+    //   {/* <LandingPage /> */}
+    //   {/* <HomePage /> */}
+    //   {/* <RestauranList /> */}
+    //   {/* <SignUp /> */}
+    //   {/* <Login /> */}
+    //   {/* <RestoDetail /> */}
+    //   {/* <Profile /> */}
+    //   {/* <AddReview /> */}
+    // </View>
   );
 };
 
