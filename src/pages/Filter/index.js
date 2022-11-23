@@ -1,5 +1,5 @@
-import {View, StyleSheet, Text} from 'react-native';
-import React from 'react';
+import {View, StyleSheet, Text, Image} from 'react-native';
+import React, {useState} from 'react';
 import Header from '../../component/Header'
 import {colors} from "../../global/styles"
 import RadioButtonRN from 'radio-buttons-react-native';
@@ -15,7 +15,8 @@ const data = [
 ];
 
 const Filter = () => {
-
+    const [check1, setCheck1] = useState(false);
+    const [check2, setCheck2] = useState(false);
     return (
         <View style = {styles.container}>
             <Header title = "Filter"/>
@@ -28,6 +29,7 @@ const Filter = () => {
                     selectedBtn={(e) => console.log(e)}
                     circleSize={16}
                     textStyle={{ fontSize: 18, color: colors.grey, fontWeight: '400'}}
+                    boxStyle={{borderWidth: 0}}
                 />
             </View>
 
@@ -36,9 +38,12 @@ const Filter = () => {
             <View style={{padding: 20}}>
                 <CheckBox
                     title='Asian'
-                    // checked={this.state.checked}
-                    // onPress={() => this.setState({ checked: !this.state.checked })}
-                    textStyle={{ fontSize: 18, color: colors.grey, fontWeight: '400'}}
+                    checked={check1}
+                    onPress={() => setCheck1(!check1)}
+                    textStyle={{fontSize: 18, color: colors.grey, fontWeight: '400', marginLeft: 20}}
+                    checkedIcon={<Image source={require('../../images/check.png')} style={{width: 25, height: 25}}/>}
+                    uncheckedIcon={<Image source={require('../../images/square.png')} style={{width: 25, height: 25}}/>}
+                    containerStyle={{backgroundColor: colors.white, borderWidth: 0}}
                 />
 
             </View>
@@ -47,10 +52,13 @@ const Filter = () => {
 
             <View style={{padding: 20}}>
                 <CheckBox
-                    title='Asian'
-                    // checked={this.state.checked}
-                    // onPress={() => this.setState({ checked: !this.state.checked })}
-                    textStyle={{ fontSize: 18, color: colors.grey, fontWeight: '400'}}
+                    title='Bakso'
+                    checked={check2}
+                    onPress={() => setCheck2(!check2)}
+                    textStyle={{ fontSize: 18, color: colors.grey, fontWeight: '400', marginLeft: 20}}
+                    checkedIcon={<Image source={require('../../images/check.png')} style={{width: 25, height: 25}}/>}
+                    uncheckedIcon={<Image source={require('../../images/square.png')} style={{width: 25, height: 25}}/>}
+                    containerStyle={{backgroundColor: colors.white, borderWidth: 0}}
                 />
             </View>
 
