@@ -13,22 +13,23 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import PDFViewer from './pages/PDFViewer';
 import RestoMenu from './pages/RestoMenu';
+import Filter from './pages/Filter';
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        {/* <Stack.Screen name="Eatzy" component={LandingPage} />
-        <Stack.Screen name="Register" component={SignUp} />
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Home" component={HomePage} />
-        <Stack.Screen name="RestoMenu" component={RestoMenu} /> */}
-        {/* <Stack.Screen name="SignUp" component={SignUp} /> */}
-        <Stack.Screen name="Login" component={Login} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    // <NavigationContainer>
+    //   <Stack.Navigator>
+    //     <Stack.Screen name="Eatzy" component={LandingPage} />
+    //     <Stack.Screen name="Register" component={SignUp} />
+    //     <Stack.Screen name="Login" component={Login} />
+    //     <Stack.Screen name="Home" component={HomePage} />
+    //     <Stack.Screen name="RestoMenu" component={RestoMenu} />
+    //     <Stack.Screen name="SignUp" component={SignUp} />
+    //     <Stack.Screen name="Login" component={Login} />
+    //   </Stack.Navigator>
+    // </NavigationContainer>
 
     // <View>
     //   {/* <PDFViewer /> */}
@@ -43,6 +44,10 @@ const App = () => {
     //   {/* <Profile /> */}
     //   {/* <AddReview /> */}
     // </View>
+
+    <View>
+      <Filter />
+    </View>
   );
 };
 
