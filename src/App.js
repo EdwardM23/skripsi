@@ -37,10 +37,10 @@ const App = () => {
       {/* <SplashScreen /> */}
       {/* <LandingPage /> */}
       {/* <HomePage /> */}
-      {/* <RestauranList /> */}
+      <RestauranList />
       {/* <SignUp /> */}
       {/* <Login /> */}
-      <RestoDetail />
+      {/* <RestoDetail /> */}
       {/* <Profile /> */}
       {/* <AddReview /> */}
       {/* <Filter /> */}
