@@ -31,23 +31,21 @@ const App = () => {
     //   </Stack.Navigator>
     // </NavigationContainer>
 
-    // <View>
-    //   {/* <PDFViewer /> */}
-    //   {/* <MenuViewer /> */}
-    //   {/* <SplashScreen /> */}
-    //   {/* <LandingPage /> */}
-    //   {/* <HomePage /> */}
-    //   {/* <RestauranList /> */}
-    //   {/* <SignUp /> */}
-    //   {/* <Login /> */}
-    //   {/* <RestoDetail /> */}
-    //   {/* <Profile /> */}
-    //   {/* <AddReview /> */}
-    // </View>
-
     <View>
-      <Filter />
+      {/* <PDFViewer /> */}
+      {/* <MenuViewer /> */}
+      {/* <SplashScreen /> */}
+      {/* <LandingPage /> */}
+      {/* <HomePage /> */}
+      {/* <RestauranList /> */}
+      {/* <SignUp /> */}
+      {/* <Login /> */}
+      <RestoDetail />
+      {/* <Profile /> */}
+      {/* <AddReview /> */}
+      {/* <Filter /> */}
     </View>
+
   );
 };
 
