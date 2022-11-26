@@ -35,7 +35,10 @@ const Item = ({stasiunName, tipeTransportasi, imageSource}) => (
   </TouchableOpacity>
 );
 
-const HomePage = () => {
+const HomePage = (route, navigation) => {
+  console.log('Hasil Data yang dikirim : ');
+  console.log(route);
+
   const [isLoading, setLoading] = useState(true);
   const [text, onChangeText] = React.useState('');
   const [data, serData] = useState();
@@ -56,9 +59,9 @@ const HomePage = () => {
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         console.log('You can use the lcoation');
-        // Geolocation.getCurrentPosition(info =>
-        //   console.log(info.coords.latitude),
-        // );
+        Geolocation.getCurrentPosition(info =>
+          console.log(info.coords.latitude),
+        );
         console.log('Lokasi sudah didapatkan');
         Geolocation.getCurrentPosition(
           posisi => {
@@ -97,7 +100,7 @@ const HomePage = () => {
 
   useEffect(() => {
     requestLocationPermission();
-    getData();
+    // getData();
   }, []);
 
   const renderItem = ({item}) => (

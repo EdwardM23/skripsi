@@ -21,13 +21,13 @@ const App = () => {
   return (
     // <NavigationContainer>
     //   <Stack.Navigator>
-    //     <Stack.Screen name="Eatzy" component={LandingPage} />
-    //     <Stack.Screen name="Register" component={SignUp} />
+    //     {/* <Stack.Screen name="Eatzy" component={LandingPage} /> */}
+    //     {/* <Stack.Screen name="Register" component={SignUp} /> */}
     //     <Stack.Screen name="Login" component={Login} />
     //     <Stack.Screen name="Home" component={HomePage} />
-    //     <Stack.Screen name="RestoMenu" component={RestoMenu} />
-    //     <Stack.Screen name="SignUp" component={SignUp} />
-    //     <Stack.Screen name="Login" component={Login} />
+    //     {/* <Stack.Screen name="RestoMenu" component={RestoMenu} /> */}
+    //     {/* <Stack.Screen name="SignUp" component={SignUp} /> */}
+    //     {/* <Stack.Screen name="Login" component={Login} /> */}
     //   </Stack.Navigator>
     // </NavigationContainer>
 
@@ -36,8 +36,8 @@ const App = () => {
       {/* <MenuViewer /> */}
       {/* <SplashScreen /> */}
       {/* <LandingPage /> */}
-      {/* <HomePage /> */}
-      <RestauranList />
+      <HomePage />
+      {/* <RestauranList /> */}
       {/* <SignUp /> */}
       {/* <Login /> */}
       {/* <RestoDetail /> */}
@@ -45,7 +45,6 @@ const App = () => {
       {/* <AddReview /> */}
       {/* <Filter /> */}
     </View>
-
   );
 };
 
