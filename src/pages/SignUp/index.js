@@ -6,105 +6,111 @@ import {
   View,
   TextInput,
   ScrollView,
+  Alert,
 } from 'react-native';
 import React, {useState} from 'react';
 import smallCover from '../../images/smallCover.png';
 import Button from '../../component/Button';
+import TitleComp from '../../component/TitleComp';
+import FormInput from '../../component/FormInput';
+import axios from 'axios';
 
-/*
-class SignUp extends Component {
-  state = {
-   username: '',
-   email: '',
-   password: ''
- }
-
- handleUsername = (text) => {
-   this.setState({ username: text })
-}
-
- handleEmail = (text) => {
-    this.setState({ email: text })
- }
-
- handlePassword = (text) => {
-    this.setState({ password: text })
- }
- 
- login = (email, pass) => {
-    alert('email: ' + email + ' password: ' + pass)
- }
-
- render() {
-    return (
-      <View style={styles.wrapper}>
-         <View style={styles.imageContainer}>
-         <Image source={smallCover} style={{width: '100%'}} />
-         </View>
-
-         <View style={styles.titleContainer}>
-            <Text style={styles.textTitleCreateAccount}>Create Account</Text>      
-         </View>
-
-         <View style={styles.formContainer}>
-            <View style={styles.formStyle}>
-               <Text style={styles.borderTitle}>Username</Text>
-               <TextInput style = {styles.input}
-               underlineColorAndroid = "transparent"
-               //  placeholder = "Username"
-               placeholderTextColor = "#353535"
-               autoCapitalize = "none"
-               onChangeText = {this.handleUsername}/>
-            </View>
-
-            <View style={styles.formStyle}>
-               <Text style={styles.borderTitle}>Email</Text>
-               <TextInput style = {styles.input}
-               underlineColorAndroid = "transparent"
-               //  placeholder = "Email"
-               placeholderTextColor = "#353535"
-               autoCapitalize = "none"
-               onChangeText = {this.handleEmail}/>
-            </View>
-
-            <View style={styles.formStyle}>
-               <Text style={styles.borderTitle}>Password</Text>
-               <TextInput style = {styles.input}
-                  underlineColorAndroid = "transparent"
-                  // placeholder = "Password"
-                  placeholderTextColor = "#353535"
-                  autoCapitalize = "none"
-                  onChangeText = {this.handlePassword}/>
-            </View>
-
-            <View style={styles.formStyle}>
-               <Text style={styles.borderTitle}>Confirm Password</Text>
-               <TextInput style = {styles.input}
-                  underlineColorAndroid = "transparent"
-                  // placeholder = "Confirm Password"
-                  placeholderTextColor = "#353535"
-                  autoCapitalize = "none"
-                  onChangeText = {this.handleConfirmPassword}/>
-            </View>
-         </View>
-
-          <View style={styles.btnContainer}>
-            <Button btnText="Register" />
-            <TouchableOpacity onPress="">
-               <Text style={{textAlign: 'center', fontSize: 18, marginTop: 15}}>
-                  Joined us before? Login
-               </Text>
-            </TouchableOpacity>
-         </View>
-      </View>
-
-    )
- }
+const isValidObjField = obj => {
+  return Object.values(obj).every(value => value.trim());
 };
-*/
 
-const SignUp = () => {
-  const [value, setValue] = useState('');
+const updateError = (error, stateUpdater) => {
+  stateUpdater(error);
+  setTimeout(() => {
+    stateUpdater('');
+  }, 10000);
+};
+
+const isValideEmail = value => {
+  const regx =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return regx.test(value);
+};
+
+const SignUp = ({navigation}) => {
+  const [error, setError] = useState(''); // untuk error massafe
+
+  const [userInfo, setUserInfo] = useState({
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+  const {username, email, password, confirmPassword} = userInfo;
+
+  const handleOnChangeText = (value, fieldNmae) => {
+    setUserInfo({...userInfo, [fieldNmae]: value});
+  };
+
+  const isValidForm = () => {
+    //all value must fill
+    if (!isValidObjField(userInfo)) {
+      console.log(userInfo);
+      return updateError('Required all fields!', setError);
+    }
+
+    // name < 3
+    if (!username.trim() || username.length < 3)
+      return updateError('Invalid Name!', setError);
+
+    // only valid email is allowed
+    if (!isValideEmail(email)) return updateError('Invalid Email!', setError);
+
+    // password must have 8 char or more
+    if (!password.trim() || password.length < 8)
+      return updateError('Password is less then 8 Character!', setError);
+
+    // confirm password
+    if (password !== confirmPassword)
+      return updateError('Password not match!', setError);
+
+    return true;
+  };
+
+  const sendData = async (email, password, username) => {
+    console.log('AXIOS POST !!!!');
+    console.log('Email : ', email);
+    console.log('Password : ', password);
+    try {
+      const res = await axios
+        .post('https://eatzyapp.herokuapp.com/register', {
+          email: email,
+          password: password,
+          username: username,
+        })
+        .then(result => {
+          console.log(result);
+          // handleLogin(result.data.token, 'Edward');
+        });
+      // jika berhasil login maka
+      // 1. simpan toekn
+
+      // 2. pindah halama
+      // navigation.navigate('Home', {
+      //   passUserInfo: userInfo,
+      // });
+    } catch (error) {
+      Alert(error.message);
+    }
+  };
+
+  const submitForm = () => {
+    if (isValidForm()) {
+      console.log(userInfo);
+      console.log('Form Valid');
+      // console.log({username});
+      sendData(email, password, username);
+      navigation.navigate('Login');
+    } else {
+      Alert.alert('Oops please check your input !!!');
+    }
+  };
+
   return (
     <ScrollView style={styles.wrapper}>
       <View style={styles.imageContainer}>
@@ -112,80 +118,70 @@ const SignUp = () => {
       </View>
 
       <View style={styles.titleContainer}>
-        <Text style={styles.textTitleCreateAccount}>Create Account</Text>
+        <TitleComp text="Create Account" />
       </View>
 
       <View style={styles.formContainer}>
-        <View style={styles.formStyle}>
-          <Text style={styles.borderTitle}>Username</Text>
-          <TextInput
-            value={value}
-            style={styles.input}
-            inputStyle={styles.inputStyle}
-            labelStyle={styles.labelStyle}
-            placeholderStyle={styles.placeholderStyle}
-            textErrorStyle={styles.textErrorStyle}
-            label="TextInput"
-            placeholderTextColor="gray"
-            onChangeText={text => {
-              setValue(text);
-            }}
-          />
-        </View>
+        <FormInput
+          autoCapitalize="none"
+          style={styles.input}
+          value={username}
+          onChangeText={value => handleOnChangeText(value, 'username')}
+          label="Username"
+          placeholder="username"
+        />
 
-        <View style={styles.formStyle}>
-          <Text style={styles.borderTitle}>Email</Text>
-          <TextInput
-            value={value}
-            style={styles.input}
-            inputStyle={styles.inputStyle}
-            labelStyle={styles.labelStyle}
-            placeholderStyle={styles.placeholderStyle}
-            textErrorStyle={styles.textErrorStyle}
-            label="TextInput"
-            placeholderTextColor="gray"
-            onChangeText={text => {
-              setValue(text);
-            }}
-          />
-        </View>
+        <FormInput
+          autoCapitalize="none"
+          style={styles.input}
+          value={email}
+          onChangeText={value => handleOnChangeText(value, 'email')}
+          label="Email"
+          placeholder="example@gmail.com"
+        />
 
-        <View style={styles.formStyle}>
-          <Text style={styles.borderTitle}>Password</Text>
-          <TextInput
-            value={value}
-            style={styles.input}
-            inputStyle={styles.inputStyle}
-            labelStyle={styles.labelStyle}
-            placeholderStyle={styles.placeholderStyle}
-            textErrorStyle={styles.textErrorStyle}
-            label="TextInput"
-            placeholderTextColor="gray"
-            onChangeText={text => {
-              setValue(text);
-            }}
-          />
-        </View>
+        <FormInput
+          autoCapitalize="none"
+          style={styles.input}
+          value={password}
+          onChangeText={value => handleOnChangeText(value, 'password')}
+          label="Password"
+          placeholder="********"
+          secureTextEntry
+        />
 
-        <View style={styles.formStyle}>
-          <Text style={styles.borderTitle}>Confirm Password</Text>
-          <TextInput
-            value={value}
-            style={styles.input}
-            inputStyle={styles.inputStyle}
-            labelStyle={styles.labelStyle}
-            placeholderStyle={styles.placeholderStyle}
-            textErrorStyle={styles.textErrorStyle}
-            label="TextInput"
-            placeholderTextColor="gray"
-            onChangeText={text => {
-              setValue(text);
-            }}
-          />
+        <FormInput
+          autoCapitalize="none"
+          style={styles.input}
+          value={confirmPassword}
+          onChangeText={value => handleOnChangeText(value, 'confirmPassword')}
+          label="Confirm Password"
+          placeholder="********"
+          secureTextEntry
+        />
+
+        <View style={{height: 20}}>
+          {error ? <Text style={{color: 'red'}}>{error}</Text> : null}
         </View>
       </View>
 
       <View style={styles.btnContainer}>
+        <Button btnText="Register" onBtnPress={submitForm} />
+        <TouchableOpacity onPress="">
+          <Text style={[{fontSize: 18, color: '#353535'}, styles.registerText]}>
+            Already have account ?
+            <Text
+              style={[
+                {fontSize: 18, color: '#0B59B1', fontWeight: '600'},
+                styles.loginText,
+              ]}>
+              Login
+            </Text>
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* <View style={styles.btnContainer}>
         <Button btnText="Register" />
         <TouchableOpacity onPress="">
           <Text
@@ -209,7 +205,7 @@ const SignUp = () => {
             </Text>
           </Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </ScrollView>
   );
 };
@@ -236,32 +232,32 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
+    marginHorizontal: 30,
     marginTop: 20,
   },
 
   formContainer: {
     flex: 4,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-    marginTop: 30,
-    marginBottom: 10,
+    width: '100%',
+    paddingTop: 30,
+    paddingHorizontal: 30,
   },
 
   btnContainer: {
     flex: 2,
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: 30,
   },
 
   input: {
-    margin: 15,
     height: 40,
-    width: 350,
+    width: '100%',
     borderColor: '#353535',
     borderWidth: 1,
     borderRadius: 15,
-    marginLeft: 30,
     marginTop: 10,
+    marginBottom: 15, // ini di -7 aja ya ?
   },
 
   textTitleCreateAccount: {
@@ -269,7 +265,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: '#0B59B1',
     fontWeight: 'bold',
-    marginLeft: 30,
   },
 
   borderTitle: {
@@ -278,8 +273,11 @@ const styles = StyleSheet.create({
     color: '#353535',
     marginLeft: 30,
   },
-
-  formStyle: {
-    marginBottom: -7,
+  loginText: {
+    textAlign: 'center',
+    marginTop: 15,
   },
+  // formStyle: {
+  //   marginBottom: -7,
+  // },
 });

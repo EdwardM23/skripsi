@@ -178,6 +178,7 @@ const styles = StyleSheet.create({
   },
 
   titleContainer: {
+    flex: 1,
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     marginHorizontal: 30,
@@ -185,12 +186,14 @@ const styles = StyleSheet.create({
   },
 
   formContainer: {
+    flex: 4,
     width: '100%',
     paddingTop: 30,
     paddingHorizontal: 30,
   },
 
   btnContainer: {
+    flex: 2,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 30,

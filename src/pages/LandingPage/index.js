@@ -17,7 +17,7 @@ const LendingPage = ({navigation}) => {
       <View style={styles.btnContainer}>
         <Button
           btnText="Get Started"
-          onBtnPress={() => navigation.navigate('SignUp')}
+          onBtnPress={() => navigation.navigate('Register')}
         />
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
           <Text style={styles.alreadyHave}>I already have account</Text>
