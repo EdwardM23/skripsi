@@ -167,7 +167,7 @@ const SignUp = ({navigation}) => {
 
       <View style={styles.btnContainer}>
         <Button btnText="Register" onBtnPress={submitForm} />
-        <TouchableOpacity onPress="">
+        <TouchableOpacity onPress={() => navigation.replace('Login')}>
           <Text style={[{fontSize: 18, color: '#353535'}, styles.registerText]}>
             Already have account ?
             <Text
@@ -248,6 +248,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 30,
+    marginBottom: 30,
   },
 
   input: {

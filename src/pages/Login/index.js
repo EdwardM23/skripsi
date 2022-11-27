@@ -142,7 +142,7 @@ const Login = ({navigation}) => {
 
       <View style={styles.btnContainer}>
         <Button btnText="Login" onBtnPress={submitForm} />
-        <TouchableOpacity onPress="">
+        <TouchableOpacity onPress={() => navigation.replace('Register')}>
           <Text style={[{fontSize: 18, color: '#353535'}, styles.registerText]}>
             Don't have account?
             <Text

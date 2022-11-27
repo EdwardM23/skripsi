@@ -1,7 +1,12 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 
-const SplashScreen = () => {
+const SplashScreen = ({navigation}) => {
+  useEffect(() => {
+    setTimeout(() => {
+      navigation.replace('Eatzy')
+    }, 1000)
+  }, [navigation]);
   return (
     <View style={styles.wrapper}>
       <Text style={styles.textTitleEatzy}>Eatzy</Text>
@@ -13,7 +18,7 @@ export default SplashScreen;
 
 const styles = StyleSheet.create({
   wrapper: {
-    padding: 20,
+    padding: 30,
     display: 'flex',
     height: '100%',
     alignItems: 'center',
