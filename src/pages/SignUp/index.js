@@ -129,6 +129,7 @@ const SignUp = ({navigation}) => {
           onChangeText={value => handleOnChangeText(value, 'username')}
           label="Username"
           placeholder="username"
+          placeholderStlye
         />
 
         <FormInput
@@ -258,7 +259,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 15,
     marginTop: 10,
-    marginBottom: 15, // ini di -7 aja ya ?
+    marginBottom: 15,
+    paddingHorizontal: 10
   },
 
   textTitleCreateAccount: {

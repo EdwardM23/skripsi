@@ -207,6 +207,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     marginTop: 10,
     marginBottom: 15,
+    paddingHorizontal: 10
   },
 
   textTitleLogin: {
