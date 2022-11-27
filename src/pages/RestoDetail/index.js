@@ -24,21 +24,21 @@ const RestoDetail = () => {
           }}
           style={{height: 275}}
         >
-          <TouchableOpacity style={{flexDirection: 'row', justifyContent: 'space-between', marginLeft: 10, marginRight: 10, marginTop: 10}}>
-            <View style={styles.ratingContainer}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between', marginLeft: 10, marginRight: 10, marginTop: 10}}>
+            <TouchableOpacity style={styles.ratingContainer}>
               <Image
                 source={Star}
                 style={{height: 20, width: 20}}
               />
               <Text style={styles.ratingText}>3.5</Text>
-            </View>
-            <View style={styles.saveContainer}>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.saveContainer}>
               <Image
                 source={Like}
                 style={{height: 20, width: 20}}
               />
-            </View>
-          </TouchableOpacity>
+            </TouchableOpacity>
+          </View>
 
         </ImageBackground>
       </View>
