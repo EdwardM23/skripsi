@@ -14,7 +14,7 @@ import Button from '../../component/Button';
 import TitleComp from '../../component/TitleComp';
 import FormInput from '../../component/FormInput';
 import axios from 'axios';
-// import {handleLogin} from '../../credential/keychain';
+import {handleLogin} from '../../credential/keychain';
 
 // Valdiation
 const isValidObjField = obj => {
@@ -76,15 +76,18 @@ const Login = ({navigation}) => {
           password: password,
         })
         .then(result => {
-          handleLogin(result.data.token, 'Edward');
-        });
-      // jika berhasil login maka
-      // 1. simpan toekn
-
-      // 2. pindah halama
-      // navigation.navigate('Home', {
-      //   passUserInfo: userInfo,
-      // });
+          console.log(result.data);
+          handleLogin(result.data.token, result.data.username);
+          navigation.navigate('Home', {
+            passUserInfo: userInfo,
+          });
+        })
+        .catch(function (error) {
+          updateError('Wrong Email or Password !!!', setError);
+          console.log('Error', error);
+          console.log('Response', error.response);
+          console.log('Message', error.message);
+        });;
     } catch (error) {
       Alert(error.message);
       setError('Invalid Username or Passowrd, Please Try Again .');
@@ -97,9 +100,6 @@ const Login = ({navigation}) => {
       console.log('Form Valid !!!');
       //   console.log(email);
       sendData(email, password);
-      navigation.navigate('Home', {
-        passUserInfo: userInfo,
-      });
     } else {
       Alert.alert('Oops please check your input !!!');
     }

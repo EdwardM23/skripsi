@@ -15,6 +15,7 @@ import TitleComp from '../../component/TitleComp';
 import axios from 'axios';
 import {colors} from '../../global/styles';
 import Geolocation from '@react-native-community/geolocation';
+import { userDetails } from '../../credential/keychain';
 
 // Geolocation.getCurrentPosition(info => console.log(info));
 
@@ -37,10 +38,10 @@ const Item = ({stasiunName, tipeTransportasi, imageSource}) => (
 
 const HomePage = (route, navigation) => {
   console.log('Hasil Data yang dikirim : ');
-  console.log(route);
+  console.log(route.route.params);
 
   const [isLoading, setLoading] = useState(true);
-  const [text, onChangeText] = React.useState('');
+  const [text, setText] = useState();
   const [data, serData] = useState();
   const [currLongitude, setcurrLongitude] = useState('');
   const [currLatitude, setcurrLatitude] = useState('');
@@ -98,11 +99,16 @@ const HomePage = (route, navigation) => {
     }
   };
 
+  // Did Mount
   useEffect(() => {
     requestLocationPermission();
-    // getData();
-  }, []);
-
+    getData();
+    return() => {
+      console.log('Did Update')
+      // getData();
+    }
+  }, [text]);
+  
   const renderItem = ({item}) => (
     <Item
       stasiunName={item.name}
@@ -113,10 +119,10 @@ const HomePage = (route, navigation) => {
 
   return (
     <View style={styles.wrapper}>
-      {/* <View style={styles.header}>
-          <Text>Hello I am Kelly</Text>
-          <Text>Gamabr</Text>
-        </View> */}
+      <View style={styles.header}>
+          <Text>Hello {userDetails.username}</Text>
+          <Text>Profile</Text>
+        </View>
 
       <View style={styles.containerCover}>
         <Image source={cover} />
@@ -128,8 +134,8 @@ const HomePage = (route, navigation) => {
         </Text>
         <TextInput
           style={styles.input}
-          onChangeText={onChangeText}
           value={text}
+          onChangeText={(value) => setText(value) }
           placeholder="Search..."
         />
       </View>
@@ -171,11 +177,11 @@ const styles = StyleSheet.create({
   },
 
   input: {
-    height: 40,
+    paddingVertical: 10,
     borderStyle: 'solid',
     borderWidth: 1,
     borderRadius: 15,
-    padding: 10,
+    paddingHorizontal: 10,
     fontSize: 16,
     borderColor: colors.blue,
   },

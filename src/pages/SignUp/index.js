@@ -85,7 +85,14 @@ const SignUp = ({navigation}) => {
         })
         .then(result => {
           console.log(result);
+          navigation.navigate('Login');
           // handleLogin(result.data.token, 'Edward');
+        })
+        .catch(function (error) {
+          updateError('Email alteady registered !!!', setError);
+          // console.log('Error', error);
+          // console.log('Response', error.response);
+          // console.log('Message', error.message);
         });
       // jika berhasil login maka
       // 1. simpan toekn
@@ -105,7 +112,6 @@ const SignUp = ({navigation}) => {
       console.log('Form Valid');
       // console.log({username});
       sendData(email, password, username);
-      navigation.navigate('Login');
     } else {
       Alert.alert('Oops please check your input !!!');
     }
