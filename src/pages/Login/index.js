@@ -8,13 +8,13 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import smallCover from '../../images/smallCover.png';
 import Button from '../../component/Button';
 import TitleComp from '../../component/TitleComp';
 import FormInput from '../../component/FormInput';
 import axios from 'axios';
-import {handleLogin} from '../../credential/keychain';
+import { AuthContext } from '../../global/AuthContext';
 
 // Valdiation
 const isValidObjField = obj => {
@@ -43,6 +43,8 @@ const Login = ({navigation}) => {
     password: '',
   });
   const {email, password} = userInfo;
+
+  const {handleLogin} = useContext(AuthContext);
 
   const handleOnChangeText = (value, fieldNmae) => {
     setUserInfo({...userInfo, [fieldNmae]: value});
@@ -77,7 +79,11 @@ const Login = ({navigation}) => {
         })
         .then(result => {
           console.log(result.data);
-          handleLogin(result.data.token, result.data.username);
+          handleLogin(
+            result.data.token,
+            result.data.username,
+            result.data.email,
+          );
           navigation.navigate('Home', {
             passUserInfo: userInfo,
           });
@@ -87,7 +93,7 @@ const Login = ({navigation}) => {
           console.log('Error', error);
           console.log('Response', error.response);
           console.log('Message', error.message);
-        });;
+        });
     } catch (error) {
       Alert(error.message);
       setError('Invalid Username or Passowrd, Please Try Again .');
@@ -98,7 +104,6 @@ const Login = ({navigation}) => {
     if (isValidForm()) {
       console.log(userInfo);
       console.log('Form Valid !!!');
-      //   console.log(email);
       sendData(email, password);
     } else {
       Alert.alert('Oops please check your input !!!');
@@ -207,7 +212,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     marginTop: 10,
     marginBottom: 15,
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
   },
 
   textTitleLogin: {

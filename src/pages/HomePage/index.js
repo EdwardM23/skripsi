@@ -9,13 +9,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import cover from '../../images/smallCover.png';
 import TitleComp from '../../component/TitleComp';
 import axios from 'axios';
 import {colors} from '../../global/styles';
 import Geolocation from '@react-native-community/geolocation';
-import { userDetails } from '../../credential/keychain';
+import { AuthContext } from '../../global/AuthContext';
 
 // Geolocation.getCurrentPosition(info => console.log(info));
 
@@ -45,6 +45,9 @@ const HomePage = (route, navigation) => {
   const [data, serData] = useState();
   const [currLongitude, setcurrLongitude] = useState('');
   const [currLatitude, setcurrLatitude] = useState('');
+
+  const {userDetails} = useContext(AuthContext);
+  console.log(userDetails);
 
   const requestLocationPermission = async () => {
     try {
