@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React, { useContext } from 'react';
+import React, {useContext} from 'react';
 import SplashScreen from './pages/SplashScreen';
 import LandingPage from './pages/LandingPage';
 import HomePage from './pages/HomePage';
@@ -21,31 +21,32 @@ const Stack = createNativeStackNavigator();
 const Navigate = () => {
   const {isLoggedIn} = useContext(AuthContext);
   console.log('IS LOGI IN', isLoggedIn);
-    return (
-      <NavigationContainer>
-        <Stack.Navigator>
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
         {isLoggedIn == false ? (
           <>
-          <Stack.Screen name="Splash" component={SplashScreen} options={{headerShown: false}} />
+            <Stack.Screen name="Home" component={HomePage} />
+            {/* <Stack.Screen name="Splash" component={SplashScreen} options={{headerShown: false}} />
           <Stack.Screen name="Eatzy" component={LandingPage} options={{headerShown: false}} />
           <Stack.Screen name="Register" component={SignUp} options={{headerShown: false}}/>
-          <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
+          <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/> */}
           </>
         ) : (
           <>
-          <Stack.Screen name="Home" component={HomePage} />
-          {/* <Stack.Screen name="RestoMenu" component={RestoMenu} /> */}
-          {/* <Stack.Screen name="SignUp" component={SignUp} /> */}
-          {/* <Stack.Screen name="Login" component={Login} /> */}
-          {/* <Stack.Screen name="RestauranList" component={RestauranList} /> */}
-          {/* <Stack.Screen name="RestoDetail" component={RestoDetail} /> */}
+            <Stack.Screen name="Home" component={HomePage} />
+            {/* <Stack.Screen name="RestoMenu" component={RestoMenu} /> */}
+            {/* <Stack.Screen name="SignUp" component={SignUp} /> */}
+            {/* <Stack.Screen name="Login" component={Login} /> */}
+            {/* <Stack.Screen name="RestauranList" component={RestauranList} /> */}
+            {/* <Stack.Screen name="RestoDetail" component={RestoDetail} /> */}
           </>
         )}
-        </Stack.Navigator>
-      </NavigationContainer>
-    );
-  };
-  
-  export default Navigate;
-  
-  const styles = StyleSheet.create({});
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+
+export default Navigate;
+
+const styles = StyleSheet.create({});

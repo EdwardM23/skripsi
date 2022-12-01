@@ -15,7 +15,7 @@ import TitleComp from '../../component/TitleComp';
 import axios from 'axios';
 import {colors} from '../../global/styles';
 import Geolocation from '@react-native-community/geolocation';
-import { AuthContext } from '../../global/AuthContext';
+import {AuthContext} from '../../global/AuthContext';
 
 // Geolocation.getCurrentPosition(info => console.log(info));
 
@@ -42,7 +42,7 @@ const HomePage = (route, navigation) => {
 
   const [isLoading, setLoading] = useState(true);
   const [text, setText] = useState();
-  const [data, serData] = useState();
+  const [data, setData] = useState('');
   const [currLongitude, setcurrLongitude] = useState('');
   const [currLatitude, setcurrLatitude] = useState('');
 
@@ -73,7 +73,7 @@ const HomePage = (route, navigation) => {
             let currLatitud1e = JSON.stringify(posisi.coords.latitude);
             setcurrLongitude(currLongitude);
             setcurrLatitude(currLatitud1e);
-            console.log(currLatitud1e);
+            console.log(currLongitude);
             console.log(currLatitud1e);
           },
           error =>
@@ -90,11 +90,33 @@ const HomePage = (route, navigation) => {
     }
   };
 
-  const getData = async () => {
+  // const getData = async () => {
+  //   try {
+  //     const res = await axios.get('https://eatzyapp.herokuapp.com/station');
+  //     setData(res.data);
+  //     //   console.log(res.data);
+  //   } catch (error) {
+  //     alert(error.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+  const getData = async (text, currLongitude, currLatitude) => {
     try {
-      const res = await axios.get('https://eatzyapp.herokuapp.com/station');
-      serData(res.data);
-      //   console.log(res.data);
+      const res = await axios
+        .post('http://eatzyapp.herokuapp.com/station/nearest', {
+          keyword: text,
+          longitude: currLongitude,
+          latitude: currLatitude,
+        })
+        .then(result => {
+          console.log('Hasil AXIOS', result.data);
+          setData(result.data);
+          console.log('Hasil Data', data);
+          // navigation.navigate('Home', {
+          //   passUserInfo: userInfo,
+          // });
+        });
     } catch (error) {
       alert(error.message);
     } finally {
@@ -105,40 +127,51 @@ const HomePage = (route, navigation) => {
   // Did Mount
   useEffect(() => {
     requestLocationPermission();
-    getData();
-    return() => {
-      console.log('Did Update')
-      // getData();
-    }
+    // return () => {
+    //   console.log('Did Update', text, currLongitude, currLatitude);
+    // };
+  }, []);
+
+  // useEffect(() => {
+  //   getData('TOSARI', currLongitude, currLatitude);
+  // }, []);
+
+  useEffect(() => {
+    console.log('Did Update', text, currLongitude, currLatitude);
+    getData('', currLongitude, currLatitude);
+  }, [currLongitude, currLatitude]);
+
+  useEffect(() => {
+    getData(text, currLongitude, currLatitude);
   }, [text]);
-  
+
   const renderItem = ({item}) => (
     <Item
       stasiunName={item.name}
-      tipeTransportasi={item.station_category.name}
-      imageSource={item.station_category.image}
+      tipeTransportasi={item.station_type.name}
+      imageSource={item.station_type.image}
     />
   );
 
   return (
     <View style={styles.wrapper}>
       <View style={styles.header}>
-          <Text>Hello {userDetails.username}</Text>
-          <Text>Profile</Text>
-        </View>
+        <Text>Hello {userDetails.username}</Text>
+        <Text>Profile</Text>
+      </View>
 
       <View style={styles.containerCover}>
         <Image source={cover} />
       </View>
 
       <View style={styles.containerSearch}>
-        <Text>
+        {/* <Text>
           Longi: {currLatitude} Lati: {currLatitude}
-        </Text>
+        </Text> */}
         <TextInput
           style={styles.input}
           value={text}
-          onChangeText={(value) => setText(value) }
+          onChangeText={value => setText(value)}
           placeholder="Search..."
         />
       </View>
