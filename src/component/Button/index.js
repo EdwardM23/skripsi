@@ -6,9 +6,7 @@ const Button = props => {
     <View>
       <TouchableOpacity onPress={props.onBtnPress}>
         <View style={styles.buttonWrap}>
-          <Text style={styles.textStyle}>
-            {props.btnText}
-          </Text>
+          <Text style={styles.textStyle}>{props.btnText}</Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -27,9 +25,9 @@ const styles = StyleSheet.create({
     width: 325,
   },
   textStyle: {
-      textAlign: 'center',
-      fontWeight: 'bold',
-      fontSize: 18,
-      color: '#353535',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 18,
+    color: '#353535',
   },
 });

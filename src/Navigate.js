@@ -15,6 +15,7 @@ import PDFViewer from './pages/PDFViewer';
 import RestoMenu from './pages/RestoMenu';
 import Filter from './pages/Filter';
 import {AuthContext} from './global/AuthContext';
+import Testing from './pages/TESTINGAJA';
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +28,8 @@ const Navigate = () => {
         {isLoggedIn == false ? (
           <>
             <Stack.Screen name="Home" component={HomePage} />
+            <Stack.Screen name="RestauranList" component={RestauranList} />
+            {/* <Stack.Screen name="Testing" component={Testing} /> */}
             {/* <Stack.Screen name="Splash" component={SplashScreen} options={{headerShown: false}} />
           <Stack.Screen name="Eatzy" component={LandingPage} options={{headerShown: false}} />
           <Stack.Screen name="Register" component={SignUp} options={{headerShown: false}}/>

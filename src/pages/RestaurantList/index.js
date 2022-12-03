@@ -1,16 +1,129 @@
-import {Image, StyleSheet, Text, View, ImageBackground} from 'react-native';
-import React from 'react';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  ImageBackground,
+  FlatList,
+  ActivityIndicator,
+  TouchableOpacity,
+} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import TitleComp from '../../component/TitleComp';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
-import Header from '../../component/Header'
-import {colors} from "../../global/styles"
-import Star from '../../images/star.png'
+import Header from '../../component/Header';
+import {colors} from '../../global/styles';
+import Star from '../../images/star.png';
+import axios from 'axios';
 
-const RestauranList = () => {
+const ItemResto = ({name, schedule, imageUrl, priceRange}) => (
+  <TouchableOpacity style={styles.item}>
+    <View style={{position: 'relative', width: '100%'}}>
+      <ImageBackground
+        source={{
+          uri: imageUrl,
+        }}
+        style={{height: 150, borderRadius: 10}}>
+        <View
+          style={{
+            marginLeft: 10,
+            marginRight: 10,
+            marginTop: 10,
+            alignItems: 'flex-end',
+          }}>
+          <View style={styles.ratingContainer}>
+            <Image source={Star} style={{height: 15, width: 15}} />
+            <Text style={styles.ratingText}>3.5</Text>
+            <Text style={styles.count}>(15)</Text>
+          </View>
+        </View>
+      </ImageBackground>
+    </View>
+    <View style={{width: '100%', marginTop: 5}}>
+      <View style={styles.row}>
+        <View style={{textAlign: 'right'}}>
+          <Text style={styles.restoFont}>{name}</Text>
+        </View>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Image
+            source={{
+              uri: 'https://www.iconpacks.net/icons/2/free-location-pointer-icon-2961-thumb.png',
+            }}
+            style={{width: 9, height: 13, marginRight: 2}}
+          />
+          <Text style={styles.distanceFont}>12 KM</Text>
+        </View>
+      </View>
+      <View style={styles.row}>
+        <View>
+          <Text
+            style={{
+              fontSize: 14,
+              color: colors.grey,
+              fontWeight: '400',
+            }}>
+            {schedule}
+            {/* Indonesia <Text style={styles.status}>Status</Text> */}
+          </Text>
+        </View>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Text
+            style={{
+              fontSize: 14,
+              color: colors.grey,
+              fontWeight: '400',
+            }}>
+            {priceRange}
+          </Text>
+        </View>
+      </View>
+    </View>
+  </TouchableOpacity>
+);
+
+const RestauranList = (route, navigation) => {
+  // console.log(route.route.params.stationId);
+
+  const stationId = route.route.params.stationId;
+  const [data, setData] = useState('');
+  const [isLoading, setLoading] = useState(true);
+
+  const getData = async Id => {
+    console.log(Id);
+    // const ApiLink = 'http://eatzyapp.herokuapp.com/restaurant/nearest/';
+    // const ApiLinkParam =
+    //   'http://eatzyapp.herokuapp.com/restaurant/nearest/' + stationId;
+    // console.log(ApiLinkParam);
+    try {
+      const res = await axios.get(
+        'http://eatzyapp.herokuapp.com/restaurant/nearest/' + stationId,
+      );
+      const response = res.data.rows[0].restaurants;
+      setData(response);
+      console.log(response);
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getData(stationId);
+  }, []);
+
+  const renderItem = ({item}) => (
+    <ItemResto
+      name={item.name}
+      schedule={item.schedule}
+      imageUrl={item.imageURL}
+      priceRange={item.priceRange}
+    />
+  );
+
   return (
     <View>
-      <Header title = "Restaurant"/>
-
+      {/* <Header title="Restaurant" /> */}
       <MapView
         provider={PROVIDER_GOOGLE} // remove if not using Google Maps
         style={{height: '40%'}}
@@ -19,8 +132,7 @@ const RestauranList = () => {
           longitude: -122.4324,
           latitudeDelta: 0.015,
           longitudeDelta: 0.0121,
-        }}>
-      </MapView>
+        }}></MapView>
 
       <View style={styles.wrapper}>
         <View style={styles.containerList}>
@@ -28,64 +140,16 @@ const RestauranList = () => {
 
           {/* Item Resto */}
           <View style={styles.containerFlatList}>
-
-            <View style={styles.item}>
-              <View style={{position: 'relative', width: '100%'}}>
-                <ImageBackground
-                  source={{
-                    uri: 'https://anakjajan.files.wordpress.com/2016/10/dscf1714.jpg?w=474&h=316',
-                  }}
-                  style={{height: 150, borderRadius: 10}}
-                >
-                  <View style={{marginLeft: 10, marginRight: 10, marginTop: 10, alignItems:'flex-end'}}>
-                    <View style={styles.ratingContainer}>
-                      <Image
-                        source={Star}
-                        style={{height: 15, width: 15}}
-                      />
-                      <Text style={styles.ratingText}>3.5</Text>
-                      <Text style={styles.count}>(15)</Text>
-                    </View>
-                  </View>
-                </ImageBackground>
-              </View>
-
-              <View style={{width: '100%', marginTop: 5}}>
-                <View style={styles.row}>
-                  <View style={{textAlign: 'right'}}>
-                    <Text style={styles.restoFont}>
-                      Wingheng
-                    </Text>
-                  </View>
-
-                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Image
-                      source={{
-                        uri: 'https://www.iconpacks.net/icons/2/free-location-pointer-icon-2961-thumb.png',
-                      }}
-                      style={{width: 9, height: 13, marginRight: 2}}
-                    />
-
-                    <Text style={styles.distanceFont}>12 KM</Text>
-                  </View>
-                </View>
-
-                <View style={styles.row}>
-                  <View>
-                    <Text style={{fontSize: 14, color: colors.grey, fontWeight: '400'}}>
-                      Indonesia <Text style={styles.status}>Status</Text>
-                    </Text>
-                  </View>
-
-                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Text style={{fontSize: 14, color: colors.grey, fontWeight: '400'}}>
-                      Price Rp 250.000 for two
-                    </Text>
-                  </View>
-                </View>
-              </View>
-
-            </View>
+            {isLoading ? (
+              <ActivityIndicator size="large" style={{marginTop: 20}} />
+            ) : (
+              <FlatList
+                data={data}
+                renderItem={renderItem}
+                keyExtractor={({id}, index) => id}
+                nestedScrollEnabled
+              />
+            )}
           </View>
         </View>
       </View>
@@ -101,7 +165,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     height: '60%',
     backgroundColor: '#ffffff',
-    
   },
 
   item: {
@@ -125,7 +188,7 @@ const styles = StyleSheet.create({
   status: {
     color: colors.red,
     fontWeight: '600',
-    fontSize: 14
+    fontSize: 14,
   },
 
   row: {
@@ -133,7 +196,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
-    marginTop: 2
+    marginTop: 2,
   },
 
   containerList: {
@@ -161,19 +224,19 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     marginRight: 30,
     marginTop: 10,
-    marginBottom: 10
+    marginBottom: 10,
   },
 
   restoFont: {
     fontSize: 18,
     fontWeight: '600',
-    color: colors.grey
+    color: colors.grey,
   },
 
   distanceFont: {
     fontSize: 14,
     fontWeight: '400',
-    color: colors.grey
+    color: colors.grey,
   },
 
   ratingContainer: {
@@ -189,12 +252,12 @@ const styles = StyleSheet.create({
   ratingText: {
     fontSize: 14,
     fontWeight: '600',
-    color: colors.grey
+    color: colors.grey,
   },
 
   count: {
     fontSize: 12,
     fontWeight: '600',
-    color: colors.grey
-  }
+    color: colors.grey,
+  },
 });

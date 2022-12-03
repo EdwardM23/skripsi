@@ -16,29 +16,30 @@ import axios from 'axios';
 import {colors} from '../../global/styles';
 import Geolocation from '@react-native-community/geolocation';
 import {AuthContext} from '../../global/AuthContext';
+import Item from '../../component/Item';
 
 // Geolocation.getCurrentPosition(info => console.log(info));
 
-const Item = ({stasiunName, tipeTransportasi, imageSource}) => (
-  <TouchableOpacity style={styles.item}>
-    <View>
-      <Image
-        source={{uri: imageSource}}
-        style={{width: 50, height: 50, marginRight: 20}}
-      />
-      {/* <Text style={{fontSize: 18, fontWeight: 'bold'}}>{imageSource}</Text> */}
-    </View>
+// const Item = ({stasiunName, tipeTransportasi, imageSource}) => (
+//   <TouchableOpacity style={styles.item}>
+//     <View>
+//       <Image
+//         source={{uri: imageSource}}
+//         style={{width: 50, height: 50, marginRight: 20}}
+//       />
+//       {/* <Text style={{fontSize: 18, fontWeight: 'bold'}}>{imageSource}</Text> */}
+//     </View>
 
-    <View>
-      <Text style={{fontSize: 18, fontWeight: 'bold'}}>{stasiunName}</Text>
-      <Text style={{fontSize: 14}}>{tipeTransportasi}</Text>
-    </View>
-  </TouchableOpacity>
-);
+//     <View>
+//       <Text style={{fontSize: 18, fontWeight: 'bold'}}>{stasiunName}</Text>
+//       <Text style={{fontSize: 14}}>{tipeTransportasi}</Text>
+//     </View>
+//   </TouchableOpacity>
+// );
 
-const HomePage = (route, navigation) => {
-  console.log('Hasil Data yang dikirim : ');
-  console.log(route.route.params);
+const HomePage = ({route, navigation}) => {
+  // console.log('Hasil Data yang dikirim : ');
+  // console.log(route.route.params);
 
   const [isLoading, setLoading] = useState(true);
   const [text, setText] = useState();
@@ -147,6 +148,11 @@ const HomePage = (route, navigation) => {
 
   const renderItem = ({item}) => (
     <Item
+      itemPress={() =>
+        navigation.push('RestauranList', {
+          stationId: item.id,
+        })
+      }
       stasiunName={item.name}
       tipeTransportasi={item.station_type.name}
       imageSource={item.station_type.image}
@@ -240,22 +246,5 @@ const styles = StyleSheet.create({
 
   containerFlatList: {
     flex: 1,
-  },
-
-  item: {
-    backgroundColor: colors.white,
-    padding: 20,
-    marginVertical: 8,
-    display: 'flex',
-    flexDirection: 'row',
-    shadowColor: colors.grey,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-    borderRadius: 15,
   },
 });
