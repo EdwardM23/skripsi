@@ -29,7 +29,7 @@ const Navigate = () => {
           <>
             <Stack.Screen name="Home" component={HomePage} />
             <Stack.Screen name="RestauranList" component={RestauranList} />
-            {/* <Stack.Screen name="Testing" component={Testing} /> */}
+            <Stack.Screen name="RestoDetail" component={RestoDetail} />
             {/* <Stack.Screen name="Splash" component={SplashScreen} options={{headerShown: false}} />
           <Stack.Screen name="Eatzy" component={LandingPage} options={{headerShown: false}} />
           <Stack.Screen name="Register" component={SignUp} options={{headerShown: false}}/>

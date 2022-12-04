@@ -149,7 +149,7 @@ const HomePage = ({route, navigation}) => {
   const renderItem = ({item}) => (
     <Item
       itemPress={() =>
-        navigation.push('RestauranList', {
+        navigation.navigate('RestauranList', {
           stationId: item.id,
         })
       }

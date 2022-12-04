@@ -19,7 +19,9 @@ import Star from '../../images/star.png';
 import Like from '../../images/like.png';
 import Unlike from '../../images/unlike.png';
 
-const RestoDetail = () => {
+const RestoDetail = ({route, navigation}) => {
+  console.log(route.params.passDetailResto);
+  const detailInfo = route.params.passDetailResto;
   return (
     <View>
       <ScrollView vertical={true} style={{height: '90%'}}>
@@ -29,7 +31,7 @@ const RestoDetail = () => {
         <View>
           <ImageBackground
             source={{
-              uri: 'https://b.zmtcdn.com/data/reviews_photos/0de/20127881d1f483945fe2fcf6cab6a0de_1637193371.jpg',
+              uri: detailInfo.imageURL,
             }}
             style={{height: 275}}>
             <View
@@ -52,12 +54,9 @@ const RestoDetail = () => {
 
         {/* Restaurant Description */}
         <View style={[styles.wrapper, {paddingBottom: 20}]}>
-          <TitleComp text="Union Deli" />
+          <TitleComp text={detailInfo.name} />
 
-          <Text style={styles.address}>
-            Grand Indonesia Mall, East Mall, Lantai Ground, Jl. M. H. Thamrin
-            No. 1, Thamrin, Jakarta
-          </Text>
+          <Text style={styles.address}>{detailInfo.address}</Text>
 
           <View style={styles.restaurantInfo}>
             <Image source={imgCuisine} style={{height: 24, width: 24}} />
@@ -73,7 +72,7 @@ const RestoDetail = () => {
 
             <View style={styles.restaurantInfoText}>
               <Text style={styles.infoText1}>Opening Hours</Text>
-              <Text style={styles.infoText2}>Mon-Sun: 11am-9pm</Text>
+              <Text style={styles.infoText2}>{detailInfo.schedule}</Text>
             </View>
           </View>
 
@@ -83,7 +82,7 @@ const RestoDetail = () => {
             <View style={styles.restaurantInfoText}>
               <Text style={styles.infoText1}>Price</Text>
               <Text style={styles.infoText2}>
-                Cost for two - Rp 150.000 (approx.)
+                Rp. {detailInfo.priceRange} (approx.)
               </Text>
             </View>
           </View>

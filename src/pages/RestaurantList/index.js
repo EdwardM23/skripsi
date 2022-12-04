@@ -16,8 +16,15 @@ import {colors} from '../../global/styles';
 import Star from '../../images/star.png';
 import axios from 'axios';
 
-const ItemResto = ({name, schedule, imageUrl, priceRange}) => (
-  <TouchableOpacity style={styles.item}>
+const ItemResto = ({
+  name,
+  schedule,
+  imageUrl,
+  priceRange,
+  walkDist,
+  restoPress,
+}) => (
+  <TouchableOpacity style={styles.item} onPress={restoPress}>
     <View style={{position: 'relative', width: '100%'}}>
       <ImageBackground
         source={{
@@ -49,9 +56,9 @@ const ItemResto = ({name, schedule, imageUrl, priceRange}) => (
             source={{
               uri: 'https://www.iconpacks.net/icons/2/free-location-pointer-icon-2961-thumb.png',
             }}
-            style={{width: 9, height: 13, marginRight: 2}}
+            style={{width: 9, height: 13, marginRight: 4}}
           />
-          <Text style={styles.distanceFont}>12 KM</Text>
+          <Text style={styles.distanceFont}>{walkDist} m</Text>
         </View>
       </View>
       <View style={styles.row}>
@@ -81,10 +88,10 @@ const ItemResto = ({name, schedule, imageUrl, priceRange}) => (
   </TouchableOpacity>
 );
 
-const RestauranList = (route, navigation) => {
-  // console.log(route.route.params.stationId);
+const RestauranList = ({route, navigation}) => {
+  console.log('Hasil Route', route.params);
 
-  const stationId = route.route.params.stationId;
+  const stationId = route.params.stationId;
   const [data, setData] = useState('');
   const [isLoading, setLoading] = useState(true);
 
@@ -118,6 +125,12 @@ const RestauranList = (route, navigation) => {
       schedule={item.schedule}
       imageUrl={item.imageURL}
       priceRange={item.priceRange}
+      walkDist={item.restaurant_detail.walkDistance}
+      restoPress={() =>
+        navigation.navigate('RestoDetail', {
+          passDetailResto: item,
+        })
+      }
     />
   );
 
