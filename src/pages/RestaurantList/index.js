@@ -105,7 +105,8 @@ const RestauranList = ({route, navigation}) => {
       const res = await axios.get(
         'http://eatzyapp.herokuapp.com/restaurant/nearest/' + stationId,
       );
-      const response = res.data.rows[0].restaurants;
+      console.log(res.data[0].restaurants);
+      const response = res.data[0].restaurants;
       setData(response);
       console.log(response);
     } catch (error) {

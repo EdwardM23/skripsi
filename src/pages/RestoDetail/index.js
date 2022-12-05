@@ -64,7 +64,15 @@ const RestoDetail = ({route, navigation}) => {
 
             <View style={styles.restaurantInfoText}>
               <Text style={styles.infoText1}>Cuisine</Text>
-              <Text style={styles.infoText2}>Western</Text>
+              <Text style={styles.infoText2}>
+                {detailInfo.categories.map(function (item, i, categories) {
+                  if (categories.length === i + 1) {
+                    return item['name'];
+                  } else {
+                    return item['name'] + ', ';
+                  }
+                })}
+              </Text>
             </View>
           </View>
 
