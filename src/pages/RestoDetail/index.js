@@ -1,6 +1,7 @@
 import {
   Image,
   ImageBackground,
+  Linking,
   ScrollView,
   StyleSheet,
   Text,
@@ -159,11 +160,25 @@ const RestoDetail = ({route, navigation}) => {
       </ScrollView>
       {/* Menu & Direction */}
       <View style={styles.footer}>
-        <TouchableOpacity style={styles.menuButton}>
+        <TouchableOpacity
+          style={styles.menuButton}
+          onPress={() => {
+            navigation.navigate('RestoMenu', {
+              passMenu: detailInfo.menuURL,
+            });
+          }}>
           <Text style={styles.menuText}>Menu</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.directionButton}>
+        <TouchableOpacity
+          style={styles.directionButton}
+          onPress={() => {
+            Linking.openURL(
+              // 'https://www.google.com/maps/search/?api=1&query=-6.1961207,106.8211564',
+              'https://www.google.com/maps/search/?api=1&query=' +
+                encodeURI(detailInfo.name + ' ' + detailInfo.address),
+            );
+          }}>
           <Text style={styles.directionText}>Direction</Text>
         </TouchableOpacity>
       </View>

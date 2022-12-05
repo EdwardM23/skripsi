@@ -2,9 +2,10 @@ import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import Pdf from 'react-native-pdf';
 
-const RestoMenu = () => {
+const RestoMenu = ({route, navigation}) => {
+  console.log('Resto Menu', route.params.passMenu);
   const source = {
-    uri: 'https://res.cloudinary.com/demo/image/upload/example_pdf.pdf',
+    uri: route.params.passMenu,
     cache: true,
   };
   return (
