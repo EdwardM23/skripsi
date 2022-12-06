@@ -12,7 +12,53 @@ import Profile from '../../images/profile.png';
 import Star from '../../images/star.png';
 import {colors} from '../../global/styles';
 
-const ReviewCard = ({review, rating, imageUrl, reviewTime, name}) => (
+// const ReviewCard = ({review, rating, imageUrl, reviewTime, name}) => (
+//   <View style={styles.item}>
+//     <View style={styles.cardHeader}>
+//       <View style={styles.restaurantInfo}>
+//         <Image
+//           source={Profile}
+//           style={{height: 35, width: 35, borderRadius: 35}}
+//         />
+
+//         <View style={styles.restaurantInfoText}>
+//           <Text style={styles.reviewText1}>{name}</Text>
+
+//           <View style={{flexDirection: 'row'}}>
+//             <Text style={styles.reviewText2}>{reviewTime}</Text>
+//           </View>
+//         </View>
+//       </View>
+
+//       <View style={styles.reviewRate}>
+//         <Image source={Star} style={{height: 15, width: 15}} />
+//         <Text style={styles.ratingText}>{rating}</Text>
+//       </View>
+//     </View>
+
+//     <View
+//       style={{
+//         flexDirection: 'row',
+//         justifyContent: 'space-between',
+//         marginTop: 10,
+//       }}>
+//       <Text style={styles.description}>{review}</Text>
+
+//       {imageUrl == '' ? (
+//         <></>
+//       ) : (
+//         <Image
+//           source={{
+//             uri: imageUrl,
+//           }}
+//           style={{width: '30%', height: 100, borderRadius: 15}}
+//         />
+//       )}
+//     </View>
+//   </View>
+// );
+
+const ReviewCard = () => (
   <View style={styles.item}>
     <View style={styles.cardHeader}>
       <View style={styles.restaurantInfo}>
@@ -22,17 +68,17 @@ const ReviewCard = ({review, rating, imageUrl, reviewTime, name}) => (
         />
 
         <View style={styles.restaurantInfoText}>
-          <Text style={styles.reviewText1}>{name}</Text>
+          <Text style={styles.reviewText1}>Matthew</Text>
 
           <View style={{flexDirection: 'row'}}>
-            <Text style={styles.reviewText2}>{reviewTime}</Text>
+            <Text style={styles.reviewText2}>ABCDEFG</Text>
           </View>
         </View>
       </View>
 
       <View style={styles.reviewRate}>
         <Image source={Star} style={{height: 15, width: 15}} />
-        <Text style={styles.ratingText}>{rating}</Text>
+        <Text style={styles.ratingText}>3.6</Text>
       </View>
     </View>
 
@@ -42,18 +88,14 @@ const ReviewCard = ({review, rating, imageUrl, reviewTime, name}) => (
         justifyContent: 'space-between',
         marginTop: 10,
       }}>
-      <Text style={styles.description}>{review}</Text>
+      <Text style={styles.description}>Makanannya enak</Text>
 
-      {imageUrl == '' ? (
-        <></>
-      ) : (
-        <Image
-          source={{
-            uri: imageUrl,
-          }}
-          style={{width: '30%', height: 100, borderRadius: 15}}
-        />
-      )}
+      <Image
+        source={{
+          uri: 'http://res.cloudinary.com/dj4qeraf0/image/upload/v1670341913/review/aextgxhw7pxqcnv8trdf.png',
+        }}
+        style={{width: '30%', height: 100, borderRadius: 15}}
+      />
     </View>
   </View>
 );
@@ -94,39 +136,47 @@ const AllReviews = ({route, navigation}) => {
   );
 
   return (
-    <View>
-      <View style={styles.wrapper}>
-        <View style={styles.containerFlatList}>
-          <ReviewCard
+    <View
+      style={{
+        flex: 1,
+        padding: 20,
+        display: 'flex',
+        height: '100%',
+        backgroundColor: '#ffffff',
+      }}>
+      {/* <View> */}
+      {/* <View style={styles.wrapper}>
+        <View style={styles.containerFlatList}> */}
+      {/* <ReviewCard
             review={'TESTING'}
             rating={'TESTING'}
             imageUrl={''}
             reviewTime={'TESTING'}
             name={'TESTING'}
-          />
-          {/* {data == '' ? <Text>There is no comment yet</Text> : <View></View>}
-            {isLoading ? (
-              <ActivityIndicator size="large" style={{marginTop: 20}} />
-            ) : (
-              <FlatList
-                data={data}
-                renderItem={({item}) => (
-                  <View
-                    style={{
-                      backgroundColor: '#f9c2ff',
-                      padding: 20,
-                      marginVertical: 8,
-                      display: 'flex',
-                      flexDirection: 'row',
-                    }}>
-                    <Text>{item.username}</Text>
-                  </View>
-                )}
-                keyExtractor={({id}, index) => id}
-              />
-            )} */}
-        </View>
-      </View>
+          /> */}
+      {/* {data == '' ? <Text>There is no comment yet</Text> : <View></View>} */}
+      {isLoading ? (
+        <ActivityIndicator size="large" style={{marginTop: 20}} />
+      ) : (
+        <FlatList
+          data={data}
+          renderItem={({item}) => (
+            <View
+              style={{
+                backgroundColor: '#f9c2ff',
+                padding: 20,
+                marginVertical: 8,
+                display: 'flex',
+                flexDirection: 'row',
+              }}>
+              <Text>{item.review}</Text>
+            </View>
+          )}
+          keyExtractor={({review}, index) => review}
+        />
+      )}
+      {/* </View>
+      </View> */}
     </View>
   );
 };
