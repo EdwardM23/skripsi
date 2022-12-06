@@ -16,6 +16,7 @@ import RestoMenu from './pages/RestoMenu';
 import Filter from './pages/Filter';
 import {AuthContext} from './global/AuthContext';
 import Testing from './pages/TESTINGAJA';
+import AllReviews from './pages/AllReview';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,20 +31,18 @@ const Navigate = () => {
             <Stack.Screen name="Home" component={HomePage} />
             <Stack.Screen name="RestauranList" component={RestauranList} />
             <Stack.Screen name="RestoDetail" component={RestoDetail} />
-            <Stack.Screen name="RestoMenu" component={RestoMenu} />
+            <Stack.Screen name="AllReviews" component={AllReviews} />
             {/* <Stack.Screen name="Splash" component={SplashScreen} options={{headerShown: false}} />
-          <Stack.Screen name="Eatzy" component={LandingPage} options={{headerShown: false}} />
-          <Stack.Screen name="Register" component={SignUp} options={{headerShown: false}}/>
-          <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/> */}
+            <Stack.Screen name="Eatzy" component={LandingPage} options={{headerShown: false}} />
+            <Stack.Screen name="Register" component={SignUp} options={{headerShown: false}}/>
+            <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/> */}
           </>
         ) : (
           <>
-            <Stack.Screen name="Home" component={HomePage} />
-            {/* <Stack.Screen name="RestoMenu" component={RestoMenu} /> */}
-            {/* <Stack.Screen name="SignUp" component={SignUp} /> */}
-            {/* <Stack.Screen name="Login" component={Login} /> */}
-            {/* <Stack.Screen name="RestauranList" component={RestauranList} /> */}
-            {/* <Stack.Screen name="RestoDetail" component={RestoDetail} /> */}
+            {/* <Stack.Screen name="Home" component={HomePage} />
+            <Stack.Screen name="RestauranList" component={RestauranList} />
+            <Stack.Screen name="RestoDetail" component={RestoDetail} />
+            <Stack.Screen name="RestoMenu" component={RestoMenu} /> */}
           </>
         )}
       </Stack.Navigator>

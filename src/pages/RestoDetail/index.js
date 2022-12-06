@@ -1,14 +1,17 @@
 import {
+  ActivityIndicator,
+  FlatList,
   Image,
   ImageBackground,
   Linking,
+  LogBox,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import TitleComp from '../../component/TitleComp';
 import imgPrice from '../../images/Price.png';
 import imgCuisine from '../../images/Cuisine.png';
@@ -19,10 +22,96 @@ import Profile from '../../images/profile.png';
 import Star from '../../images/star.png';
 import Like from '../../images/like.png';
 import Unlike from '../../images/unlike.png';
+import {AuthContext} from '../../global/AuthContext';
+import axios from 'axios';
+
+const ReviewCard = ({review, rating, imageUrl, reviewTime, name}) => (
+  <View style={styles.item}>
+    <View style={styles.cardHeader}>
+      <View style={styles.restaurantInfo}>
+        <Image
+          source={Profile}
+          style={{height: 35, width: 35, borderRadius: 35}}
+        />
+
+        <View style={styles.restaurantInfoText}>
+          <Text style={styles.reviewText1}>{name}</Text>
+
+          <View style={{flexDirection: 'row'}}>
+            <Text style={styles.reviewText2}>{reviewTime}</Text>
+          </View>
+        </View>
+      </View>
+
+      <View style={styles.reviewRate}>
+        <Image source={Star} style={{height: 15, width: 15}} />
+        <Text style={styles.ratingText}>{rating}</Text>
+      </View>
+    </View>
+
+    <View
+      style={{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 10,
+      }}>
+      <Text style={styles.description}>{review}</Text>
+
+      {imageUrl == '' ? (
+        <></>
+      ) : (
+        <Image
+          source={{
+            uri: imageUrl,
+          }}
+          style={{width: '30%', height: 100, borderRadius: 15}}
+        />
+      )}
+    </View>
+  </View>
+);
 
 const RestoDetail = ({route, navigation}) => {
   console.log(route.params.passDetailResto);
   const detailInfo = route.params.passDetailResto;
+  const [data, setData] = useState('');
+  const {userDetails} = useContext(AuthContext);
+  const [isLoading, setLoading] = useState(true);
+  console.log('Resto ID', detailInfo.id);
+
+  const getData = async () => {
+    try {
+      const res = await axios.get(
+        'https://eatzyapp.herokuapp.com/review/top/' + detailInfo.id,
+      );
+      console.log(res.data);
+      console.log('Data response', res.data);
+      setData(res.data);
+      console.log('Data', data);
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const renderItem = ({item}) => (
+    <ReviewCard
+      review={item.review}
+      rating={item.rating}
+      imageUrl={item.imageURL}
+      reviewTime={item.createdAt}
+      name={item.username}
+    />
+  );
+  // const renderItem = ({item}) => {
+  //   console.log(item.review);
+  // };
+
   return (
     <View>
       <ScrollView vertical={true} style={{height: '90%'}}>
@@ -109,59 +198,37 @@ const RestoDetail = ({route, navigation}) => {
           {/* Review Card */}
           <View>
             <View style={styles.containerFlatList}>
-              <View style={styles.item}>
-                <View style={styles.cardHeader}>
-                  <View style={styles.restaurantInfo}>
-                    <Image
-                      source={Profile}
-                      style={{height: 35, width: 35, borderRadius: 35}}
-                    />
-
-                    <View style={styles.restaurantInfoText}>
-                      <Text style={styles.reviewText1}>Matthew</Text>
-
-                      <View style={{flexDirection: 'row'}}>
-                        <Text style={styles.reviewText2}>
-                          18 September 2022 06.45 PM
-                        </Text>
-                      </View>
-                    </View>
-                  </View>
-
-                  <View style={styles.reviewRate}>
-                    <Image source={Star} style={{height: 15, width: 15}} />
-                    <Text style={styles.ratingText}>3.5</Text>
-                  </View>
-                </View>
-
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginTop: 10,
-                  }}>
-                  <Text style={styles.description}>
-                    Makanan enak, tempat cozy, mantep! Lain kali bakal balik
-                    lagi ke sini. Makanan enak, tempat cozy, mantep! Lain kali
-                    bakal balik lagi ke sini. Makanan enak, tempat cozy, mantep!
-                    Lain kali bakal balik lagi ke sini. Makanan enak, tempat
-                    cozy, mantep! Lain kali bakal balik lagi ke sini.
-                  </Text>
-
-                  <Image
-                    source={{
-                      uri: 'https://b.zmtcdn.com/data/reviews_photos/0de/20127881d1f483945fe2fcf6cab6a0de_1637193371.jpg',
-                    }}
-                    style={{width: '30%', height: 100, borderRadius: 15}}
-                  />
-                </View>
-              </View>
+              {data == '' ? (
+                <Text>There is no comment yet</Text>
+              ) : (
+                <View></View>
+              )}
+              {isLoading ? (
+                <ActivityIndicator size="large" style={{marginTop: 20}} />
+              ) : (
+                <FlatList
+                  data={data}
+                  renderItem={renderItem}
+                  keyExtractor={({id}, index) => id}
+                />
+                // {data == '' ? (<Text>There is no review yet</Text>) : (               <FlatList
+                //   data={data}
+                //   renderItem={renderItem}
+                //   keyExtractor={({id}, index) => id}
+                // />)}
+              )}
+              {/* <Review /> */}
             </View>
           </View>
 
           {/* See All Reviews */}
 
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('AllReviews', {
+                passRestoId: detailInfo.id,
+              })
+            }>
             <Text style={styles.seeAllReviews}>See All Reviews</Text>
           </TouchableOpacity>
         </View>
