@@ -12,53 +12,7 @@ import Profile from '../../images/profile.png';
 import Star from '../../images/star.png';
 import {colors} from '../../global/styles';
 
-// const ReviewCard = ({review, rating, imageUrl, reviewTime, name}) => (
-//   <View style={styles.item}>
-//     <View style={styles.cardHeader}>
-//       <View style={styles.restaurantInfo}>
-//         <Image
-//           source={Profile}
-//           style={{height: 35, width: 35, borderRadius: 35}}
-//         />
-
-//         <View style={styles.restaurantInfoText}>
-//           <Text style={styles.reviewText1}>{name}</Text>
-
-//           <View style={{flexDirection: 'row'}}>
-//             <Text style={styles.reviewText2}>{reviewTime}</Text>
-//           </View>
-//         </View>
-//       </View>
-
-//       <View style={styles.reviewRate}>
-//         <Image source={Star} style={{height: 15, width: 15}} />
-//         <Text style={styles.ratingText}>{rating}</Text>
-//       </View>
-//     </View>
-
-//     <View
-//       style={{
-//         flexDirection: 'row',
-//         justifyContent: 'space-between',
-//         marginTop: 10,
-//       }}>
-//       <Text style={styles.description}>{review}</Text>
-
-//       {imageUrl == '' ? (
-//         <></>
-//       ) : (
-//         <Image
-//           source={{
-//             uri: imageUrl,
-//           }}
-//           style={{width: '30%', height: 100, borderRadius: 15}}
-//         />
-//       )}
-//     </View>
-//   </View>
-// );
-
-const ReviewCard = () => (
+const ReviewCard = ({review, rating, imageUrl, reviewTime, name}) => (
   <View style={styles.item}>
     <View style={styles.cardHeader}>
       <View style={styles.restaurantInfo}>
@@ -68,17 +22,17 @@ const ReviewCard = () => (
         />
 
         <View style={styles.restaurantInfoText}>
-          <Text style={styles.reviewText1}>Matthew</Text>
+          <Text style={styles.reviewText1}>{name}</Text>
 
           <View style={{flexDirection: 'row'}}>
-            <Text style={styles.reviewText2}>ABCDEFG</Text>
+            <Text style={styles.reviewText2}>{reviewTime}</Text>
           </View>
         </View>
       </View>
 
       <View style={styles.reviewRate}>
         <Image source={Star} style={{height: 15, width: 15}} />
-        <Text style={styles.ratingText}>3.6</Text>
+        <Text style={styles.ratingText}>{rating}</Text>
       </View>
     </View>
 
@@ -88,14 +42,18 @@ const ReviewCard = () => (
         justifyContent: 'space-between',
         marginTop: 10,
       }}>
-      <Text style={styles.description}>Makanannya enak</Text>
+      <Text style={styles.description}>{review}</Text>
 
-      <Image
-        source={{
-          uri: 'http://res.cloudinary.com/dj4qeraf0/image/upload/v1670341913/review/aextgxhw7pxqcnv8trdf.png',
-        }}
-        style={{width: '30%', height: 100, borderRadius: 15}}
-      />
+      {imageUrl == '' ? (
+        <></>
+      ) : (
+        <Image
+          source={{
+            uri: imageUrl,
+          }}
+          style={{width: '30%', height: 100, borderRadius: 15}}
+        />
+      )}
     </View>
   </View>
 );
@@ -158,20 +116,25 @@ const AllReviews = ({route, navigation}) => {
       {isLoading ? (
         <ActivityIndicator size="large" style={{marginTop: 20}} />
       ) : (
+        // <FlatList
+        //   data={data}
+        //   renderItem={({item}) => (
+        //     <View
+        //       style={{
+        //         backgroundColor: '#f9c2ff',
+        //         padding: 20,
+        //         marginVertical: 8,
+        //         display: 'flex',
+        //         flexDirection: 'row',
+        //       }}>
+        //       <Text>{item.review}</Text>
+        //     </View>
+        //   )}
+        //   keyExtractor={({review}, index) => review}
+        // />
         <FlatList
           data={data}
-          renderItem={({item}) => (
-            <View
-              style={{
-                backgroundColor: '#f9c2ff',
-                padding: 20,
-                marginVertical: 8,
-                display: 'flex',
-                flexDirection: 'row',
-              }}>
-              <Text>{item.review}</Text>
-            </View>
-          )}
+          renderItem={renderItem}
           keyExtractor={({review}, index) => review}
         />
       )}

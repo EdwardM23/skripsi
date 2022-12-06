@@ -97,10 +97,7 @@ const RestauranList = ({route, navigation}) => {
 
   const getData = async Id => {
     console.log(Id);
-    // const ApiLink = 'http://eatzyapp.herokuapp.com/restaurant/nearest/';
-    // const ApiLinkParam =
-    //   'http://eatzyapp.herokuapp.com/restaurant/nearest/' + stationId;
-    // console.log(ApiLinkParam);
+
     try {
       const res = await axios.get(
         'http://eatzyapp.herokuapp.com/restaurant/nearest/' + stationId,
