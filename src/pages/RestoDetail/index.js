@@ -1,5 +1,6 @@
 import {
   ActivityIndicator,
+  Alert,
   FlatList,
   Image,
   ImageBackground,
@@ -95,6 +96,30 @@ const RestoDetail = ({route, navigation}) => {
     }
   };
 
+  const addWishlist = async (token, restaurantId) => {
+    try {
+      const res = await axios
+        .post('https://eatzyapp.herokuapp.com/wishlist', {
+          token: token,
+          restaurantId: restaurantId,
+        })
+        .then(result => {
+          console.log(result.data);
+          alert(result.data.msg);
+        })
+        .catch(function (error) {
+          console.log('Error', error);
+          console.log('Response', error.response);
+          console.log('Message', error.message);
+          alert('This restaurant already in your wishlist');
+        });
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     getData();
   }, []);
@@ -135,7 +160,9 @@ const RestoDetail = ({route, navigation}) => {
                 <Image source={Star} style={{height: 20, width: 20}} />
                 <Text style={styles.ratingText}>3.5</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.saveContainer}>
+              <TouchableOpacity
+                style={styles.saveContainer}
+                onPress={() => addWishlist(userDetails.token, detailInfo.id)}>
                 <Image source={Like} style={{height: 20, width: 20}} />
               </TouchableOpacity>
             </View>

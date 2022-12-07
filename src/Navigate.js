@@ -28,21 +28,34 @@ const Navigate = () => {
       <Stack.Navigator>
         {isLoggedIn == false ? (
           <>
-            <Stack.Screen name="Home" component={HomePage} />
-            <Stack.Screen name="RestauranList" component={RestauranList} />
-            <Stack.Screen name="RestoDetail" component={RestoDetail} />
-            <Stack.Screen name="AllReviews" component={AllReviews} />
-            {/* <Stack.Screen name="Splash" component={SplashScreen} options={{headerShown: false}} />
-            <Stack.Screen name="Eatzy" component={LandingPage} options={{headerShown: false}} />
-            <Stack.Screen name="Register" component={SignUp} options={{headerShown: false}}/>
-            <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/> */}
+            <Stack.Screen
+              name="Splash"
+              component={SplashScreen}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="Eatzy"
+              component={LandingPage}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="Register"
+              component={SignUp}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              options={{headerShown: false}}
+            />
           </>
         ) : (
           <>
-            {/* <Stack.Screen name="Home" component={HomePage} />
+            <Stack.Screen name="Home" component={HomePage} />
             <Stack.Screen name="RestauranList" component={RestauranList} />
             <Stack.Screen name="RestoDetail" component={RestoDetail} />
-            <Stack.Screen name="RestoMenu" component={RestoMenu} /> */}
+            <Stack.Screen name="RestoMenu" component={RestoMenu} />
+            <Stack.Screen name="AllReviews" component={AllReviews} />
           </>
         )}
       </Stack.Navigator>
