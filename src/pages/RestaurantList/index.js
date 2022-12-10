@@ -100,7 +100,7 @@ const RestauranList = ({route, navigation}) => {
     console.log(Id);
 
     try {
-      const res = await axios.get(
+      const res = await axios.post(
         'http://eatzyapp.herokuapp.com/restaurant/nearest/' + stationId,
       );
       console.log(res.data[0].restaurants);
@@ -149,7 +149,12 @@ const RestauranList = ({route, navigation}) => {
 
       <View style={styles.wrapper}>
         <View style={styles.containerList}>
-          <Text style={styles.filterFont}>FILTER</Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Filter');
+            }}>
+            <Text style={styles.filterFont}>FILTER</Text>
+          </TouchableOpacity>
 
           {/* Item Resto */}
           <View style={styles.containerFlatList}>

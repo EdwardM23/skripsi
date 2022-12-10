@@ -71,7 +71,7 @@ const ItemResto = ({
                 ) : (
                   <>
                     <Text style={styles.ratingText}>
-                      {parseFloat(rating.averageRating).toFixed(2)}
+                      {parseFloat(rating.averageRating).toFixed(1)}
                     </Text>
                   </>
                 )}

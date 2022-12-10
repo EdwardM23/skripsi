@@ -14,7 +14,7 @@ import Button from '../../component/Button';
 import TitleComp from '../../component/TitleComp';
 import FormInput from '../../component/FormInput';
 import axios from 'axios';
-import { AuthContext } from '../../global/AuthContext';
+import {AuthContext} from '../../global/AuthContext';
 
 // Valdiation
 const isValidObjField = obj => {

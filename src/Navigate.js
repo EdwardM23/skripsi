@@ -32,6 +32,7 @@ const Navigate = () => {
             <Stack.Screen name="Profile" component={Profile} />
             <Stack.Screen name="RestauranList" component={RestauranList} />
             <Stack.Screen name="RestoDetail" component={RestoDetail} />
+            <Stack.Screen name="Filter" component={Filter} />
             {/* <Stack.Screen
               name="Splash"
               component={SplashScreen}

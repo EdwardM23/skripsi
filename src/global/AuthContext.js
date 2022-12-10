@@ -6,6 +6,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({children}) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userDetails, setUserDetails] = useState({});
+  const [filter, setFilter] = useState([]);
 
   const handleLogin = async (token, username, email) => {
     setIsLoggedIn(true);
@@ -50,6 +51,8 @@ export const AuthProvider = ({children}) => {
       value={{
         isLoggedIn,
         userDetails,
+        filter,
+        setFilter,
         handleLogin,
         handleLogout,
       }}>
