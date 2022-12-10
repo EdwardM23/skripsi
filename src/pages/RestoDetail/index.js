@@ -26,6 +26,10 @@ import Unlike from '../../images/unlike.png';
 import {AuthContext} from '../../global/AuthContext';
 import axios from 'axios';
 
+LogBox.ignoreLogs([
+  'VirtualizedLists should never be nested inside plain ScrollViews with the same orientation because it can break windowing and other functionality - use another VirtualizedList-backed container instead.',
+]);
+
 const ReviewCard = ({review, rating, imageUrl, reviewTime, name}) => (
   <View style={styles.item}>
     <View style={styles.cardHeader}>

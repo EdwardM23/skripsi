@@ -163,7 +163,9 @@ const HomePage = ({route, navigation}) => {
     <View style={styles.wrapper}>
       <View style={styles.header}>
         <Text>Hello {userDetails.username}</Text>
-        <Text>Profile</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+          <Text>Profile</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.containerCover}>

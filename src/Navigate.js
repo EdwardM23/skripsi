@@ -28,7 +28,11 @@ const Navigate = () => {
       <Stack.Navigator>
         {isLoggedIn == false ? (
           <>
-            <Stack.Screen
+            <Stack.Screen name="Home" component={HomePage} />
+            <Stack.Screen name="Profile" component={Profile} />
+            <Stack.Screen name="RestauranList" component={RestauranList} />
+            <Stack.Screen name="RestoDetail" component={RestoDetail} />
+            {/* <Stack.Screen
               name="Splash"
               component={SplashScreen}
               options={{headerShown: false}}
@@ -47,11 +51,12 @@ const Navigate = () => {
               name="Login"
               component={Login}
               options={{headerShown: false}}
-            />
+            /> */}
           </>
         ) : (
           <>
             <Stack.Screen name="Home" component={HomePage} />
+            <Stack.Screen name="Profile" component={Profile} />
             <Stack.Screen name="RestauranList" component={RestauranList} />
             <Stack.Screen name="RestoDetail" component={RestoDetail} />
             <Stack.Screen name="RestoMenu" component={RestoMenu} />

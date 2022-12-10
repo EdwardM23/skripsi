@@ -14,79 +14,80 @@ import MapView, {PROVIDER_GOOGLE} from 'react-native-maps'; // remove PROVIDER_G
 import Header from '../../component/Header';
 import {colors} from '../../global/styles';
 import Star from '../../images/star.png';
+import ItemResto from '../../component/ItemResto';
 import axios from 'axios';
 
-const ItemResto = ({
-  name,
-  schedule,
-  imageUrl,
-  priceRange,
-  walkDist,
-  restoPress,
-}) => (
-  <TouchableOpacity style={styles.item} onPress={restoPress}>
-    <View style={{position: 'relative', width: '100%'}}>
-      <ImageBackground
-        source={{
-          uri: imageUrl,
-        }}
-        style={{height: 150, borderRadius: 10}}>
-        <View
-          style={{
-            marginLeft: 10,
-            marginRight: 10,
-            marginTop: 10,
-            alignItems: 'flex-end',
-          }}>
-          <View style={styles.ratingContainer}>
-            <Image source={Star} style={{height: 15, width: 15}} />
-            <Text style={styles.ratingText}>3.5</Text>
-            <Text style={styles.count}>(15)</Text>
-          </View>
-        </View>
-      </ImageBackground>
-    </View>
-    <View style={{width: '100%', marginTop: 5}}>
-      <View style={styles.row}>
-        <View style={{textAlign: 'right'}}>
-          <Text style={styles.restoFont}>{name}</Text>
-        </View>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Image
-            source={{
-              uri: 'https://www.iconpacks.net/icons/2/free-location-pointer-icon-2961-thumb.png',
-            }}
-            style={{width: 9, height: 13, marginRight: 4}}
-          />
-          <Text style={styles.distanceFont}>{walkDist} m</Text>
-        </View>
-      </View>
-      <View style={styles.row}>
-        <View>
-          <Text
-            style={{
-              fontSize: 14,
-              color: colors.grey,
-              fontWeight: '400',
-            }}>
-            {schedule}
-            {/* Indonesia <Text style={styles.status}>Status</Text> */}
-          </Text>
-        </View>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Text
-            style={{
-              fontSize: 14,
-              color: colors.grey,
-              fontWeight: '400',
-            }}>
-            {priceRange}
-          </Text>
-        </View>
-      </View>
-    </View>
-  </TouchableOpacity>
-);
+// const ItemResto = ({
+//   name,
+//   schedule,
+//   imageUrl,
+//   priceRange,
+//   walkDist,
+//   restoPress,
+// }) => (
+//   <TouchableOpacity style={styles.item} onPress={restoPress}>
+//     <View style={{position: 'relative', width: '100%'}}>
+//       <ImageBackground
+//         source={{
+//           uri: imageUrl,
+//         }}
+//         style={{height: 150, borderRadius: 10}}>
+//         <View
+//           style={{
+//             marginLeft: 10,
+//             marginRight: 10,
+//             marginTop: 10,
+//             alignItems: 'flex-end',
+//           }}>
+//           <View style={styles.ratingContainer}>
+//             <Image source={Star} style={{height: 15, width: 15}} />
+//             <Text style={styles.ratingText}>3.5</Text>
+//             <Text style={styles.count}>(15)</Text>
+//           </View>
+//         </View>
+//       </ImageBackground>
+//     </View>
+//     <View style={{width: '100%', marginTop: 5}}>
+//       <View style={styles.row}>
+//         <View style={{textAlign: 'right'}}>
+//           <Text style={styles.restoFont}>{name}</Text>
+//         </View>
+//         <View style={{flexDirection: 'row', alignItems: 'center'}}>
+//           <Image
+//             source={{
+//               uri: 'https://www.iconpacks.net/icons/2/free-location-pointer-icon-2961-thumb.png',
+//             }}
+//             style={{width: 9, height: 13, marginRight: 4}}
+//           />
+//           <Text style={styles.distanceFont}>{walkDist} m</Text>
+//         </View>
+//       </View>
+//       <View style={styles.row}>
+//         <View>
+//           <Text
+//             style={{
+//               fontSize: 14,
+//               color: colors.grey,
+//               fontWeight: '400',
+//             }}>
+//             {schedule}
+//             {/* Indonesia <Text style={styles.status}>Status</Text> */}
+//           </Text>
+//         </View>
+//         <View style={{flexDirection: 'row', alignItems: 'center'}}>
+//           <Text
+//             style={{
+//               fontSize: 14,
+//               color: colors.grey,
+//               fontWeight: '400',
+//             }}>
+//             {priceRange}
+//           </Text>
+//         </View>
+//       </View>
+//     </View>
+//   </TouchableOpacity>
+// );
 
 const RestauranList = ({route, navigation}) => {
   console.log('Hasil Route', route.params);
@@ -119,6 +120,7 @@ const RestauranList = ({route, navigation}) => {
 
   const renderItem = ({item}) => (
     <ItemResto
+      restoId={item.id}
       name={item.name}
       schedule={item.schedule}
       imageUrl={item.imageURL}

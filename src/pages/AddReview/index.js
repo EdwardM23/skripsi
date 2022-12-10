@@ -1,98 +1,118 @@
 import React from 'react';
-import {View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity} from 'react-native'
-import {colors} from "../../global/styles"
-import Header from '../../component/Header'
-import Submit from '../../component/Submit'
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
+import {colors} from '../../global/styles';
+import Header from '../../component/Header';
+import Submit from '../../component/Submit';
 import {Rating} from 'react-native-ratings';
 import {launchImageLibrary} from 'react-native-image-picker';
 import * as ImagePicker from 'react-native-image-picker';
+import Button from '../../component/Button';
 
-export default class AddReview extends React.Component{
-  constructor(props){
+export default class AddReview extends React.Component {
+  constructor(props) {
     super(props);
     this.state = {
-        resourcePath: '',
+      resourcePath: '',
     };
   }
 
+  ratingCompleted(rating) {
+    console.log('Rating is: ' + rating);
+  }
+
   render() {
-    return(
-        <View style = {styles.container}>
-            <Header title = "Add Review"/>
+    return (
+      <View style={styles.container}>
+        {/* <Header title="Add Review" /> */}
 
-            <ScrollView >
-                <View style={{marginLeft: 30, marginTop: 10}}>
-                    {/* Rate Your Experience */}
-                    <View>
-                        <Text style={styles.title}>Rate Your Experience</Text>
-                        <Rating
-                            // showRating
-                            onFinishRating={this.ratingCompleted}
-                            style={{paddingVertical: 10}}
-                        />
-                    </View>
-                    
-                    {/* Write a Review */}
-                    <View style={{marginTop:30}}>
-                        <Text style={styles.title}>Write a Review</Text>
+        <ScrollView style={styles.form}>
+          <View>
+            {/* Rate Your Experience */}
+            <View>
+              <Text style={styles.title}>Rate Your Experience</Text>
+              <Rating
+                ratingCount={5}
+                onFinishRating={this.ratingCompleted}
+                style={{paddingVertical: 10}}
+              />
+            </View>
 
-                        <TextInput
-                            style={styles.textInput}
-                            placeholder = "Tell us more about your experience"
-                            
-                        />
-                    </View>
+            {/* Write a Review */}
+            <View style={{marginTop: 30}}>
+              <Text style={styles.title}>Write a Review</Text>
 
-                    {/* Add Photos */}
-                    <View style={{marginTop:30}}>
-                        <Text style={styles.title}>Add Photos</Text>
+              <TextInput
+                style={styles.textInput}
+                placeholder="Tell us more about your experience"
+              />
+            </View>
 
-                        <Text style={{alignItems:'center'}}>
-                        {this.state.resourcePath.uri}
-                        </Text>
+            {/* Add Photos */}
+            <View style={{marginTop: 30}}>
+              <Text style={styles.title}>Add Photos</Text>
 
-                        <Text>
-                            <TouchableOpacity style={styles.button} 
-                            onPress={()=> 
-                                ImagePicker.launchImageLibrary({
-                                    mediaType: 'photo',
-                                    includeBase64: false,
-                                    maxHeight: 200,
-                                    maxWidth: 200
-                                },
-                                (response) => {
-                                    console.log(response.assets[0].uri);
-                                    this.setState({resourcePath: response.assets[0].uri});
-                                }
-                            )}>
+              <Text style={{alignItems: 'center'}}>
+                {this.state.resourcePath.uri}
+              </Text>
 
-                                <Text style={styles.buttonText}>Select File</Text>
+              <Text>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() =>
+                    ImagePicker.launchImageLibrary(
+                      {
+                        mediaType: 'photo',
+                        includeBase64: false,
+                        maxHeight: 200,
+                        maxWidth: 200,
+                      },
+                      response => {
+                        console.log(response.assets[0].uri);
+                        this.setState({resourcePath: response.assets[0].uri});
+                      },
+                    )
+                  }>
+                  <Text style={styles.buttonText}>Select File</Text>
+                </TouchableOpacity>
+              </Text>
+            </View>
+          </View>
+        </ScrollView>
 
-                            </TouchableOpacity>
-                        </Text>
-                    </View>
-
-                </View>
-            </ScrollView>
-
-            <Submit title = "Submit" type="arrow-left" />
-            
+        {/* <Submit title="Submit" type="arrow-left" /> */}
+        <View style={styles.submit}>
+          <Button btnText="Submit" onBtnPress={() => Alert('error')} />
         </View>
-    )
-}
-  
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
     // flex:1,
-    backgroundColor: colors.white
+    backgroundColor: colors.white,
+    padding: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  form: {
+    height: '90%',
   },
 
   title: {
     color: colors.blue,
     fontSize: 18,
-    fontWeight: '600'
+    fontWeight: '600',
   },
 
   textInput: {
@@ -102,8 +122,9 @@ const styles = StyleSheet.create({
     width: 350,
     height: 150,
     marginTop: 15,
-    textAlignVertical: 'top', 
-    fontSize: 14
+    textAlignVertical: 'top',
+    fontSize: 14,
+    padding: 10,
   },
 
   button: {
@@ -120,12 +141,12 @@ const styles = StyleSheet.create({
   buttonText: {
     textAlign: 'center',
     fontSize: 14,
-    color: colors.grey
+    color: colors.grey,
   },
 
   submit: {
-    flex: 2,
     alignItems: 'center',
     justifyContent: 'center',
+    height: '20%',
   },
-})
+});
