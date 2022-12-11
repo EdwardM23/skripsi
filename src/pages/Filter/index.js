@@ -1,4 +1,12 @@
-import {View, StyleSheet, Text, Image} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  Image,
+  ActivityIndicator,
+  FlatList,
+  ScrollView,
+} from 'react-native';
 import React, {useContext, useEffect, useState} from 'react';
 import Header from '../../component/Header';
 import {colors} from '../../global/styles';
@@ -7,6 +15,7 @@ import {CheckBox} from 'react-native-elements';
 import Button from '../../component/Button';
 import CheckBoxFilter from '../../component/CheckBoxFilter';
 import {AuthContext} from '../../global/AuthContext';
+import axios from 'axios';
 
 const data = [
   {
@@ -18,18 +27,64 @@ const data = [
 ];
 
 const Filter = () => {
+  const {filter, setFilter} = useContext(AuthContext);
+  const [food, setFood] = useState();
+  const [cuisine, setCuisine] = useState();
+  const [isLoadingFood, setLoadingFood] = useState(true);
+  const [isLoadingCuisine, setLoadingCuisine] = useState(true);
   const [check1, setCheck1] = useState(false);
   const [check2, setCheck2] = useState(false);
-  const {filter, setFilter} = useContext(AuthContext);
+
+  const getFoodCategory = async () => {
+    try {
+      const res = await axios.get(
+        'https://eatzyapp.herokuapp.com/category/food',
+      );
+      console.log('Category', res.data);
+      setFood(res.data);
+      // console.log(res.data);
+      // console.log('Data response', res.data);
+      // setData(res.data);
+      // console.log('Data', data);
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      setLoadingFood(false);
+    }
+  };
+
+  const getCuisineCategory = async () => {
+    try {
+      const res = await axios.get(
+        'https://eatzyapp.herokuapp.com/category/cuisine',
+      );
+      console.log('Cuisine', res.data);
+      setCuisine(res.data);
+      // console.log(res.data);
+      // console.log('Data response', res.data);
+      // setData(res.data);
+      // console.log('Data', data);
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      setLoadingCuisine(false);
+    }
+  };
 
   useEffect(() => {
-    setFilter(['inisisasi', 'edo']);
+    setFilter([]);
+    getFoodCategory();
+    getCuisineCategory();
     console.log('Filter : ', filter);
   }, []);
 
+  const renderItem = ({item}) => (
+    <CheckBoxFilter categoryID={item.id} categoryName={item.name} />
+  );
+
   return (
     <View style={styles.container}>
-      <View style={styles.category}>
+      <ScrollView style={styles.category}>
         {/* <Header title="Filter" /> */}
 
         {/* <Text style={styles.title1}>Sort By</Text>
@@ -49,67 +104,37 @@ const Filter = () => {
         {/* <checkBoxFilter /> */}
 
         <View>
-          <CheckBoxFilter />
-          <CheckBox
-            title="Asian"
-            checked={check1}
-            onPress={title => {
-              setCheck1(!check1);
-              if (check1 == true) {
-                console.log('TRUE CLICK');
-              } else {
-                console.log('FALSE CLICK');
-              }
-            }}
-            textStyle={styles.checkBoxText}
-            checkedIcon={
-              <Image
-                source={require('../../images/check.png')}
-                style={{width: 25, height: 25}}
-              />
-            }
-            uncheckedIcon={
-              <Image
-                source={require('../../images/square.png')}
-                style={{width: 25, height: 25}}
-              />
-            }
-            containerStyle={{backgroundColor: colors.white, borderWidth: 0}}
-          />
+          {isLoadingCuisine ? (
+            <ActivityIndicator size="large" style={{marginTop: 20}} />
+          ) : (
+            <FlatList
+              data={cuisine}
+              renderItem={renderItem}
+              keyExtractor={({id}, index) => id}
+            />
+          )}
         </View>
 
         <Text style={styles.title1}>Food</Text>
 
         <View>
-          <Button />
-          <CheckBox
-            title="Bakso"
-            checked={check2}
-            onPress={() => setCheck2(!check2)}
-            textStyle={{
-              fontSize: 18,
-              color: colors.grey,
-              fontWeight: '400',
-              marginLeft: 20,
-            }}
-            checkedIcon={
-              <Image
-                source={require('../../images/check.png')}
-                style={{width: 25, height: 25}}
-              />
-            }
-            uncheckedIcon={
-              <Image
-                source={require('../../images/square.png')}
-                style={{width: 25, height: 25}}
-              />
-            }
-            containerStyle={{backgroundColor: colors.white, borderWidth: 0}}
-          />
+          {isLoadingFood ? (
+            <ActivityIndicator size="large" style={{marginTop: 20}} />
+          ) : (
+            <FlatList
+              data={food}
+              renderItem={renderItem}
+              keyExtractor={({id}, index) => id}
+            />
+          )}
         </View>
-      </View>
+      </ScrollView>
       <View
-        style={{height: '10%', justifyContent: 'center', alignItems: 'center'}}>
+        style={{
+          height: '10%',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
         <Button btnText="Apply" onBtnPress={() => console.log(filter)} />
       </View>
     </View>
@@ -120,17 +145,16 @@ export default Filter;
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
     backgroundColor: colors.white,
   },
   category: {
+    padding: 20,
     height: '90%',
   },
   title1: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#0B59B1',
-    marginTop: 15,
   },
   checkBoxText: {
     fontSize: 18,

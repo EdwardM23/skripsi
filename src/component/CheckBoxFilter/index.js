@@ -4,24 +4,24 @@ import {colors} from '../../global/styles';
 import {CheckBox} from 'react-native-elements';
 import {AuthContext} from '../../global/AuthContext';
 
-const CheckBoxFilter = () => {
+const CheckBoxFilter = ({categoryID, categoryName}) => {
   const [check, setCheck] = useState(false);
   const {filter, setFilter} = useContext(AuthContext);
 
   return (
     <View>
       <CheckBox
-        title="Asian"
+        title={categoryName}
         checked={check}
         onPress={() => {
           setCheck(!check);
           if (check == true) {
             console.log('After Click : ', filter);
-            console.log(filter.indexOf('Asian'));
-            filter.splice(filter.indexOf('Asian'), 1);
+            console.log(filter.indexOf(categoryID));
+            filter.splice(filter.indexOf(categoryID), 1);
           } else if (check == false) {
             console.log('False Click : ', filter);
-            setFilter(filter => [...filter, 'Asian', 'Bamabng']);
+            setFilter(filter => [...filter, categoryID]);
           }
         }}
         textStyle={styles.checkBoxText}
