@@ -43,7 +43,9 @@ const ReviewCard = ({review, rating, imageUrl, reviewTime, name}) => (
           <Text style={styles.reviewText1}>{name}</Text>
 
           <View style={{flexDirection: 'row'}}>
-            <Text style={styles.reviewText2}>{reviewTime}</Text>
+            <Text style={styles.reviewText2}>
+              {reviewTime.replace(/T|Z/g, ' ')}
+            </Text>
           </View>
         </View>
       </View>
@@ -119,13 +121,35 @@ const RestoDetail = ({route, navigation}) => {
         });
     } catch (error) {
       alert(error.message);
-    } finally {
-      setLoading(false);
+    }
+  };
+
+  const addHistory = async (token, restaurantId) => {
+    console.log('History : ', token, restaurantId);
+    try {
+      const res = await axios
+        .post('https://eatzyapp.herokuapp.com/history', {
+          token: token,
+          restaurantId: restaurantId,
+        })
+        .then(result => {
+          console.log(result.data);
+          // alert(result.data.msg);
+        })
+        .catch(function (error) {
+          console.log('Error', error);
+          console.log('Response', error.response);
+          console.log('Message', error.message);
+          alert('This restaurant already in your wishlist');
+        });
+    } catch (error) {
+      alert(error.message);
     }
   };
 
   useEffect(() => {
     getData();
+    addHistory(userDetails.token, detailInfo.id);
   }, []);
 
   const renderItem = ({item}) => (

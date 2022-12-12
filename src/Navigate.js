@@ -17,6 +17,8 @@ import Filter from './pages/Filter';
 import {AuthContext} from './global/AuthContext';
 import Testing from './pages/TESTINGAJA';
 import AllReviews from './pages/AllReview';
+import RestaurantListFiltered from './pages/RestaurantListFiltered';
+import History from './pages/History';
 
 const Stack = createNativeStackNavigator();
 
@@ -28,12 +30,16 @@ const Navigate = () => {
       <Stack.Navigator>
         {isLoggedIn == false ? (
           <>
-            <Stack.Screen name="Home" component={HomePage} />
+            {/* <Stack.Screen name="Home" component={HomePage} />
             <Stack.Screen name="Profile" component={Profile} />
             <Stack.Screen name="RestauranList" component={RestauranList} />
             <Stack.Screen name="RestoDetail" component={RestoDetail} />
-            <Stack.Screen name="Filter" component={Filter} />
-            {/* <Stack.Screen
+            <Stack.Screen
+              name="RestaurantListFiltered"
+              component={RestaurantListFiltered}
+            />
+            <Stack.Screen name="Filter" component={Filter} /> */}
+            <Stack.Screen
               name="Splash"
               component={SplashScreen}
               options={{headerShown: false}}
@@ -52,13 +58,19 @@ const Navigate = () => {
               name="Login"
               component={Login}
               options={{headerShown: false}}
-            /> */}
+            />
           </>
         ) : (
           <>
             <Stack.Screen name="Home" component={HomePage} />
             <Stack.Screen name="Profile" component={Profile} />
             <Stack.Screen name="RestauranList" component={RestauranList} />
+            <Stack.Screen name="Filter" component={Filter} />
+            <Stack.Screen name="History" component={History} />
+            <Stack.Screen
+              name="RestaurantListFiltered"
+              component={RestaurantListFiltered}
+            />
             <Stack.Screen name="RestoDetail" component={RestoDetail} />
             <Stack.Screen name="RestoMenu" component={RestoMenu} />
             <Stack.Screen name="AllReviews" component={AllReviews} />

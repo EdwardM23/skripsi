@@ -183,6 +183,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     flexDirection: 'row',
+    marginHorizontal: 10,
   },
 
   leftContainer: {

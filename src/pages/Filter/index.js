@@ -26,12 +26,13 @@ const data = [
   },
 ];
 
-const Filter = () => {
+const Filter = ({route, navigation}) => {
   const {filter, setFilter} = useContext(AuthContext);
   const [food, setFood] = useState();
   const [cuisine, setCuisine] = useState();
   const [isLoadingFood, setLoadingFood] = useState(true);
   const [isLoadingCuisine, setLoadingCuisine] = useState(true);
+  const stationId = route.params.stationId;
   const [check1, setCheck1] = useState(false);
   const [check2, setCheck2] = useState(false);
 
@@ -135,7 +136,16 @@ const Filter = () => {
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-        <Button btnText="Apply" onBtnPress={() => console.log(filter)} />
+        <Button
+          btnText="Apply"
+          onBtnPress={() => {
+            console.log(filter, stationId);
+            navigation.navigate('RestaurantListFiltered', {
+              filter: filter,
+              stationId: stationId,
+            });
+          }}
+        />
       </View>
     </View>
   );

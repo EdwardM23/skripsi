@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import TitleComp from '../../component/TitleComp';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import Header from '../../component/Header';
@@ -16,83 +16,13 @@ import {colors} from '../../global/styles';
 import Star from '../../images/star.png';
 import ItemResto from '../../component/ItemResto';
 import axios from 'axios';
+import {AuthContext} from '../../global/AuthContext';
 
-// const ItemResto = ({
-//   name,
-//   schedule,
-//   imageUrl,
-//   priceRange,
-//   walkDist,
-//   restoPress,
-// }) => (
-//   <TouchableOpacity style={styles.item} onPress={restoPress}>
-//     <View style={{position: 'relative', width: '100%'}}>
-//       <ImageBackground
-//         source={{
-//           uri: imageUrl,
-//         }}
-//         style={{height: 150, borderRadius: 10}}>
-//         <View
-//           style={{
-//             marginLeft: 10,
-//             marginRight: 10,
-//             marginTop: 10,
-//             alignItems: 'flex-end',
-//           }}>
-//           <View style={styles.ratingContainer}>
-//             <Image source={Star} style={{height: 15, width: 15}} />
-//             <Text style={styles.ratingText}>3.5</Text>
-//             <Text style={styles.count}>(15)</Text>
-//           </View>
-//         </View>
-//       </ImageBackground>
-//     </View>
-//     <View style={{width: '100%', marginTop: 5}}>
-//       <View style={styles.row}>
-//         <View style={{textAlign: 'right'}}>
-//           <Text style={styles.restoFont}>{name}</Text>
-//         </View>
-//         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-//           <Image
-//             source={{
-//               uri: 'https://www.iconpacks.net/icons/2/free-location-pointer-icon-2961-thumb.png',
-//             }}
-//             style={{width: 9, height: 13, marginRight: 4}}
-//           />
-//           <Text style={styles.distanceFont}>{walkDist} m</Text>
-//         </View>
-//       </View>
-//       <View style={styles.row}>
-//         <View>
-//           <Text
-//             style={{
-//               fontSize: 14,
-//               color: colors.grey,
-//               fontWeight: '400',
-//             }}>
-//             {schedule}
-//             {/* Indonesia <Text style={styles.status}>Status</Text> */}
-//           </Text>
-//         </View>
-//         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-//           <Text
-//             style={{
-//               fontSize: 14,
-//               color: colors.grey,
-//               fontWeight: '400',
-//             }}>
-//             {priceRange}
-//           </Text>
-//         </View>
-//       </View>
-//     </View>
-//   </TouchableOpacity>
-// );
-
-const RestauranList = ({route, navigation}) => {
+const RestauranListFiltered = ({route, navigation}) => {
   console.log('Hasil Route', route.params);
 
   const stationId = route.params.stationId;
+  const {filter} = useContext(AuthContext);
   const [data, setData] = useState('');
   const [isLoading, setLoading] = useState(true);
 
@@ -102,7 +32,11 @@ const RestauranList = ({route, navigation}) => {
     try {
       const res = await axios.post(
         'http://eatzyapp.herokuapp.com/restaurant/nearest/' + stationId,
+        {
+          categories: filter,
+        },
       );
+      console.log('return >>', res);
       console.log(res.data[0].restaurants);
       const response = res.data[0].restaurants;
       setData(response);
@@ -149,22 +83,14 @@ const RestauranList = ({route, navigation}) => {
 
       <View style={styles.wrapper}>
         <View style={styles.containerList}>
-          <View style={styles.filterHist}>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('History');
-              }}>
-              <Text style={styles.filterFont}>History</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('Filter', {
-                  stationId: stationId,
-                });
-              }}>
-              <Text style={styles.filterFont}>Filter</Text>
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Filter', {
+                stationId: stationId,
+              });
+            }}>
+            <Text style={styles.filterFont}>FILTER</Text>
+          </TouchableOpacity>
 
           {/* Item Resto */}
           <View style={styles.containerFlatList}>
@@ -185,7 +111,7 @@ const RestauranList = ({route, navigation}) => {
   );
 };
 
-export default RestauranList;
+export default RestauranListFiltered;
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -250,6 +176,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     textAlign: 'right',
+    marginRight: 30,
+    marginTop: 10,
+    marginBottom: 10,
   },
 
   restoFont: {
@@ -284,12 +213,5 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
     color: colors.grey,
-  },
-  filterHist: {
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    marginHorizontal: 10,
-    marginTop: 10,
-    marginBottom: 10,
   },
 });
