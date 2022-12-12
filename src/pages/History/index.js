@@ -10,7 +10,7 @@ import {AuthContext} from '../../global/AuthContext';
 import axios from 'axios';
 import ItemResto from '../../component/ItemResto';
 
-const History = () => {
+const History = ({route, navigation}) => {
   const {userDetails} = useContext(AuthContext);
   const [history, setHistory] = useState('');
   const [isLoading, setLoading] = useState(true);
@@ -26,10 +26,6 @@ const History = () => {
       console.log(res.data);
       setHistory(res.data);
       console.log('Data History', history);
-      // console.log(res.data);
-      // console.log('Data response', res.data);
-      // setData(res.data);
-      // console.log('Data', data);
     } catch (error) {
       alert(error.message);
     } finally {
@@ -57,7 +53,7 @@ const History = () => {
   }, []);
 
   return (
-    <View>
+    <View style={{flex: 1, padding: 20, display: 'flex'}}>
       <Text>History</Text>
       <View>
         {history == '' ? <Text>There is no history yet</Text> : <View></View>}
