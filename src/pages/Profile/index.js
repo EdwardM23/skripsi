@@ -70,7 +70,7 @@ LogBox.ignoreLogs([
 // );
 
 const Profile = ({navigation, route}) => {
-  const {userDetails} = useContext(AuthContext);
+  const {userDetails, handleLogout} = useContext(AuthContext);
   const [wishlist, setWishlist] = useState('');
   const [isLoading, setLoading] = useState(true);
   console.log(userDetails);
@@ -84,6 +84,7 @@ const Profile = ({navigation, route}) => {
       );
       console.log(res.data[0].restaurants);
       setWishlist(res.data[0].restaurants);
+      console.log('Wishlist Data >> ', res.data[0].restaurants);
       // console.log(res.data);
       // console.log('Data response', res.data);
       // setData(res.data);
@@ -101,6 +102,7 @@ const Profile = ({navigation, route}) => {
 
   const renderItem = ({item}) => (
     <ItemResto
+      restoId={item.id}
       name={item.name}
       schedule={item.schedule}
       imageUrl={item.imageURL}
@@ -131,7 +133,10 @@ const Profile = ({navigation, route}) => {
           </View>
 
           <View>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                handleLogout(), navigation.navigate('Splash');
+              }}>
               <Image source={logout} style={{width: 20, height: 20}} />
             </TouchableOpacity>
           </View>

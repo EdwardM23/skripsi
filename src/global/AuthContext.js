@@ -38,6 +38,7 @@ export const AuthProvider = ({children}) => {
     if (logout) {
       setIsLoggedIn(false);
       setUserDetails({});
+      console.log('Log Out Succes');
     }
   };
 
