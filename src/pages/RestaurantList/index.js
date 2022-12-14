@@ -137,7 +137,9 @@ const RestauranList = ({route, navigation}) => {
   return (
     <View>
       {/* <Header title="Restaurant" /> */}
-      <MapView
+
+      {/* >>> Map View <<< */}
+      {/* <MapView
         provider={PROVIDER_GOOGLE} // remove if not using Google Maps
         style={{height: '40%'}}
         region={{
@@ -145,7 +147,8 @@ const RestauranList = ({route, navigation}) => {
           longitude: -122.4324,
           latitudeDelta: 0.015,
           longitudeDelta: 0.0121,
-        }}></MapView>
+        }}></MapView> */}
+      {/* >>> Map View <<< */}
 
       <View style={styles.wrapper}>
         <View style={styles.containerList}>
@@ -191,7 +194,8 @@ const styles = StyleSheet.create({
   wrapper: {
     padding: 10,
     display: 'flex',
-    height: '60%',
+    // height: '60%',
+    height: '100%',
     backgroundColor: '#ffffff',
   },
 

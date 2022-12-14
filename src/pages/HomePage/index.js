@@ -17,6 +17,7 @@ import {colors} from '../../global/styles';
 import Geolocation from '@react-native-community/geolocation';
 import {AuthContext} from '../../global/AuthContext';
 import Item from '../../component/Item';
+import profilePicture from '../../images/profile.png';
 
 // Geolocation.getCurrentPosition(info => console.log(info));
 
@@ -162,9 +163,11 @@ const HomePage = ({route, navigation}) => {
   return (
     <View style={styles.wrapper}>
       <View style={styles.header}>
-        <Text>Hello {userDetails.username}</Text>
+        <Text style={{fontSize: 18, color: colors.blue}}>
+          Hello {userDetails.username}
+        </Text>
         <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-          <Text>Profile</Text>
+          <Image source={profilePicture} style={{width: 50, height: 50}} />
         </TouchableOpacity>
       </View>
 
@@ -218,6 +221,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'space-between',
     flexDirection: 'row',
+    alignItems: 'center',
   },
 
   input: {

@@ -62,17 +62,47 @@ const Navigate = () => {
           </>
         ) : (
           <>
-            <Stack.Screen name="Home" component={HomePage} />
-            <Stack.Screen name="Profile" component={Profile} />
-            <Stack.Screen name="RestauranList" component={RestauranList} />
-            <Stack.Screen name="Filter" component={Filter} />
-            <Stack.Screen name="History" component={History} />
+            <Stack.Screen
+              name="Home"
+              component={HomePage}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="Profile"
+              component={Profile}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="RestauranList"
+              component={RestauranList}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="Filter"
+              component={Filter}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="History"
+              component={History}
+              options={{headerShown: false}}
+            />
             <Stack.Screen
               name="RestaurantListFiltered"
               component={RestaurantListFiltered}
+              options={{headerShown: false}}
             />
-            <Stack.Screen name="RestoDetail" component={RestoDetail} />
-            <Stack.Screen name="RestoMenu" component={RestoMenu} />
+            <Stack.Screen
+              name="RestoDetail"
+              component={RestoDetail}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="RestoMenu"
+              component={RestoMenu}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen name="AddReview" component={AddReview} />
             <Stack.Screen name="AllReviews" component={AllReviews} />
           </>
         )}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import {
   View,
   Text,
@@ -7,94 +7,248 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
+  Image,
 } from 'react-native';
 import {colors} from '../../global/styles';
 import Header from '../../component/Header';
 import Submit from '../../component/Submit';
-import {Rating} from 'react-native-ratings';
+import {AirbnbRating, Rating} from 'react-native-ratings';
 import {launchImageLibrary} from 'react-native-image-picker';
 import * as ImagePicker from 'react-native-image-picker';
+import {CheckBox} from 'react-native-elements';
 import Button from '../../component/Button';
+import {AuthContext} from '../../global/AuthContext';
+import {Buffer} from 'buffer';
+import axios, {Axios} from 'axios';
 
-export default class AddReview extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      resourcePath: '',
-    };
-  }
+const AddReview = ({route, navigation}) => {
+  const restaurantId = route.params.restaurantId;
+  const {userDetails} = useContext(AuthContext);
+  const [resourcePath, setResourcePath] = useState('');
+  const [review, setReview] = useState('');
+  const [rating, setRating] = useState('');
+  const [isAnonymous, setIsAnonymous] = useState(false);
 
-  ratingCompleted(rating) {
-    console.log('Rating is: ' + rating);
-  }
+  const ratingCompleted = value => {
+    console.log('Rating is: ' + value);
+    setRating(value);
+  };
 
-  render() {
-    return (
-      <View style={styles.container}>
-        {/* <Header title="Add Review" /> */}
+  const addReview = async (
+    token,
+    restaurantId,
+    file,
+    rating,
+    review,
+    isAnonymous,
+  ) => {
+    try {
+      const datas = new FormData();
+      datas.append('token', token);
+      datas.append('restaurantId', restaurantId);
+      datas.append('rating', rating);
+      datas.append('review', review);
+      datas.append('isAnonymous', isAnonymous);
+      datas.append('file', {
+        uri: file.uri,
+        type: file.type,
+        name: file.fileName,
+      });
 
-        <ScrollView style={styles.form}>
+      console.log('DATAS: ', datas);
+
+      axios
+        .post('https://eatzyapp.herokuapp.com/review', datas, {
+          headers: {'Content-Type': 'multipart/form-data'},
+        })
+        .then(res => {
+          console.log('Resilt : ', res);
+        })
+        .catch(error => {
+          console.log('Error', error);
+          console.log('Response', error.response);
+          console.log('Message', error.message);
+        });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  const addReview1 = async (
+    token,
+    restaurantId,
+    file,
+    rating,
+    review,
+    isAnonymous,
+  ) => {
+    try {
+      const img = Buffer.from(file.base64, 'base64');
+      console.log('This is Buffer >> ', img);
+      // datas.append('images', {
+      //   name: file.fileName,
+      //   type: file.type,
+      //   uri: file.uri,
+      // });
+      console.log();
+      console.log('name: ', file.fileName);
+      console.log('data: ', img);
+      console.log('size: ', file.fileSize);
+      console.log('encoding: ', file.encoding);
+      console.log('tempFilePath: ', file.uri);
+      console.log('truncated: ', false);
+      await axios
+        .post('https://eatzyapp.herokuapp.com/review', {
+          token: token,
+          restaurantId: restaurantId,
+          file: {
+            name: file.fileName,
+            data: img,
+            size: file.fileSize,
+            tempFilePath: file.uri,
+            mimeType: file.type,
+          },
+          rating: rating,
+          review: review,
+          isAnonymous: isAnonymous,
+        })
+        .then(result => {
+          console.log('Resilt : ', result);
+          // alert(result.data.msg);
+        })
+        .catch(function (error) {
+          console.log('Error', error);
+          console.log('Response', error.response);
+          console.log('Message', error.message);
+          // alert('This restaurant already in your wishlist');
+        });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      {/* <Header title="Add Review" /> */}
+
+      <ScrollView style={styles.form}>
+        <View>
+          {/* Rate Your Experience */}
           <View>
-            {/* Rate Your Experience */}
-            <View>
-              <Text style={styles.title}>Rate Your Experience</Text>
-              <Rating
-                ratingCount={5}
-                onFinishRating={this.ratingCompleted}
-                style={{paddingVertical: 10}}
-              />
-            </View>
-
-            {/* Write a Review */}
-            <View style={{marginTop: 30}}>
-              <Text style={styles.title}>Write a Review</Text>
-
-              <TextInput
-                style={styles.textInput}
-                placeholder="Tell us more about your experience"
-              />
-            </View>
-
-            {/* Add Photos */}
-            <View style={{marginTop: 30}}>
-              <Text style={styles.title}>Add Photos</Text>
-
-              <Text style={{alignItems: 'center'}}>
-                {this.state.resourcePath.uri}
-              </Text>
-
-              <Text>
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={() =>
-                    ImagePicker.launchImageLibrary(
-                      {
-                        mediaType: 'photo',
-                        includeBase64: false,
-                        maxHeight: 200,
-                        maxWidth: 200,
-                      },
-                      response => {
-                        console.log(response.assets[0].uri);
-                        this.setState({resourcePath: response.assets[0].uri});
-                      },
-                    )
-                  }>
-                  <Text style={styles.buttonText}>Select File</Text>
-                </TouchableOpacity>
-              </Text>
-            </View>
+            <Text style={styles.title}>Rate Your Experience</Text>
+            <AirbnbRating
+              showRating={false}
+              defaultRating={0}
+              ratingCount={5}
+              onFinishRating={ratingCompleted}
+              style={{paddingVertical: 10}}
+            />
           </View>
-        </ScrollView>
 
-        {/* <Submit title="Submit" type="arrow-left" /> */}
-        <View style={styles.submit}>
-          <Button btnText="Submit" onBtnPress={() => Alert('error')} />
+          {/* Write a Review */}
+          <View style={{marginTop: 30}}>
+            <Text style={styles.title}>Write a Review</Text>
+
+            <TextInput
+              style={styles.textInput}
+              placeholder="Tell us more about your experience"
+              onChangeText={value => setReview(value)}
+            />
+          </View>
+
+          {/* Add Photos */}
+          <View style={{marginTop: 30}}>
+            <Text style={styles.title}>Add Photos</Text>
+
+            {/* <Text style={{alignItems: 'center'}}>{resourcePath.uri}</Text> */}
+
+            <Text>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() =>
+                  ImagePicker.launchImageLibrary(
+                    {
+                      mediaType: 'photo',
+                      includeBase64: true,
+                      maxHeight: 200,
+                      maxWidth: 200,
+                    },
+                    response => {
+                      console.log(response);
+                      console.log(response.assets[0].uri);
+                      setResourcePath(response.assets[0]);
+                    },
+                  )
+                }>
+                <Text style={styles.buttonText}>Select File</Text>
+                {resourcePath == '' ? (
+                  <View></View>
+                ) : (
+                  <Image
+                    source={{uri: resourcePath.uri}}
+                    style={{width: 100, height: 100}}
+                  />
+                )}
+              </TouchableOpacity>
+            </Text>
+          </View>
+
+          {/* Anonymous */}
+          <View>
+            <CheckBox
+              title="Submit as anonymous"
+              checked={isAnonymous}
+              onPress={() => {
+                setIsAnonymous(!isAnonymous);
+                if (isAnonymous == true) {
+                  console.log('After Click : ');
+                } else if (isAnonymous == false) {
+                  console.log('False Click : ');
+                }
+              }}
+              textStyle={{fontWeight: '400'}}
+              checkedIcon={
+                <Image
+                  source={require('../../images/check.png')}
+                  style={{width: 25, height: 25, opacity: 0.8}}
+                />
+              }
+              uncheckedIcon={
+                <Image
+                  source={require('../../images/square.png')}
+                  style={{width: 25, height: 25, opacity: 0.5}}
+                />
+              }
+              containerStyle={{backgroundColor: colors.white, borderWidth: 0}}
+            />
+          </View>
         </View>
+      </ScrollView>
+
+      {/* <Submit title="Submit" type="arrow-left" /> */}
+      <View style={styles.submit}>
+        <Button
+          btnText="Submit"
+          onBtnPress={() => {
+            addReview(
+              userDetails.token,
+              restaurantId,
+              resourcePath,
+              rating,
+              review,
+              isAnonymous,
+            );
+            navigation.navigate('AllReviews', {
+              passRestoId: detailInfo.id,
+            });
+          }}
+        />
       </View>
-    );
-  }
-}
+    </View>
+  );
+};
+
+export default AddReview;
 
 const styles = StyleSheet.create({
   container: {
@@ -113,6 +267,7 @@ const styles = StyleSheet.create({
     color: colors.blue,
     fontSize: 18,
     fontWeight: '600',
+    marginBottom: 10,
   },
 
   textInput: {

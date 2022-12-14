@@ -9,6 +9,8 @@ import React, {useContext, useEffect, useState} from 'react';
 import {AuthContext} from '../../global/AuthContext';
 import axios from 'axios';
 import ItemResto from '../../component/ItemResto';
+import TitleComp from '../../component/TitleComp';
+import {colors} from '../../global/styles';
 
 const History = ({route, navigation}) => {
   const {userDetails} = useContext(AuthContext);
@@ -35,6 +37,7 @@ const History = ({route, navigation}) => {
 
   const renderItem = ({item}) => (
     <ItemResto
+      restoId={item.restaurant.id}
       name={item.restaurant.name}
       schedule={item.restaurant.schedule}
       imageUrl={item.restaurant.imageURL}
@@ -53,8 +56,10 @@ const History = ({route, navigation}) => {
   }, []);
 
   return (
-    <View style={{flex: 1, padding: 20, display: 'flex'}}>
-      <Text>History</Text>
+    <View style={styles.container}>
+      <View style={{justifyContent: 'center'}}>
+        <TitleComp text="History" />
+      </View>
       <View>
         {history == '' ? <Text>There is no history yet</Text> : <View></View>}
         {isLoading ? (
@@ -73,4 +78,13 @@ const History = ({route, navigation}) => {
 
 export default History;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingHorizontal: 20,
+    display: 'flex',
+    paddingTop: 10,
+    paddingBottom: 30,
+    backgroundColor: colors.white,
+  },
+});

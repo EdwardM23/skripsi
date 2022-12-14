@@ -248,6 +248,14 @@ const RestoDetail = ({route, navigation}) => {
         <View style={styles.wrapper}>
           <View style={styles.reveiwHeader}>
             <TitleComp text="Review" />
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('AddReview', {
+                  restaurantId: detailInfo.id,
+                });
+              }}>
+              <Text style={{color: colors.blue}}>Write Review</Text>
+            </TouchableOpacity>
           </View>
 
           {/* Review Card */}
