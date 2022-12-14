@@ -67,26 +67,10 @@ const Navigate = () => {
               component={HomePage}
               options={{headerShown: false}}
             />
-            <Stack.Screen
-              name="Profile"
-              component={Profile}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="RestauranList"
-              component={RestauranList}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="Filter"
-              component={Filter}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="History"
-              component={History}
-              options={{headerShown: false}}
-            />
+            <Stack.Screen name="Profile" component={Profile} />
+            <Stack.Screen name="RestauranList" component={RestauranList} />
+            <Stack.Screen name="Filter" component={Filter} />
+            <Stack.Screen name="History" component={History} />
             <Stack.Screen
               name="RestaurantListFiltered"
               component={RestaurantListFiltered}
@@ -95,14 +79,20 @@ const Navigate = () => {
             <Stack.Screen
               name="RestoDetail"
               component={RestoDetail}
-              options={{headerShown: false}}
+              options={({route}) => ({
+                title: route.params.passDetailResto.name,
+              })}
             />
             <Stack.Screen
               name="RestoMenu"
               component={RestoMenu}
               options={{headerShown: false}}
             />
-            <Stack.Screen name="AddReview" component={AddReview} />
+            <Stack.Screen
+              name="AddReview"
+              component={AddReview}
+              options={{title: 'Write Review'}}
+            />
             <Stack.Screen name="AllReviews" component={AllReviews} />
           </>
         )}

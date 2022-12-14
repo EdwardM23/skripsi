@@ -71,7 +71,7 @@ const RestauranListFiltered = ({route, navigation}) => {
   return (
     <View>
       {/* <Header title="Restaurant" /> */}
-      <MapView
+      {/* <MapView
         provider={PROVIDER_GOOGLE} // remove if not using Google Maps
         style={{height: '40%'}}
         region={{
@@ -79,18 +79,26 @@ const RestauranListFiltered = ({route, navigation}) => {
           longitude: -122.4324,
           latitudeDelta: 0.015,
           longitudeDelta: 0.0121,
-        }}></MapView>
+        }}></MapView> */}
 
       <View style={styles.wrapper}>
         <View style={styles.containerList}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('Filter', {
-                stationId: stationId,
-              });
-            }}>
-            <Text style={styles.filterFont}>FILTER</Text>
-          </TouchableOpacity>
+          <View style={styles.filterHist}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('History');
+              }}>
+              <Text style={styles.filterFont}>History</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Filter', {
+                  stationId: stationId,
+                });
+              }}>
+              <Text style={styles.filterFont}>Filter</Text>
+            </TouchableOpacity>
+          </View>
 
           {/* Item Resto */}
           <View style={styles.containerFlatList}>
@@ -117,7 +125,8 @@ const styles = StyleSheet.create({
   wrapper: {
     padding: 10,
     display: 'flex',
-    height: '60%',
+    // height: '60%',
+    height: '100%',
     backgroundColor: '#ffffff',
   },
 
@@ -176,9 +185,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     textAlign: 'right',
-    marginRight: 30,
-    marginTop: 10,
-    marginBottom: 10,
   },
 
   restoFont: {
@@ -213,5 +219,12 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
     color: colors.grey,
+  },
+  filterHist: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    marginHorizontal: 10,
+    marginTop: 10,
+    marginBottom: 10,
   },
 });

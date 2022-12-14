@@ -163,11 +163,11 @@ const HomePage = ({route, navigation}) => {
   return (
     <View style={styles.wrapper}>
       <View style={styles.header}>
-        <Text style={{fontSize: 18, color: colors.blue}}>
+        <Text style={{fontSize: 18, color: colors.blue, fontWeight: 'bold'}}>
           Hello {userDetails.username}
         </Text>
         <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-          <Image source={profilePicture} style={{width: 50, height: 50}} />
+          <Image source={profilePicture} style={{width: 45, height: 45}} />
         </TouchableOpacity>
       </View>
 

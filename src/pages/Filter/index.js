@@ -116,7 +116,7 @@ const Filter = ({route, navigation}) => {
 
         <Text style={styles.title1}>Food</Text>
 
-        <View>
+        <View style={{paddingBottom: 10}}>
           {isLoadingFood ? (
             <ActivityIndicator size="large" style={{marginTop: 20}} />
           ) : (
