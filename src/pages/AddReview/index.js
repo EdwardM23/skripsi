@@ -26,7 +26,7 @@ const AddReview = ({route, navigation}) => {
   const {userDetails} = useContext(AuthContext);
   const [resourcePath, setResourcePath] = useState('');
   const [review, setReview] = useState('');
-  const [rating, setRating] = useState('');
+  const [rating, setRating] = useState('5');
   const [isAnonymous, setIsAnonymous] = useState(false);
 
   const ratingCompleted = value => {
@@ -138,7 +138,7 @@ const AddReview = ({route, navigation}) => {
             <Text style={styles.title}>Rate Your Experience</Text>
             <AirbnbRating
               showRating={false}
-              defaultRating={0}
+              defaultRating={5}
               ratingCount={5}
               onFinishRating={ratingCompleted}
               style={{paddingVertical: 10}}
@@ -158,7 +158,7 @@ const AddReview = ({route, navigation}) => {
 
           {/* Add Photos */}
           <View style={{marginTop: 30}}>
-            <Text style={styles.title}>Add Photos</Text>
+            <Text style={styles.title}>Add Photo</Text>
 
             {/* <Text style={{alignItems: 'center'}}>{resourcePath.uri}</Text> */}
 
@@ -174,13 +174,24 @@ const AddReview = ({route, navigation}) => {
                       maxWidth: 200,
                     },
                     response => {
-                      console.log(response);
-                      console.log(response.assets[0].uri);
-                      setResourcePath(response.assets[0]);
+                      console.log('res', response);
+                      if (Object.keys(response) == 'didCancel') {
+                        console.log('Batal Upload Foto');
+                      } else if (Object.keys(response) == 'assets') {
+                        console.log('Foto Uploaded');
+                        setResourcePath(response.assets[0]);
+                      }
+                      // console.log(response.assets[0].uri);
+                      // setResourcePath(response.assets[0]);
                     },
                   )
                 }>
-                <Text style={styles.buttonText}>Select File</Text>
+                {resourcePath == '' ? (
+                  <Text style={styles.buttonText}>Select a photo</Text>
+                ) : (
+                  <Text></Text>
+                )}
+
                 {resourcePath == '' ? (
                   <View></View>
                 ) : (
@@ -239,7 +250,7 @@ const AddReview = ({route, navigation}) => {
               isAnonymous,
             );
             navigation.navigate('AllReviews', {
-              passRestoId: detailInfo.id,
+              passRestoId: restaurantId,
             });
           }}
         />

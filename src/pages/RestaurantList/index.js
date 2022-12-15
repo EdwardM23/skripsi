@@ -103,6 +103,7 @@ const RestauranList = ({route, navigation}) => {
       const res = await axios.post(
         'http://eatzyapp.herokuapp.com/restaurant/nearest/' + stationId,
       );
+      //disini kasih if kalo resto nya ngaada
       console.log(res.data[0].restaurants);
       const response = res.data[0].restaurants;
       setData(response);

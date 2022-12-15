@@ -68,7 +68,11 @@ const Navigate = () => {
               options={{headerShown: false}}
             />
             <Stack.Screen name="Profile" component={Profile} />
-            <Stack.Screen name="RestauranList" component={RestauranList} />
+            <Stack.Screen
+              name="RestauranList"
+              component={RestauranList}
+              options={{title: 'Restaurant List'}}
+            />
             <Stack.Screen name="Filter" component={Filter} />
             <Stack.Screen name="History" component={History} />
             <Stack.Screen
@@ -93,7 +97,11 @@ const Navigate = () => {
               component={AddReview}
               options={{title: 'Write Review'}}
             />
-            <Stack.Screen name="AllReviews" component={AllReviews} />
+            <Stack.Screen
+              name="AllReviews"
+              component={AllReviews}
+              options={{title: 'All Review'}}
+            />
           </>
         )}
       </Stack.Navigator>

@@ -9,6 +9,7 @@ import {
 import React, {useEffect, useState} from 'react';
 import {colors} from '../../global/styles';
 import Star from '../../images/star.png';
+import people from '../../images/people.png';
 import axios from 'axios';
 
 const rating = 0;
@@ -62,22 +63,27 @@ const ItemResto = ({
                 marginTop: 10,
                 alignItems: 'flex-end',
               }}>
-              <View style={styles.ratingContainer}>
-                <Image source={Star} style={{height: 15, width: 15}} />
-                {rating.averageRating == null ? (
-                  <>
-                    <Text style={styles.ratingText}>-</Text>
-                  </>
-                ) : (
-                  <>
+              {/* <View style={styles.ratingContainer}>
+                <Image source={Star} style={{height: 15, width: 15}} /> */}
+              {rating.averageRating == null ? (
+                <>
+                  <View></View>
+                </>
+              ) : (
+                <>
+                  <View style={styles.ratingContainer}>
+                    <Image source={Star} style={{height: 15, width: 15}} />
                     <Text style={styles.ratingText}>
                       {parseFloat(rating.averageRating).toFixed(1)}
                     </Text>
-                  </>
-                )}
+                    <Image source={people} style={{height: 10, width: 10}} />
+                    <Text style={styles.count}>{rating.countReview}</Text>
+                  </View>
+                </>
+              )}
 
-                <Text style={styles.count}>({rating.countReview})</Text>
-              </View>
+              {/* <Text style={styles.count}>({rating.countReview})</Text>
+              </View> */}
             </View>
           </ImageBackground>
         </View>
@@ -153,7 +159,7 @@ const styles = StyleSheet.create({
   },
   ratingContainer: {
     backgroundColor: colors.white,
-    width: 75,
+    width: 80,
     height: 30,
     borderRadius: 15,
     flexDirection: 'row',
@@ -161,7 +167,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   ratingText: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: '600',
     color: colors.grey,
   },
