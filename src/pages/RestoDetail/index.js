@@ -44,7 +44,7 @@ const ReviewCard = ({review, rating, imageUrl, reviewTime, name}) => (
 
           <View style={{flexDirection: 'row'}}>
             <Text style={styles.reviewText2}>
-              {reviewTime.replace(/T|Z/g, ' ')}
+              {reviewTime.replace(/T|Z/g, ' ').substring(0, 19)}
             </Text>
           </View>
         </View>
@@ -481,14 +481,14 @@ const styles = StyleSheet.create({
   menuButton: {
     width: '45%',
     paddingVertical: 10,
-    backgroundColor: colors.red,
+    backgroundColor: colors.yellow,
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   menuText: {
-    color: colors.white,
+    color: colors.grey,
     fontSize: 16,
     fontWeight: 'bold',
   },
@@ -496,14 +496,14 @@ const styles = StyleSheet.create({
   directionButton: {
     width: '45%',
     paddingVertical: 10,
-    backgroundColor: colors.yellow,
+    backgroundColor: colors.blue,
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   directionText: {
-    color: colors.grey,
+    color: colors.white,
     fontSize: 16,
     fontWeight: 'bold',
   },

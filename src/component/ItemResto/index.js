@@ -72,12 +72,16 @@ const ItemResto = ({
               ) : (
                 <>
                   <View style={styles.ratingContainer}>
-                    <Image source={Star} style={{height: 15, width: 15}} />
-                    <Text style={styles.ratingText}>
-                      {parseFloat(rating.averageRating).toFixed(1)}
-                    </Text>
-                    <Image source={people} style={{height: 10, width: 10}} />
-                    <Text style={styles.count}>{rating.countReview}</Text>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                      <Image source={Star} style={{height: 15, width: 15}} />
+                      <Text style={styles.ratingText}>
+                        {parseFloat(rating.averageRating).toFixed(1)}
+                      </Text>
+                    </View>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                      <Image source={people} style={{height: 10, width: 10}} />
+                      <Text style={styles.count}>{rating.countReview}</Text>
+                    </View>
                   </View>
                 </>
               )}
@@ -170,11 +174,13 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
     color: colors.grey,
+    marginLeft: 2,
   },
   count: {
     fontSize: 12,
     fontWeight: '600',
     color: colors.grey,
+    marginLeft: 2,
   },
   row: {
     flexDirection: 'row',

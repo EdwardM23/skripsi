@@ -194,12 +194,18 @@ const HomePage = ({route, navigation}) => {
           {isLoading ? (
             <ActivityIndicator size="large" style={{marginTop: 20}} />
           ) : (
-            <FlatList
-              data={data}
-              renderItem={renderItem}
-              keyExtractor={({id}, index) => id}
-              nestedScrollEnabled
-            />
+            <>
+              {data.length != 0 ? (
+                <FlatList
+                  data={data}
+                  renderItem={renderItem}
+                  keyExtractor={({id}, index) => id}
+                  nestedScrollEnabled
+                />
+              ) : (
+                <Text>No station found, try to search other station</Text>
+              )}
+            </>
           )}
         </View>
       </View>

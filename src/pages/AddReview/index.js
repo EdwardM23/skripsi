@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Alert,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import {colors} from '../../global/styles';
 import Header from '../../component/Header';
@@ -20,6 +21,14 @@ import Button from '../../component/Button';
 import {AuthContext} from '../../global/AuthContext';
 import {Buffer} from 'buffer';
 import axios, {Axios} from 'axios';
+import {wrap} from 'module';
+
+const updateError = (error, stateUpdater) => {
+  stateUpdater(error);
+  setTimeout(() => {
+    stateUpdater('');
+  }, 10000);
+};
 
 const AddReview = ({route, navigation}) => {
   const restaurantId = route.params.restaurantId;
@@ -27,11 +36,32 @@ const AddReview = ({route, navigation}) => {
   const [resourcePath, setResourcePath] = useState('');
   const [review, setReview] = useState('');
   const [rating, setRating] = useState('5');
+  const [textLen, setTextLen] = useState(0);
+  const [error, setError] = useState('');
+  const [isSubmit, setIsSubmit] = useState(false);
   const [isAnonymous, setIsAnonymous] = useState(false);
+
+  useEffect(() => {
+    const refresh = navigation.addListener('focus', () => {
+      setIsSubmit(false);
+    });
+    return refresh;
+  }, [navigation]);
+
+  const handleOnChangeText = value => {
+    setReview(value);
+    setTextLen(value.length);
+  };
 
   const ratingCompleted = value => {
     console.log('Rating is: ' + value);
     setRating(value);
+  };
+
+  const isValidForm = () => {
+    if (textLen > 100)
+      return updateError('Review must less than 100', setError);
+    return true;
   };
 
   const addReview = async (
@@ -42,6 +72,7 @@ const AddReview = ({route, navigation}) => {
     review,
     isAnonymous,
   ) => {
+    setIsSubmit(true);
     try {
       const datas = new FormData();
       datas.append('token', token);
@@ -130,7 +161,6 @@ const AddReview = ({route, navigation}) => {
   return (
     <View style={styles.container}>
       {/* <Header title="Add Review" /> */}
-
       <ScrollView style={styles.form}>
         <View>
           {/* Rate Your Experience */}
@@ -144,18 +174,28 @@ const AddReview = ({route, navigation}) => {
               style={{paddingVertical: 10}}
             />
           </View>
-
           {/* Write a Review */}
           <View style={{marginTop: 30}}>
-            <Text style={styles.title}>Write a Review</Text>
-
+            <Text style={styles.title}>
+              Write a Review
+              {textLen <= 150 ? (
+                <Text>({textLen}/100)</Text>
+              ) : (
+                <Text style={{color: colors.red}}>({textLen}/100)</Text>
+              )}
+            </Text>
             <TextInput
               style={styles.textInput}
               placeholder="Tell us more about your experience"
-              onChangeText={value => setReview(value)}
+              multiline={true}
+              onChangeText={value => handleOnChangeText(value)}
             />
+            {error ? (
+              <View style={{height: 20}}>
+                <Text style={{color: 'red'}}>* {error}</Text>
+              </View>
+            ) : null}
           </View>
-
           {/* Add Photos */}
           <View style={{marginTop: 30}}>
             <Text style={styles.title}>Add Photo</Text>
@@ -203,7 +243,6 @@ const AddReview = ({route, navigation}) => {
               </TouchableOpacity>
             </Text>
           </View>
-
           {/* Anonymous */}
           <View>
             <CheckBox
@@ -233,6 +272,13 @@ const AddReview = ({route, navigation}) => {
               containerStyle={{backgroundColor: colors.white, borderWidth: 0}}
             />
           </View>
+          {isSubmit == true ? (
+            <View>
+              <ActivityIndicator size="large" style={{marginTop: 20}} />
+            </View>
+          ) : (
+            <View></View>
+          )}
         </View>
       </ScrollView>
 
@@ -241,17 +287,25 @@ const AddReview = ({route, navigation}) => {
         <Button
           btnText="Submit"
           onBtnPress={() => {
-            addReview(
-              userDetails.token,
-              restaurantId,
-              resourcePath,
-              rating,
-              review,
-              isAnonymous,
-            );
-            navigation.navigate('AllReviews', {
-              passRestoId: restaurantId,
-            });
+            if (isValidForm()) {
+              if (!isSubmit) {
+                addReview(
+                  userDetails.token,
+                  restaurantId,
+                  resourcePath,
+                  rating,
+                  review,
+                  isAnonymous,
+                );
+              }
+              setTimeout(() => {
+                navigation.navigate('AllReviews', {
+                  passRestoId: restaurantId,
+                });
+              }, 500);
+            } else {
+              Alert.alert('Oops please check your input !!!');
+            }
           }}
         />
       </View>
@@ -286,8 +340,7 @@ const styles = StyleSheet.create({
     borderColor: colors.grey,
     borderRadius: 15,
     width: 350,
-    height: 150,
-    marginTop: 15,
+    height: 100,
     textAlignVertical: 'top',
     fontSize: 14,
     padding: 10,
