@@ -193,6 +193,7 @@ const HomePage = ({route, navigation}) => {
           <TouchableOpacity
             onPress={() => {
               requestLocationPermission();
+              getData('', currLongitude, currLatitude);
             }}>
             <Text style={{color: colors.blue}}>Refresh Location</Text>
           </TouchableOpacity>
