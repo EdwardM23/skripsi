@@ -7,6 +7,7 @@ import {
   TextInput,
   ScrollView,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useContext, useState} from 'react';
 import smallCover from '../../images/smallCover.png';
@@ -37,6 +38,7 @@ const isValideEmail = value => {
 
 const Login = ({navigation}) => {
   const [error, setError] = useState(''); // untuk error massafe
+  const [loading, setLoading] = useState(false);
 
   const [userInfo, setUserInfo] = useState({
     email: '',
@@ -105,6 +107,7 @@ const Login = ({navigation}) => {
       console.log(userInfo);
       console.log('Form Valid !!!');
       sendData(email, password);
+      setLoading(true);
     } else {
       Alert.alert('Oops please check your input !!!');
     }
@@ -142,6 +145,11 @@ const Login = ({navigation}) => {
 
         <View style={{height: 20}}>
           {error ? <Text style={{color: 'red'}}>{error}</Text> : null}
+          {loading ? (
+            <ActivityIndicator size="small" style={{marginTop: 20}} />
+          ) : (
+            <></>
+          )}
         </View>
       </View>
 

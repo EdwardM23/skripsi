@@ -86,6 +86,13 @@ const RestoDetail = ({route, navigation}) => {
   const [isLoading, setLoading] = useState(true);
   console.log('Resto ID', detailInfo.id);
 
+  useEffect(() => {
+    const refresh = navigation.addListener('focus', () => {
+      getData();
+    });
+    return refresh;
+  }, [navigation]);
+
   const getData = async () => {
     try {
       const res = await axios.get(

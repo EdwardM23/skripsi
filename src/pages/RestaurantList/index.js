@@ -109,7 +109,8 @@ const RestauranList = ({route, navigation}) => {
       setData(response);
       console.log(response);
     } catch (error) {
-      alert(error.message);
+      // alert(error.message);
+      alert('There is no restaurant available near this staiton');
     } finally {
       setLoading(false);
     }

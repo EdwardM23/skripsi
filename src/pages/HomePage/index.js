@@ -188,7 +188,15 @@ const HomePage = ({route, navigation}) => {
       </View>
 
       <View style={styles.containerListStation}>
-        <TitleComp text="Station List" style={styles.titleFont} />
+        <View style={styles.headerStation}>
+          <TitleComp text="Station List" style={styles.titleFont} />
+          <TouchableOpacity
+            onPress={() => {
+              requestLocationPermission();
+            }}>
+            <Text style={{color: colors.blue}}>Refresh Location</Text>
+          </TouchableOpacity>
+        </View>
 
         <View style={styles.containerFlatList}>
           {isLoading ? (
@@ -258,5 +266,11 @@ const styles = StyleSheet.create({
 
   containerFlatList: {
     flex: 1,
+  },
+
+  headerStation: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });

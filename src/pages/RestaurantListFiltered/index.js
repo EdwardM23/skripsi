@@ -42,7 +42,10 @@ const RestauranListFiltered = ({route, navigation}) => {
       setData(response);
       console.log(response);
     } catch (error) {
-      alert(error.message);
+      // alert(error.message);
+      alert(
+        'There is no restaurant match with this filter, try another category',
+      );
     } finally {
       setLoading(false);
     }

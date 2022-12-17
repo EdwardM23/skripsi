@@ -135,7 +135,7 @@ const Profile = ({navigation, route}) => {
           <View>
             <TouchableOpacity
               onPress={() => {
-                handleLogout(), navigation.navigate('Splash');
+                handleLogout(), navigation.replace('Splash');
               }}>
               <Image source={logout} style={{width: 20, height: 20}} />
             </TouchableOpacity>
