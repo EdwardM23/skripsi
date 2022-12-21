@@ -177,12 +177,13 @@ const SignUp = ({navigation}) => {
         <TouchableOpacity onPress={() => navigation.replace('Login')}>
           <Text style={[{fontSize: 18, color: '#353535'}, styles.registerText]}>
             Already have account ?
+            <Text> </Text>
             <Text
               style={[
                 {fontSize: 18, color: '#0B59B1', fontWeight: '600'},
                 styles.loginText,
               ]}>
-              Login
+               Login
             </Text>
           </Text>
         </TouchableOpacity>

@@ -158,6 +158,7 @@ const Login = ({navigation}) => {
         <TouchableOpacity onPress={() => navigation.replace('Register')}>
           <Text style={[{fontSize: 18, color: '#353535'}, styles.registerText]}>
             Don't have account?
+            <Text> </Text>
             <Text
               style={[
                 {fontSize: 18, color: '#0B59B1', fontWeight: '600'},
