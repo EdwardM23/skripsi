@@ -84,14 +84,8 @@ const RestoDetail = ({route, navigation}) => {
   const [data, setData] = useState('');
   const {userDetails} = useContext(AuthContext);
   const [isLoading, setLoading] = useState(true);
+  const [isLike, setIsLike] = useState();
   console.log('Resto ID', detailInfo.id);
-
-  useEffect(() => {
-    const refresh = navigation.addListener('focus', () => {
-      getData();
-    });
-    return refresh;
-  }, [navigation]);
 
   const getData = async () => {
     try {
@@ -131,6 +125,51 @@ const RestoDetail = ({route, navigation}) => {
     }
   };
 
+  const removeWishlist = async (token, restaurantId) => {
+    try {
+      const res = await axios
+        .delete('https://eatzyapp.herokuapp.com/wishlist', {
+          token: token,
+          restaurantId: restaurantId,
+        })
+        .then(result => {
+          console.log('DELETE', result);
+          // setIsLike(result.data);
+        })
+        .catch(function (error) {
+          console.log('Delete');
+          console.log('Error', error);
+          console.log('Response', error.response);
+          console.log('Message', error.message);
+          alert('This restaurant already in your wishlist');
+        });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  const checkWishlist = async (token, restaurantId) => {
+    try {
+      const res = await axios
+        .post('https://eatzyapp.herokuapp.com/wishlist/status', {
+          token: token,
+          restaurantId: restaurantId,
+        })
+        .then(result => {
+          setIsLike(result.data);
+        })
+        .catch(function (error) {
+          console.log('STATUS');
+          console.log('Error', error);
+          console.log('Response', error.response);
+          console.log('Message', error.message);
+          alert('This restaurant already in your wishlist');
+        });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   const addHistory = async (token, restaurantId) => {
     console.log('History : ', token, restaurantId);
     try {
@@ -157,7 +196,15 @@ const RestoDetail = ({route, navigation}) => {
   useEffect(() => {
     getData();
     addHistory(userDetails.token, detailInfo.id);
+    checkWishlist(userDetails.token, detailInfo.id);
   }, []);
+
+  useEffect(() => {
+    const refresh = navigation.addListener('focus', () => {
+      getData();
+    });
+    return refresh;
+  }, [navigation]);
 
   const renderItem = ({item}) => (
     <ReviewCard
@@ -195,11 +242,19 @@ const RestoDetail = ({route, navigation}) => {
                 <Image source={Star} style={{height: 20, width: 20}} />
                 <Text style={styles.ratingText}>3.5</Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.saveContainer}
-                onPress={() => addWishlist(userDetails.token, detailInfo.id)}>
-                <Image source={Like} style={{height: 20, width: 20}} />
-              </TouchableOpacity>
+              {isLike ? (
+                <TouchableOpacity
+                  style={styles.saveContainer}
+                  onPress={() => addWishlist(userDetails.token, detailInfo.id)}>
+                  <Image source={Like} style={{height: 20, width: 20}} />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  style={styles.saveContainer}
+                  onPress={() => addWishlist(userDetails.token, detailInfo.id)}>
+                  <Image source={Unlike} style={{height: 20, width: 20}} />
+                </TouchableOpacity>
+              )}
             </View>
           </ImageBackground>
         </View>
