@@ -1,5 +1,6 @@
 import {
   ActivityIndicator,
+  Alert,
   FlatList,
   Image,
   PermissionsAndroid,
@@ -14,7 +15,8 @@ import cover from '../../images/smallCover.png';
 import TitleComp from '../../component/TitleComp';
 import axios from 'axios';
 import {colors} from '../../global/styles';
-import Geolocation from '@react-native-community/geolocation';
+// import Geolocation from '@react-native-community/geolocation';
+import Geolocation from 'react-native-geolocation-service';
 import {AuthContext} from '../../global/AuthContext';
 import Item from '../../component/Item';
 import profilePicture from '../../images/profile.png';
@@ -55,6 +57,7 @@ const HomePage = ({route, navigation}) => {
     try {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
         {
           title: 'Izinkan Mengambil Data Lokasi ?',
           message: 'Izinkan mengambil data lokasi untuk Testing',
@@ -65,12 +68,13 @@ const HomePage = ({route, navigation}) => {
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         console.log('You can use the lcoation');
-        Geolocation.getCurrentPosition(info =>
-          console.log(info.coords.latitude),
-        );
+        // Geolocation.getCurrentPosition(info =>
+        //   console.log(info.coords.latitude),
+        // );
         console.log('Lokasi sudah didapatkan');
         Geolocation.getCurrentPosition(
           posisi => {
+            console.log('GPS LOCATION', posisi);
             let currLongitude = JSON.stringify(posisi.coords.longitude);
             let currLatitud1e = JSON.stringify(posisi.coords.latitude);
             setcurrLongitude(currLongitude);
@@ -83,6 +87,7 @@ const HomePage = ({route, navigation}) => {
               'error posisi tidak bisa ditemukan',
               JSON.stringify(error),
             ),
+          {enableHighAccuracy: true, maximumAge: 0},
         );
       } else {
         console.log('Location permission denied');
@@ -92,20 +97,10 @@ const HomePage = ({route, navigation}) => {
     }
   };
 
-  // const getData = async () => {
-  //   try {
-  //     const res = await axios.get('https://eatzyapp.herokuapp.com/station');
-  //     setData(res.data);
-  //     //   console.log(res.data);
-  //   } catch (error) {
-  //     alert(error.message);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-  const getData = async (text, currLongitude, currLatitude) => {
+  const getData = (text, currLongitude, currLatitude) => {
+    console.log('Send API', currLongitude, currLatitude);
     try {
-      const res = await axios
+      axios
         .post('http://eatzyapp.herokuapp.com/station/nearest', {
           keyword: text,
           longitude: currLongitude,
@@ -129,23 +124,31 @@ const HomePage = ({route, navigation}) => {
   // Did Mount
   useEffect(() => {
     requestLocationPermission();
-    // return () => {
-    //   console.log('Did Update', text, currLongitude, currLatitude);
-    // };
+    console.log('Mounting');
   }, []);
 
-  // useEffect(() => {
-  //   getData('TOSARI', currLongitude, currLatitude);
-  // }, []);
-
+  // GetLocation & Reload Lcoatuin
+  const location = React.useRef(null);
+  const onChangeLocation = (long, lat) => {
+    clearTimeout(location.current);
+    location.current = setTimeout(() => {
+      getData('', long, lat);
+    }, 200);
+  };
   useEffect(() => {
     console.log('Did Update', text, currLongitude, currLatitude);
-    getData('', currLongitude, currLatitude);
+    onChangeLocation(currLongitude, currLatitude);
   }, [currLongitude, currLatitude]);
 
-  useEffect(() => {
-    getData(text, currLongitude, currLatitude);
-  }, [text]);
+  // Search
+  const search = React.useRef(null);
+  const onChangeHandler = value => {
+    clearTimeout(search.current);
+    setText(value);
+    search.current = setTimeout(() => {
+      getData(value, currLongitude, currLatitude);
+    }, 200);
+  };
 
   const renderItem = ({item}) => (
     <Item
@@ -182,7 +185,7 @@ const HomePage = ({route, navigation}) => {
         <TextInput
           style={styles.input}
           value={text}
-          onChangeText={value => setText(value)}
+          onChangeText={value => onChangeHandler(value)}
           placeholder="Search..."
         />
       </View>
@@ -194,6 +197,7 @@ const HomePage = ({route, navigation}) => {
             onPress={() => {
               requestLocationPermission();
               getData('', currLongitude, currLatitude);
+              setText('');
             }}>
             <Text style={{color: colors.blue}}>Refresh Location</Text>
           </TouchableOpacity>

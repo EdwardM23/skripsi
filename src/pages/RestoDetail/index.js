@@ -111,6 +111,7 @@ const RestoDetail = ({route, navigation}) => {
           restaurantId: restaurantId,
         })
         .then(result => {
+          setIsLike(true);
           console.log(result.data);
           alert(result.data.msg);
         })
@@ -126,22 +127,22 @@ const RestoDetail = ({route, navigation}) => {
   };
 
   const removeWishlist = async (token, restaurantId) => {
+    console.log('DELETE PASS', token, restaurantId);
     try {
-      const res = await axios
+      await axios
         .delete('https://eatzyapp.herokuapp.com/wishlist', {
-          token: token,
-          restaurantId: restaurantId,
+          data: {token: token, restaurantId: restaurantId},
         })
         .then(result => {
+          setIsLike(false);
           console.log('DELETE', result);
-          // setIsLike(result.data);
         })
         .catch(function (error) {
-          console.log('Delete');
+          console.log('Error Delete');
           console.log('Error', error);
           console.log('Response', error.response);
           console.log('Message', error.message);
-          alert('This restaurant already in your wishlist');
+          alert('Error Delete');
         });
     } catch (error) {
       alert(error.message);
@@ -156,14 +157,16 @@ const RestoDetail = ({route, navigation}) => {
           restaurantId: restaurantId,
         })
         .then(result => {
+          console.log('Status Wishlist: ', result);
           setIsLike(result.data);
+          console.log('Status Wishlist', isLike);
         })
         .catch(function (error) {
-          console.log('STATUS');
+          console.log('STATUS CHECKWISHLIST');
           console.log('Error', error);
           console.log('Response', error.response);
           console.log('Message', error.message);
-          alert('This restaurant already in your wishlist');
+          // alert('Check Status Wishlist');
         });
     } catch (error) {
       alert(error.message);
@@ -206,6 +209,11 @@ const RestoDetail = ({route, navigation}) => {
     return refresh;
   }, [navigation]);
 
+  // useEffect(() => {
+  //   checkWishlist();
+  //   console.log('IS LIKE VAL', isLike);
+  // }, [isLike]);
+
   const renderItem = ({item}) => (
     <ReviewCard
       review={item.review}
@@ -245,7 +253,9 @@ const RestoDetail = ({route, navigation}) => {
               {isLike ? (
                 <TouchableOpacity
                   style={styles.saveContainer}
-                  onPress={() => addWishlist(userDetails.token, detailInfo.id)}>
+                  onPress={() => {
+                    removeWishlist(userDetails.token, detailInfo.id);
+                  }}>
                   <Image source={Like} style={{height: 20, width: 20}} />
                 </TouchableOpacity>
               ) : (
@@ -374,7 +384,6 @@ const RestoDetail = ({route, navigation}) => {
           style={styles.directionButton}
           onPress={() => {
             Linking.openURL(
-              // 'https://www.google.com/maps/search/?api=1&query=-6.1961207,106.8211564',
               'https://www.google.com/maps/search/?api=1&query=' +
                 encodeURI(detailInfo.name + ' ' + detailInfo.address),
             );

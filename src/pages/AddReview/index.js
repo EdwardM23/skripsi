@@ -179,7 +179,7 @@ const AddReview = ({route, navigation}) => {
             <Text style={styles.title}>
               Write a Review
               {textLen <= 150 ? (
-                <Text>({textLen}/100)</Text>
+                <Text>({textLen}/150)</Text>
               ) : (
                 <Text style={{color: colors.red}}>({textLen}/100)</Text>
               )}
