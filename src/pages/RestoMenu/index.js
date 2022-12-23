@@ -1,4 +1,4 @@
-import {Dimensions, StyleSheet, Text, View} from 'react-native';
+import {Alert, Dimensions, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import Pdf from 'react-native-pdf';
 
@@ -21,6 +21,7 @@ const RestoMenu = ({route, navigation}) => {
         }}
         onError={error => {
           console.log(error);
+          Alert.alert('Menu currently unavailble');
         }}
         onPressLink={uri => {
           console.log(`Link pressed: ${uri}`);

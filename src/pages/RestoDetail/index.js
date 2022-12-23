@@ -85,6 +85,7 @@ const RestoDetail = ({route, navigation}) => {
   const {userDetails} = useContext(AuthContext);
   const [isLoading, setLoading] = useState(true);
   const [isLike, setIsLike] = useState();
+  const [rating, setRating] = useState('');
   console.log('Resto ID', detailInfo.id);
 
   const getData = async () => {
@@ -196,10 +197,28 @@ const RestoDetail = ({route, navigation}) => {
     }
   };
 
+  const getAvgRating = async id => {
+    console.log('ID avg rating', id);
+    try {
+      const res = await axios.get(
+        'https://eatzyapp.herokuapp.com/review/average/' + id,
+      );
+      console.log(rating);
+      console.log('res AVG Rating', res.data[0]);
+      console.log(res);
+      setRating(res.data[0].averageRating);
+      console.log('RATING : ', rating);
+    } catch (error) {
+      alert(error.message);
+    } finally {
+    }
+  };
+
   useEffect(() => {
     getData();
     addHistory(userDetails.token, detailInfo.id);
     checkWishlist(userDetails.token, detailInfo.id);
+    getAvgRating(detailInfo.id);
   }, []);
 
   useEffect(() => {
@@ -208,11 +227,6 @@ const RestoDetail = ({route, navigation}) => {
     });
     return refresh;
   }, [navigation]);
-
-  // useEffect(() => {
-  //   checkWishlist();
-  //   console.log('IS LIKE VAL', isLike);
-  // }, [isLike]);
 
   const renderItem = ({item}) => (
     <ReviewCard
@@ -223,9 +237,6 @@ const RestoDetail = ({route, navigation}) => {
       name={item.username}
     />
   );
-  // const renderItem = ({item}) => {
-  //   console.log(item.review);
-  // };
 
   return (
     <View>
@@ -246,10 +257,19 @@ const RestoDetail = ({route, navigation}) => {
                 marginHorizontal: 20,
                 marginTop: 10,
               }}>
-              <TouchableOpacity style={styles.ratingContainer}>
-                <Image source={Star} style={{height: 20, width: 20}} />
-                <Text style={styles.ratingText}>3.5</Text>
-              </TouchableOpacity>
+              {rating == null ? (
+                <View style={styles.ratingContainerNull}></View>
+              ) : (
+                <>
+                  <View style={styles.ratingContainer}>
+                    <Image source={Star} style={{height: 20, width: 20}} />
+                    <Text style={styles.ratingText}>
+                      {parseFloat(rating).toFixed(1)}
+                    </Text>
+                  </View>
+                </>
+              )}
+
               {isLike ? (
                 <TouchableOpacity
                   style={styles.saveContainer}
@@ -500,6 +520,15 @@ const styles = StyleSheet.create({
 
   ratingContainer: {
     backgroundColor: colors.white,
+    width: 60,
+    height: 30,
+    borderRadius: 15,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+  },
+
+  ratingContainerNull: {
     width: 60,
     height: 30,
     borderRadius: 15,
