@@ -273,9 +273,20 @@ const RestoDetail = ({route, navigation}) => {
               {isLike ? (
                 <TouchableOpacity
                   style={styles.saveContainer}
-                  onPress={() => {
-                    removeWishlist(userDetails.token, detailInfo.id);
-                  }}>
+                  onPress={() =>
+                    Alert.alert(
+                      'Alert',
+                      'Are you sure want to remove this restauran from whislist ?',
+                      [
+                        {text: 'No'},
+                        {
+                          text: 'Yes',
+                          onPress: () =>
+                            removeWishlist(userDetails.token, detailInfo.id),
+                        },
+                      ],
+                    )
+                  }>
                   <Image source={Like} style={{height: 20, width: 20}} />
                 </TouchableOpacity>
               ) : (
@@ -366,13 +377,7 @@ const RestoDetail = ({route, navigation}) => {
                   renderItem={renderItem}
                   keyExtractor={({id}, index) => id}
                 />
-                // {data == '' ? (<Text>There is no review yet</Text>) : (               <FlatList
-                //   data={data}
-                //   renderItem={renderItem}
-                //   keyExtractor={({id}, index) => id}
-                // />)}
               )}
-              {/* <Review /> */}
             </View>
           </View>
 

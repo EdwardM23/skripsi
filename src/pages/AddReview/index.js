@@ -299,7 +299,7 @@ const AddReview = ({route, navigation}) => {
                 );
               }
               setTimeout(() => {
-                navigation.navigate('AllReviews', {
+                navigation.replace('AllReviews', {
                   passRestoId: restaurantId,
                 });
               }, 500);

@@ -24,21 +24,11 @@ const Stack = createNativeStackNavigator();
 
 const Navigate = () => {
   const {isLoggedIn} = useContext(AuthContext);
-  console.log('IS LOGI IN', isLoggedIn);
   return (
     <NavigationContainer>
       <Stack.Navigator>
         {isLoggedIn == false ? (
           <>
-            {/* <Stack.Screen name="Home" component={HomePage} />
-            <Stack.Screen name="Profile" component={Profile} />
-            <Stack.Screen name="RestauranList" component={RestauranList} />
-            <Stack.Screen name="RestoDetail" component={RestoDetail} />
-            <Stack.Screen
-              name="RestaurantListFiltered"
-              component={RestaurantListFiltered}
-            />
-            <Stack.Screen name="Filter" component={Filter} /> */}
             <Stack.Screen
               name="Splash"
               component={SplashScreen}

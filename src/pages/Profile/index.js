@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   FlatList,
   LogBox,
+  Alert,
 } from 'react-native';
 import Header from '../../component/Header';
 import {colors} from '../../global/styles';
@@ -134,9 +135,18 @@ const Profile = ({navigation, route}) => {
 
           <View>
             <TouchableOpacity
-              onPress={() => {
-                handleLogout(), navigation.replace('Splash');
-              }}>
+              onPress={() =>
+                Alert.alert('Alert', 'Are you sure want to Logout ?', [
+                  {text: 'No'},
+                  {
+                    text: 'Yes',
+                    onPress: () => {
+                      handleLogout();
+                      navigation.replace('Splash');
+                    },
+                  },
+                ])
+              }>
               <Image source={logout} style={{width: 20, height: 20}} />
             </TouchableOpacity>
           </View>
@@ -174,6 +184,7 @@ const styles = StyleSheet.create({
     // flex:1,
     backgroundColor: colors.white,
     padding: 10,
+    height: '100%',
   },
 
   title: {
