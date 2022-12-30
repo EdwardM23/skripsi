@@ -44,7 +44,13 @@ const ReviewCard = ({review, rating, imageUrl, reviewTime, name}) => (
 
           <View style={{flexDirection: 'row'}}>
             <Text style={styles.reviewText2}>
-              {reviewTime.replace(/T|Z/g, ' ').substring(0, 19)}
+              {reviewTime.substring(8, 10) +
+                '-' +
+                reviewTime.substring(5, 7) +
+                '-' +
+                reviewTime.substring(0, 4) +
+                ' ' +
+                reviewTime.substring(11, 19)}
             </Text>
           </View>
         </View>

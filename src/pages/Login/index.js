@@ -92,13 +92,14 @@ const Login = ({navigation}) => {
         })
         .catch(function (error) {
           updateError('Wrong Email or Password !!!', setError);
+          setLoading(false);
           console.log('Error', error);
           console.log('Response', error.response);
           console.log('Message', error.message);
         });
     } catch (error) {
       Alert(error.message);
-      setError('Invalid Username or Passowrd, Please Try Again .');
+      // setError('Invalid Username or Passowrd, Please Try Again .');
     }
   };
 
@@ -106,8 +107,13 @@ const Login = ({navigation}) => {
     if (isValidForm()) {
       console.log(userInfo);
       console.log('Form Valid !!!');
-      sendData(email, password);
       setLoading(true);
+      sendData(email, password);
+      if (error != '') {
+        setLoading(false);
+      } else if (error == '') {
+        setLoading(true);
+      }
     } else {
       Alert.alert('Oops please check your input !!!');
     }

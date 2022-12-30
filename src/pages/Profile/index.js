@@ -76,6 +76,13 @@ const Profile = ({navigation, route}) => {
   const [isLoading, setLoading] = useState(true);
   console.log(userDetails);
 
+  useEffect(() => {
+    const refresh = navigation.addListener('focus', () => {
+      getWishlist(userDetails.token);
+    });
+    return refresh;
+  }, [navigation]);
+
   const getWishlist = async token => {
     console.log(token);
     console.log('https://eatzyapp.herokuapp.com/wishlist/' + token);

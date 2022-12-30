@@ -68,7 +68,7 @@ const Navigate = () => {
             <Stack.Screen
               name="RestaurantListFiltered"
               component={RestaurantListFiltered}
-              options={{headerShown: false}}
+              options={{title: 'Restaurant List'}}
             />
             <Stack.Screen
               name="RestoDetail"

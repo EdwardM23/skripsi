@@ -88,7 +88,7 @@ const AddReview = ({route, navigation}) => {
 
       console.log('DATAS: ', datas);
 
-      axios
+      await axios
         .post('https://eatzyapp.herokuapp.com/review', datas, {
           headers: {'Content-Type': 'multipart/form-data'},
         })
@@ -96,6 +96,7 @@ const AddReview = ({route, navigation}) => {
           console.log('Resilt : ', res);
         })
         .catch(error => {
+          // Alert.alert('You already add a review to this restaurant');
           console.log('Error', error);
           console.log('Response', error.response);
           console.log('Message', error.message);

@@ -85,6 +85,7 @@ const SignUp = ({navigation}) => {
         })
         .then(result => {
           console.log(result);
+          Alert.alert('Create Account Succeded');
           navigation.navigate('Login');
           // handleLogin(result.data.token, 'Edward');
         })
@@ -176,14 +177,13 @@ const SignUp = ({navigation}) => {
         <Button btnText="Register" onBtnPress={submitForm} />
         <TouchableOpacity onPress={() => navigation.replace('Login')}>
           <Text style={[{fontSize: 18, color: '#353535'}, styles.registerText]}>
-            Already have account ?
-            <Text> </Text>
+            Already have account ?<Text> </Text>
             <Text
               style={[
                 {fontSize: 18, color: '#0B59B1', fontWeight: '600'},
                 styles.loginText,
               ]}>
-               Login
+              Login
             </Text>
           </Text>
         </TouchableOpacity>
@@ -267,7 +267,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     marginTop: 10,
     marginBottom: 15,
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
   },
 
   textTitleCreateAccount: {
