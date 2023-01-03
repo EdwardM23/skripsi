@@ -120,7 +120,7 @@ const RestoDetail = ({route, navigation}) => {
         .then(result => {
           setIsLike(true);
           console.log(result.data);
-          alert(result.data.msg);
+          Alert.alert('', result.data.msg);
         })
         .catch(function (error) {
           console.log('Error', error);
@@ -281,8 +281,8 @@ const RestoDetail = ({route, navigation}) => {
                   style={styles.saveContainer}
                   onPress={() =>
                     Alert.alert(
-                      'Alert',
-                      'Are you sure want to remove this restauran from whislist ?',
+                      '',
+                      'Are you sure want to remove this restaurant from wishlist?',
                       [
                         {text: 'No'},
                         {
@@ -342,7 +342,7 @@ const RestoDetail = ({route, navigation}) => {
           <View style={styles.restaurantInfo}>
             <Image source={imgPrice} style={{height: 24, width: 24}} />
             <View style={styles.restaurantInfoText}>
-              <Text style={styles.infoText1}>Price</Text>
+              <Text style={styles.infoText1}>Price Range</Text>
               <Text style={styles.infoText2}>
                 Rp. {detailInfo.priceRange} (approx.)
               </Text>
@@ -371,32 +371,36 @@ const RestoDetail = ({route, navigation}) => {
           <View>
             <View style={styles.containerFlatList}>
               {data == '' ? (
-                <Text>There is no comment yet</Text>
+                <Text style={{paddingBottom: 20}}>No review yet.</Text>
               ) : (
-                <View></View>
-              )}
-              {isLoading ? (
-                <ActivityIndicator size="large" style={{marginTop: 20}} />
-              ) : (
-                <FlatList
-                  data={data}
-                  renderItem={renderItem}
-                  keyExtractor={({id}, index) => id}
-                />
+                <View>
+                  {isLoading ? (
+                    <ActivityIndicator size="large" style={{marginTop: 20}} />
+                  ) : (
+                    <>
+                      <FlatList
+                        data={data}
+                        renderItem={renderItem}
+                        keyExtractor={({id}, index) => id}
+                      />
+                      {/* See All Reviews */}
+
+                      <TouchableOpacity
+                        onPress={() =>
+                          navigation.navigate('AllReviews', {
+                            passRestoId: detailInfo.id,
+                          })
+                        }>
+                        <Text style={styles.seeAllReviews}>
+                          See All Reviews
+                        </Text>
+                      </TouchableOpacity>
+                    </>
+                  )}
+                </View>
               )}
             </View>
           </View>
-
-          {/* See All Reviews */}
-
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('AllReviews', {
-                passRestoId: detailInfo.id,
-              })
-            }>
-            <Text style={styles.seeAllReviews}>See All Reviews</Text>
-          </TouchableOpacity>
         </View>
       </ScrollView>
       {/* Menu & Direction */}
@@ -479,6 +483,7 @@ const styles = StyleSheet.create({
 
   containerFlatList: {
     flex: 1,
+    backgroundColor: colors.white,
   },
 
   item: {

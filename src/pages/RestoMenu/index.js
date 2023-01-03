@@ -21,7 +21,7 @@ const RestoMenu = ({route, navigation}) => {
         }}
         onError={error => {
           console.log(error);
-          Alert.alert('Menu currently unavailable');
+          Alert.alert('Menu currently not available');
         }}
         onPressLink={uri => {
           console.log(`Link pressed: ${uri}`);

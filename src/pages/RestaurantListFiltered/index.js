@@ -7,6 +7,7 @@ import {
   FlatList,
   ActivityIndicator,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import React, {useContext, useEffect, useState} from 'react';
 import TitleComp from '../../component/TitleComp';
@@ -43,8 +44,9 @@ const RestauranListFiltered = ({route, navigation}) => {
       console.log(response);
     } catch (error) {
       // alert(error.message);
-      alert(
-        'There is no restaurant match with this filter, try another category',
+      Alert.alert(
+        'No Restaurant Available',
+        'There is no restaurant match this filter, try another category.',
       );
     } finally {
       setLoading(false);

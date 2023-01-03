@@ -59,8 +59,8 @@ const HomePage = ({route, navigation}) => {
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
         {
-          title: 'Izinkan Mengambil Data Lokasi ?',
-          message: 'Izinkan mengambil data lokasi untuk Testing',
+          title: 'Eatzy App Location Permission',
+          message: 'Cool Eatzy App needs access to your camer',
           buttonNeutral: 'Ask Me Later',
           buttonNegative: 'Cancel',
           buttonPositive: 'OK',
@@ -84,8 +84,8 @@ const HomePage = ({route, navigation}) => {
           },
           error =>
             Alert.alert(
-              'error posisi tidak bisa ditemukan',
-              JSON.stringify(error),
+              'Your location currently unavailable',
+              // JSON.stringify(error),
             ),
           {enableHighAccuracy: true, maximumAge: 0},
         );
@@ -167,7 +167,7 @@ const HomePage = ({route, navigation}) => {
     <View style={styles.wrapper}>
       <View style={styles.header}>
         <Text style={{fontSize: 18, color: colors.blue, fontWeight: 'bold'}}>
-          Hello {userDetails.username}
+          Hello, {userDetails.username}
         </Text>
         <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
           <Image source={profilePicture} style={{width: 45, height: 45}} />
@@ -192,7 +192,7 @@ const HomePage = ({route, navigation}) => {
 
       <View style={styles.containerListStation}>
         <View style={styles.headerStation}>
-          <TitleComp text="Station List" style={styles.titleFont} />
+          <TitleComp text="Station" style={styles.titleFont} />
           <TouchableOpacity
             onPress={() => {
               requestLocationPermission();
@@ -216,7 +216,7 @@ const HomePage = ({route, navigation}) => {
                   nestedScrollEnabled
                 />
               ) : (
-                <Text>No station found, try to search other station</Text>
+                <Text>No station found, try to search another station</Text>
               )}
             </>
           )}

@@ -143,16 +143,20 @@ const Profile = ({navigation, route}) => {
           <View>
             <TouchableOpacity
               onPress={() =>
-                Alert.alert('Alert', 'Are you sure want to Logout ?', [
-                  {text: 'No'},
-                  {
-                    text: 'Yes',
-                    onPress: () => {
-                      handleLogout();
-                      navigation.replace('Splash');
+                Alert.alert(
+                  'Logout Confirmation',
+                  'Are you sure want to logout?',
+                  [
+                    {text: 'No'},
+                    {
+                      text: 'Yes',
+                      onPress: () => {
+                        handleLogout();
+                        navigation.replace('Splash');
+                      },
                     },
-                  },
-                ])
+                  ],
+                )
               }>
               <Image source={logout} style={{width: 20, height: 20}} />
             </TouchableOpacity>
@@ -170,11 +174,21 @@ const Profile = ({navigation, route}) => {
           {isLoading ? (
             <ActivityIndicator size="large" style={{marginTop: 20}} />
           ) : (
-            <FlatList
-              data={wishlist}
-              renderItem={renderItem}
-              keyExtractor={({id}, index) => id}
-            />
+            <>
+              {wishlist == '' ? (
+                <View style={{padding: 20}}>
+                  <Text>Your wishlist is empty</Text>
+                </View>
+              ) : (
+                <>
+                  <FlatList
+                    data={wishlist}
+                    renderItem={renderItem}
+                    keyExtractor={({id}, index) => id}
+                  />
+                </>
+              )}
+            </>
           )}
           {/* <ReviewCard /> */}
           {/* <ItemResto /> */}

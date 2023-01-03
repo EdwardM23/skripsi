@@ -60,11 +60,12 @@ const Login = ({navigation}) => {
     }
 
     // only valid email is allowed
-    if (!isValideEmail(email)) return updateError('Invalid Email!', setError);
+    if (!isValideEmail(email))
+      return updateError('Incorrect email or password', setError);
 
     // password must have 8 char or more
     if (!password.trim() || password.length < 8)
-      return updateError('Password is less then 8 Character!', setError);
+      return updateError('Incorrect email or password.', setError);
 
     return true;
   };
@@ -91,7 +92,7 @@ const Login = ({navigation}) => {
           });
         })
         .catch(function (error) {
-          updateError('Wrong Email or Password !!!', setError);
+          updateError('Incorrect email or password.', setError);
           setLoading(false);
           console.log('Error', error);
           console.log('Response', error.response);
@@ -115,7 +116,7 @@ const Login = ({navigation}) => {
         setLoading(true);
       }
     } else {
-      Alert.alert('Oops please check your input !!!');
+      // Alert.alert('Oops please check your input !!!');
     }
   };
 
@@ -163,7 +164,7 @@ const Login = ({navigation}) => {
         <Button btnText="Login" onBtnPress={submitForm} />
         <TouchableOpacity onPress={() => navigation.replace('Register')}>
           <Text style={[{fontSize: 18, color: '#353535'}, styles.registerText]}>
-            Don't have account?
+            Don't have any account?
             <Text> </Text>
             <Text
               style={[

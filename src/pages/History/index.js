@@ -61,7 +61,7 @@ const History = ({route, navigation}) => {
         <TitleComp text="History" />
       </View>
       <View>
-        {history == '' ? <Text>There is no history yet</Text> : <View></View>}
+        {history == '' ? <Text>No history yet.</Text> : <View></View>}
         {isLoading ? (
           <ActivityIndicator size="large" style={{marginTop: 20}} />
         ) : (

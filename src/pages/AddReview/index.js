@@ -40,6 +40,11 @@ const AddReview = ({route, navigation}) => {
   const [error, setError] = useState('');
   const [isSubmit, setIsSubmit] = useState(false);
   const [isAnonymous, setIsAnonymous] = useState(false);
+  // const [imagePath, setImagePath] = useState({
+  //   uri: '',
+  //   type: '',
+  //   name: file.fileName,
+  // });
 
   useEffect(() => {
     const refresh = navigation.addListener('focus', () => {
@@ -59,8 +64,8 @@ const AddReview = ({route, navigation}) => {
   };
 
   const isValidForm = () => {
-    if (textLen > 100)
-      return updateError('Review must less than 100', setError);
+    if (textLen > 150)
+      return updateError('Review must be less than 150 characters.', setError);
     return true;
   };
 
@@ -80,11 +85,16 @@ const AddReview = ({route, navigation}) => {
       datas.append('rating', rating);
       datas.append('review', review);
       datas.append('isAnonymous', isAnonymous);
-      datas.append('file', {
-        uri: file.uri,
-        type: file.type,
-        name: file.fileName,
-      });
+
+      // Check Image Exist or Not
+      if (file == '') {
+      } else if (file != '') {
+        datas.append('file', {
+          uri: file.uri,
+          type: file.type,
+          name: file.fileName,
+        });
+      }
 
       console.log('DATAS: ', datas);
 
@@ -96,7 +106,7 @@ const AddReview = ({route, navigation}) => {
           console.log('Resilt : ', res);
         })
         .catch(error => {
-          // Alert.alert('You already add a review to this restaurant');
+          Alert.alert('You already add a review to this restaurant');
           console.log('Error', error);
           console.log('Response', error.response);
           console.log('Message', error.message);
@@ -178,11 +188,11 @@ const AddReview = ({route, navigation}) => {
           {/* Write a Review */}
           <View style={{marginTop: 30}}>
             <Text style={styles.title}>
-              Write a Review
+              Write a Review<Text> </Text>
               {textLen <= 150 ? (
                 <Text>({textLen}/150)</Text>
               ) : (
-                <Text style={{color: colors.red}}>({textLen}/100)</Text>
+                <Text style={{color: colors.red}}>({textLen}/150)</Text>
               )}
             </Text>
             <TextInput
@@ -244,6 +254,7 @@ const AddReview = ({route, navigation}) => {
               </TouchableOpacity>
             </Text>
           </View>
+
           {/* Anonymous */}
           <View>
             <CheckBox
@@ -305,7 +316,7 @@ const AddReview = ({route, navigation}) => {
                 });
               }, 500);
             } else {
-              Alert.alert('Oops please check your input !!!');
+              // Alert.alert('Oops please check your input !!!');
             }
           }}
         />

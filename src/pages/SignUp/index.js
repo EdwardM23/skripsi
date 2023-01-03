@@ -51,23 +51,27 @@ const SignUp = ({navigation}) => {
     //all value must fill
     if (!isValidObjField(userInfo)) {
       console.log(userInfo);
-      return updateError('Required all fields!', setError);
+      return updateError('Required all fields.', setError);
     }
 
     // name < 3
-    if (!username.trim() || username.length < 3)
-      return updateError('Invalid Name!', setError);
+    if (!username.trim() || username.length < 6)
+      return updateError('Name must more than 5 characters.', setError);
 
     // only valid email is allowed
-    if (!isValideEmail(email)) return updateError('Invalid Email!', setError);
+    if (!isValideEmail(email))
+      return updateError('Invalid email address.', setError);
 
     // password must have 8 char or more
     if (!password.trim() || password.length < 8)
-      return updateError('Password is less then 8 Character!', setError);
+      return updateError('Password is less than 8 character.', setError);
 
     // confirm password
     if (password !== confirmPassword)
-      return updateError('Password not match!', setError);
+      return updateError(
+        'Password and Confirm Password must be match.',
+        setError,
+      );
 
     return true;
   };
@@ -85,12 +89,12 @@ const SignUp = ({navigation}) => {
         })
         .then(result => {
           console.log(result);
-          Alert.alert('Create Account Succeded');
+          Alert.alert('Account successfully created');
           navigation.navigate('Login');
           // handleLogin(result.data.token, 'Edward');
         })
         .catch(function (error) {
-          updateError('Email alteady registered !!!', setError);
+          updateError('Email already registered.', setError);
           // console.log('Error', error);
           // console.log('Response', error.response);
           // console.log('Message', error.message);
@@ -114,7 +118,7 @@ const SignUp = ({navigation}) => {
       // console.log({username});
       sendData(email, password, username);
     } else {
-      Alert.alert('Oops please check your input !!!');
+      // Alert.alert('Oops please check your input !!!');
     }
   };
 
@@ -177,7 +181,7 @@ const SignUp = ({navigation}) => {
         <Button btnText="Register" onBtnPress={submitForm} />
         <TouchableOpacity onPress={() => navigation.replace('Login')}>
           <Text style={[{fontSize: 18, color: '#353535'}, styles.registerText]}>
-            Already have account ?<Text> </Text>
+            Already have an account?<Text> </Text>
             <Text
               style={[
                 {fontSize: 18, color: '#0B59B1', fontWeight: '600'},
