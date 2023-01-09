@@ -106,7 +106,11 @@ const AddReview = ({route, navigation}) => {
           console.log('Resilt : ', res);
         })
         .catch(error => {
-          Alert.alert('You already add a review to this restaurant');
+          if ((error.response.status = 400)) {
+            Alert.alert(error.response.data.msg);
+          } else {
+            Alert.alert('Server error');
+          }
           console.log('Error', error);
           console.log('Response', error.response);
           console.log('Message', error.message);

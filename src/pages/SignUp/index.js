@@ -94,7 +94,11 @@ const SignUp = ({navigation}) => {
           // handleLogin(result.data.token, 'Edward');
         })
         .catch(function (error) {
-          updateError('Email already registered.', setError);
+          if ((error.response.status = 400)) {
+            updateError(error.response.data.message, setError);
+          } else {
+            updateError('Server error.', setError);
+          }
           // console.log('Error', error);
           // console.log('Response', error.response);
           // console.log('Message', error.message);
