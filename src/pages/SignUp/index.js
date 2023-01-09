@@ -69,7 +69,7 @@ const SignUp = ({navigation}) => {
     // confirm password
     if (password !== confirmPassword)
       return updateError(
-        'Password and Confirm Password must be match.',
+        'Password and confirm password must be matched.',
         setError,
       );
 
@@ -90,7 +90,7 @@ const SignUp = ({navigation}) => {
         .then(result => {
           console.log(result);
           Alert.alert('Account successfully created');
-          navigation.navigate('Login');
+          navigation.replace('Login');
           // handleLogin(result.data.token, 'Edward');
         })
         .catch(function (error) {
@@ -138,8 +138,8 @@ const SignUp = ({navigation}) => {
           style={styles.input}
           value={username}
           onChangeText={value => handleOnChangeText(value, 'username')}
-          label="Username"
-          placeholder="username"
+          label="Name"
+          placeholder="Name"
           placeholderStlye
         />
 
@@ -149,7 +149,7 @@ const SignUp = ({navigation}) => {
           value={email}
           onChangeText={value => handleOnChangeText(value, 'email')}
           label="Email"
-          placeholder="example@gmail.com"
+          placeholder="Email"
         />
 
         <FormInput
@@ -179,7 +179,7 @@ const SignUp = ({navigation}) => {
 
       <View style={styles.btnContainer}>
         <Button btnText="Register" onBtnPress={submitForm} />
-        <TouchableOpacity onPress={() => navigation.replace('Login')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
           <Text style={[{fontSize: 18, color: '#353535'}, styles.registerText]}>
             Already have an account?<Text> </Text>
             <Text
@@ -291,7 +291,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 15,
   },
-  // formStyle: {
-  //   marginBottom: -7,
-  // },
 });

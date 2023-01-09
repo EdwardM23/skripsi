@@ -15,6 +15,8 @@ import Header from '../../component/Header';
 import {colors} from '../../global/styles';
 import Star from '../../images/star.png';
 import ItemResto from '../../component/ItemResto';
+import historyImg from '../../images/history.png';
+import filterImg from '../../images/filter.png';
 import axios from 'axios';
 
 // const ItemResto = ({
@@ -159,7 +161,10 @@ const RestauranList = ({route, navigation}) => {
               onPress={() => {
                 navigation.navigate('History');
               }}>
-              <Text style={styles.filterFont}>History</Text>
+              <View style={styles.histFilBtn}>
+                <Image source={historyImg} style={styles.iconStyle} />
+                <Text style={styles.filterFont}>History</Text>
+              </View>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
@@ -167,7 +172,10 @@ const RestauranList = ({route, navigation}) => {
                   stationId: stationId,
                 });
               }}>
-              <Text style={styles.filterFont}>Filter</Text>
+              <View style={styles.histFilBtn}>
+                <Image source={filterImg} style={styles.iconStyle} />
+                <Text style={styles.filterFont}>Filter</Text>
+              </View>
             </TouchableOpacity>
           </View>
 
@@ -297,5 +305,15 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginTop: 10,
     marginBottom: 10,
+  },
+  iconStyle: {
+    width: 18,
+    height: 18,
+    marginRight: 5,
+  },
+  histFilBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

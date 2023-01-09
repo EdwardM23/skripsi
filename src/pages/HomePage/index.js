@@ -20,6 +20,7 @@ import Geolocation from 'react-native-geolocation-service';
 import {AuthContext} from '../../global/AuthContext';
 import Item from '../../component/Item';
 import profilePicture from '../../images/profile.png';
+import refreshImg from '../../images/refresh.png';
 
 // Geolocation.getCurrentPosition(info => console.log(info));
 
@@ -199,7 +200,10 @@ const HomePage = ({route, navigation}) => {
               getData('', currLongitude, currLatitude);
               setText('');
             }}>
-            <Text style={{color: colors.blue}}>Refresh Location</Text>
+            <View style={styles.reloadLocation}>
+              <Image source={refreshImg} style={styles.iconStyle} />
+              <Text style={{color: colors.blue}}>Refresh</Text>
+            </View>
           </TouchableOpacity>
         </View>
 
@@ -277,5 +281,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  titleFont: {alignItems: 'center'},
+  iconStyle: {
+    width: 16,
+    height: 13,
+    marginRight: 5,
+  },
+  reloadLocation: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

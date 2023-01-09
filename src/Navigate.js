@@ -90,7 +90,7 @@ const Navigate = () => {
             <Stack.Screen
               name="AllReviews"
               component={AllReviews}
-              options={{title: 'All Review'}}
+              options={{title: 'All Reviews'}}
             />
           </>
         )}

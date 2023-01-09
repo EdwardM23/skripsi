@@ -137,7 +137,7 @@ const Login = ({navigation}) => {
           value={email}
           onChangeText={value => handleOnChangeText(value, 'email')}
           label="Email"
-          placeholder="example@gmail.com"
+          placeholder="Email"
         />
 
         <FormInput
@@ -162,7 +162,7 @@ const Login = ({navigation}) => {
 
       <View style={styles.btnContainer}>
         <Button btnText="Login" onBtnPress={submitForm} />
-        <TouchableOpacity onPress={() => navigation.replace('Register')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
           <Text style={[{fontSize: 18, color: '#353535'}, styles.registerText]}>
             Don't have any account?
             <Text> </Text>

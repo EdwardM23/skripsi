@@ -282,7 +282,7 @@ const RestoDetail = ({route, navigation}) => {
                   onPress={() =>
                     Alert.alert(
                       '',
-                      'Are you sure want to remove this restaurant from wishlist?',
+                      'Are you sure want to remove this restaurant from your wishlist?',
                       [
                         {text: 'No'},
                         {
