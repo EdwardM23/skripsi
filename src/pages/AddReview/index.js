@@ -120,59 +120,6 @@ const AddReview = ({route, navigation}) => {
     }
   };
 
-  const addReview1 = async (
-    token,
-    restaurantId,
-    file,
-    rating,
-    review,
-    isAnonymous,
-  ) => {
-    try {
-      const img = Buffer.from(file.base64, 'base64');
-      console.log('This is Buffer >> ', img);
-      // datas.append('images', {
-      //   name: file.fileName,
-      //   type: file.type,
-      //   uri: file.uri,
-      // });
-      console.log();
-      console.log('name: ', file.fileName);
-      console.log('data: ', img);
-      console.log('size: ', file.fileSize);
-      console.log('encoding: ', file.encoding);
-      console.log('tempFilePath: ', file.uri);
-      console.log('truncated: ', false);
-      await axios
-        .post('https://eatzyapp.herokuapp.com/review', {
-          token: token,
-          restaurantId: restaurantId,
-          file: {
-            name: file.fileName,
-            data: img,
-            size: file.fileSize,
-            tempFilePath: file.uri,
-            mimeType: file.type,
-          },
-          rating: rating,
-          review: review,
-          isAnonymous: isAnonymous,
-        })
-        .then(result => {
-          console.log('Resilt : ', result);
-          // alert(result.data.msg);
-        })
-        .catch(function (error) {
-          console.log('Error', error);
-          console.log('Response', error.response);
-          console.log('Message', error.message);
-          // alert('This restaurant already in your wishlist');
-        });
-    } catch (error) {
-      alert(error.message);
-    }
-  };
-
   return (
     <View style={styles.container}>
       {/* <Header title="Add Review" /> */}
@@ -355,7 +302,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.grey,
     borderRadius: 15,
-    width: 350,
+    width: '100%',
     height: 100,
     textAlignVertical: 'top',
     fontSize: 14,
@@ -363,7 +310,7 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    width: 350,
+    width: '100%',
     height: 150,
     backgroundColor: colors.white,
     alignItems: 'center',

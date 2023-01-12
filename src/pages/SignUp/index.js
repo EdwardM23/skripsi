@@ -7,6 +7,7 @@ import {
   TextInput,
   ScrollView,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useState} from 'react';
 import smallCover from '../../images/smallCover.png';
@@ -34,6 +35,7 @@ const isValideEmail = value => {
 
 const SignUp = ({navigation}) => {
   const [error, setError] = useState(''); // untuk error massafe
+  const [loading, setLoading] = useState(false);
 
   const [userInfo, setUserInfo] = useState({
     username: '',
@@ -99,6 +101,7 @@ const SignUp = ({navigation}) => {
           } else {
             updateError('Server error.', setError);
           }
+          setLoading(false);
           // console.log('Error', error);
           // console.log('Response', error.response);
           // console.log('Message', error.message);
@@ -120,7 +123,13 @@ const SignUp = ({navigation}) => {
       console.log(userInfo);
       console.log('Form Valid');
       // console.log({username});
+      setLoading(true);
       sendData(email, password, username);
+      if (error != '') {
+        setLoading(false);
+      } else if (error == '') {
+        setLoading(true);
+      }
     } else {
       // Alert.alert('Oops please check your input !!!');
     }
@@ -178,13 +187,18 @@ const SignUp = ({navigation}) => {
 
         <View style={{height: 20}}>
           {error ? <Text style={{color: 'red'}}>{error}</Text> : null}
+          {loading ? (
+            <ActivityIndicator size="small" style={{marginTop: 20}} />
+          ) : (
+            <></>
+          )}
         </View>
       </View>
 
       <View style={styles.btnContainer}>
         <Button btnText="Register" onBtnPress={submitForm} />
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-          <Text style={[{fontSize: 18, color: '#353535'}, styles.registerText]}>
+          <Text style={[{fontSize: 18, color: '#353535'}, styles.loginText]}>
             Already have an account?<Text> </Text>
             <Text
               style={[
@@ -196,32 +210,6 @@ const SignUp = ({navigation}) => {
           </Text>
         </TouchableOpacity>
       </View>
-
-      {/* <View style={styles.btnContainer}>
-        <Button btnText="Register" />
-        <TouchableOpacity onPress="">
-          <Text
-            style={{
-              textAlign: 'center',
-              fontSize: 18,
-              marginTop: 15,
-              color: '#353535',
-            }}>
-            Joined us before?
-            <Text
-              style={{
-                textAlign: 'center',
-                fontSize: 18,
-                marginTop: 15,
-                fontWeight: '600',
-                color: '#0B59B1',
-              }}>
-              {' '}
-              Login
-            </Text>
-          </Text>
-        </TouchableOpacity>
-      </View> */}
     </ScrollView>
   );
 };
@@ -290,6 +278,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#353535',
     marginLeft: 30,
+  },
+  loginText: {
+    textAlign: 'center',
+    marginTop: 15,
   },
   loginText: {
     textAlign: 'center',

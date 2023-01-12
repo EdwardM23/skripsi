@@ -47,8 +47,6 @@ const Filter = ({route, navigation}) => {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.category}>
-        <Text style={styles.title1}>Category</Text>
-
         {/* <checkBoxFilter /> */}
         <View style={{paddingBottom: 20}}>
           {isLoadingCategory ? (

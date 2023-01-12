@@ -63,7 +63,11 @@ const Navigate = () => {
               component={RestauranList}
               options={{title: 'Restaurants'}}
             />
-            <Stack.Screen name="Filter" component={Filter} />
+            <Stack.Screen
+              name="Filter"
+              component={Filter}
+              options={{title: 'Category'}}
+            />
             <Stack.Screen name="History" component={History} />
             <Stack.Screen
               name="RestaurantListFiltered"

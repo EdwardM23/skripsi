@@ -57,9 +57,6 @@ const History = ({route, navigation}) => {
 
   return (
     <View style={styles.container}>
-      <View style={{justifyContent: 'center'}}>
-        <TitleComp text="History" />
-      </View>
       <View>
         {history == '' ? <Text>No history yet.</Text> : <View></View>}
         {isLoading ? (
