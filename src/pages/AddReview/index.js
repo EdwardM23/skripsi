@@ -40,11 +40,6 @@ const AddReview = ({route, navigation}) => {
   const [error, setError] = useState('');
   const [isSubmit, setIsSubmit] = useState(false);
   const [isAnonymous, setIsAnonymous] = useState(false);
-  // const [imagePath, setImagePath] = useState({
-  //   uri: '',
-  //   type: '',
-  //   name: file.fileName,
-  // });
 
   useEffect(() => {
     const refresh = navigation.addListener('focus', () => {
@@ -158,52 +153,48 @@ const AddReview = ({route, navigation}) => {
               </View>
             ) : null}
           </View>
+
           {/* Add Photos */}
           <View style={{marginTop: 30}}>
             <Text style={styles.title}>Add Photo</Text>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() =>
+                ImagePicker.launchImageLibrary(
+                  {
+                    mediaType: 'photo',
+                    includeBase64: true,
+                    maxHeight: 200,
+                    maxWidth: 200,
+                  },
+                  response => {
+                    console.log('res', response);
+                    if (Object.keys(response) == 'didCancel') {
+                      console.log('Batal Upload Foto');
+                    } else if (Object.keys(response) == 'assets') {
+                      console.log('Foto Uploaded');
+                      setResourcePath(response.assets[0]);
+                    }
+                    // console.log(response.assets[0].uri);
+                    // setResourcePath(response.assets[0]);
+                  },
+                )
+              }>
+              {resourcePath == '' ? (
+                <Text style={styles.buttonText}>Select a photo</Text>
+              ) : (
+                <Text></Text>
+              )}
 
-            {/* <Text style={{alignItems: 'center'}}>{resourcePath.uri}</Text> */}
-
-            <Text>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() =>
-                  ImagePicker.launchImageLibrary(
-                    {
-                      mediaType: 'photo',
-                      includeBase64: true,
-                      maxHeight: 200,
-                      maxWidth: 200,
-                    },
-                    response => {
-                      console.log('res', response);
-                      if (Object.keys(response) == 'didCancel') {
-                        console.log('Batal Upload Foto');
-                      } else if (Object.keys(response) == 'assets') {
-                        console.log('Foto Uploaded');
-                        setResourcePath(response.assets[0]);
-                      }
-                      // console.log(response.assets[0].uri);
-                      // setResourcePath(response.assets[0]);
-                    },
-                  )
-                }>
-                {resourcePath == '' ? (
-                  <Text style={styles.buttonText}>Select a photo</Text>
-                ) : (
-                  <Text></Text>
-                )}
-
-                {resourcePath == '' ? (
-                  <View></View>
-                ) : (
-                  <Image
-                    source={{uri: resourcePath.uri}}
-                    style={{width: 100, height: 100}}
-                  />
-                )}
-              </TouchableOpacity>
-            </Text>
+              {resourcePath == '' ? (
+                <View></View>
+              ) : (
+                <Image
+                  source={{uri: resourcePath.uri}}
+                  style={{width: 100, height: 100}}
+                />
+              )}
+            </TouchableOpacity>
           </View>
 
           {/* Anonymous */}
@@ -280,7 +271,6 @@ export default AddReview;
 
 const styles = StyleSheet.create({
   container: {
-    // flex:1,
     backgroundColor: colors.white,
     padding: 20,
     justifyContent: 'center',
@@ -289,6 +279,7 @@ const styles = StyleSheet.create({
 
   form: {
     height: '90%',
+    width: '95%',
   },
 
   title: {
