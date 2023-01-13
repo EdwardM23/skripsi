@@ -99,6 +99,9 @@ const AddReview = ({route, navigation}) => {
         })
         .then(res => {
           console.log('Resilt : ', res);
+          navigation.replace('AllReviews', {
+            passRestoId: restaurantId,
+          });
         })
         .catch(error => {
           if ((error.response.status = 400)) {
@@ -106,6 +109,7 @@ const AddReview = ({route, navigation}) => {
           } else {
             Alert.alert('Server error');
           }
+          setIsSubmit(false);
           console.log('Error', error);
           console.log('Response', error.response);
           console.log('Message', error.message);
@@ -252,11 +256,11 @@ const AddReview = ({route, navigation}) => {
                   isAnonymous,
                 );
               }
-              setTimeout(() => {
-                navigation.replace('AllReviews', {
-                  passRestoId: restaurantId,
-                });
-              }, 500);
+              // setTimeout(() => {
+              //   navigation.replace('AllReviews', {
+              //     passRestoId: restaurantId,
+              //   });
+              // }, 2000);
             } else {
               // Alert.alert('Oops please check your input !!!');
             }
