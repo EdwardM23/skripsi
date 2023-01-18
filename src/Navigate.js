@@ -66,7 +66,7 @@ const Navigate = () => {
             <Stack.Screen
               name="Filter"
               component={Filter}
-              options={{title: 'Category'}}
+              options={{title: 'Filter'}}
             />
             <Stack.Screen name="History" component={History} />
             <Stack.Screen

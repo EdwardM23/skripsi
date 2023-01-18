@@ -11,6 +11,25 @@ import axios from 'axios';
 import Profile from '../../images/profile.png';
 import Star from '../../images/star.png';
 import {colors} from '../../global/styles';
+import moment from 'moment/moment';
+
+const ConverteDate = reviewTime => {
+  const str =
+    reviewTime.substring(8, 10) +
+    '-' +
+    reviewTime.substring(5, 7) +
+    '-' +
+    reviewTime.substring(0, 4) +
+    ' ' +
+    reviewTime.substring(11, 19);
+  const [dateValues, timeValues] = str.split(' ');
+
+  const [day, month, year] = dateValues.split('-');
+  const [hours, minutes, seconds] = timeValues.split(':');
+
+  const date = new Date(+year, month - 1, +day, +hours + 7, +minutes, +seconds);
+  return moment(date).format('DD-MMM-YYYY, HH:mm:ss');
+};
 
 const ReviewCard = ({review, rating, imageUrl, reviewTime, name}) => (
   <View style={styles.item}>
@@ -25,15 +44,7 @@ const ReviewCard = ({review, rating, imageUrl, reviewTime, name}) => (
           <Text style={styles.reviewText1}>{name}</Text>
 
           <View style={{flexDirection: 'row'}}>
-            <Text style={styles.reviewText2}>
-              {reviewTime.substring(8, 10) +
-                '-' +
-                reviewTime.substring(5, 7) +
-                '-' +
-                reviewTime.substring(0, 4) +
-                ' ' +
-                reviewTime.substring(11, 19)}
-            </Text>
+            <Text style={styles.reviewText2}>{ConverteDate(reviewTime)}</Text>
           </View>
         </View>
       </View>
