@@ -169,7 +169,7 @@ const Login = ({navigation}) => {
         <Button btnText="Login" onBtnPress={submitForm} />
         <TouchableOpacity onPress={() => navigation.navigate('Register')}>
           <Text style={[{fontSize: 18, color: '#353535'}, styles.registerText]}>
-            Don't have any account?
+            Don't have any account?a
             <Text> </Text>
             <Text
               style={[
