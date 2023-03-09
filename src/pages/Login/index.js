@@ -31,6 +31,8 @@ const updateError = (error, stateUpdater) => {
 
 const isValideEmail = value => {
   const regx = /^[^\s@,!#$%^&*()+=?\/{}|<>\[\]\\';:"]+@[^\s@,]+.[^\s@,]+$/;
+//   [^\s@,!#$%^&*()+=?\/{}|<>\[\]\\';:"] -> one or more char yang tidak ada di dalam []
+// + -> one or more
   return regx.test(value);
 };
 // Valdiation
