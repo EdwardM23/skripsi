@@ -42,9 +42,6 @@ import refreshImg from '../../images/refresh.png';
 // );
 
 const HomePage = ({route, navigation}) => {
-  // console.log('Hasil Data yang dikirim : ');
-  // console.log(route.route.params);
-
   const [isLoading, setLoading] = useState(true);
   const [text, setText] = useState();
   const [data, setData] = useState('');
@@ -69,9 +66,6 @@ const HomePage = ({route, navigation}) => {
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         console.log('You can use the lcoation');
-        // Geolocation.getCurrentPosition(info =>
-        //   console.log(info.coords.latitude),
-        // );
         console.log('Lokasi sudah didapatkan');
         Geolocation.getCurrentPosition(
           posisi => {
@@ -136,19 +130,21 @@ const HomePage = ({route, navigation}) => {
       getData('', long, lat);
     }, 200);
   };
+
+  //ketika longitude dan latititude berubah
   useEffect(() => {
     console.log('Did Update', text, currLongitude, currLatitude);
     onChangeLocation(currLongitude, currLatitude);
   }, [currLongitude, currLatitude]);
 
   // Search
-  const search = React.useRef(null);
+  const search = React.useRef(null); //bilai saat rendering terakhir
   const onChangeHandler = value => {
-    clearTimeout(search.current);
-    setText(value);
+    clearTimeout(search.current); //menghapus timer yang di buat di search current
+    setText(value); //setText value nya
     search.current = setTimeout(() => {
       getData(value, currLongitude, currLatitude);
-    }, 200);
+    }, 200); //set timeeout, delay getData 200ms
   };
 
   const renderItem = ({item}) => (
@@ -179,6 +175,7 @@ const HomePage = ({route, navigation}) => {
         <Image source={cover} />
       </View>
 
+      {/* Container unutk melakukan search */}
       <View style={styles.containerSearch}>
         {/* <Text>
           Longi: {currLatitude} Lati: {currLatitude}

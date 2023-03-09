@@ -21,7 +21,7 @@ const CheckBoxFilter = ({categoryID, categoryName}) => {
             filter.splice(filter.indexOf(categoryID), 1);
           } else if (check == false) {
             console.log('False Click : ', filter);
-            setFilter(filter => [...filter, categoryID]);
+            setFilter(filter => [...filter, categoryID]); //filter sebeumnya tambah ',' filter yang baru di checklist
           }
         }}
         textStyle={styles.checkBoxText}

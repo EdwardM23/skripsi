@@ -78,14 +78,14 @@ const ReviewCard = ({review, rating, imageUrl, reviewTime, name}) => (
 );
 
 const AllReviews = ({route, navigation}) => {
-  const retoID = route.params.passRestoId;
+  const restoID = route.params.passRestoId;
   const [data, setData] = useState('');
   const [isLoading, setLoading] = useState(true);
 
   const getData = async () => {
     try {
       const res = await axios.get(
-        'https://eatzyapp.herokuapp.com/review/restaurant/' + retoID,
+        'https://eatzyapp.herokuapp.com/review/restaurant/' + restoID,
       );
       console.log('Data response', res.data.rows);
       const response = res.data.rows;

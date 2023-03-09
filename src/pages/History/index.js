@@ -19,7 +19,6 @@ const History = ({route, navigation}) => {
 
   const getHistory = async token => {
     console.log(token);
-    console.log('https://eatzyapp.herokuapp.com/wishlist/' + token);
     try {
       const res = await axios.get(
         'https://eatzyapp.herokuapp.com/history/' + token,

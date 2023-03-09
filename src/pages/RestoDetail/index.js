@@ -98,14 +98,14 @@ const ReviewCard = ({review, rating, imageUrl, reviewTime, name}) => (
 const RestoDetail = ({route, navigation}) => {
   console.log(route.params.passDetailResto);
   const detailInfo = route.params.passDetailResto;
-  const [data, setData] = useState('');
+  const [data, setData] = useState(''); //untuk review
   const {userDetails} = useContext(AuthContext);
   const [isLoading, setLoading] = useState(true);
   const [isLike, setIsLike] = useState();
-  const [rating, setRating] = useState('');
+  const [rating, setRating] = useState(null);
   console.log('Resto ID', detailInfo.id);
 
-  const getData = async () => {
+  const getTopReview = async () => {
     try {
       const res = await axios.get(
         'https://eatzyapp.herokuapp.com/review/top/' + detailInfo.id,
@@ -223,7 +223,9 @@ const RestoDetail = ({route, navigation}) => {
       console.log(rating);
       console.log('res AVG Rating', res.data[0]);
       console.log(res);
-      setRating(res.data[0].averageRating);
+      if (res.data[0].averageRating !== null) {
+        setRating(res.data[0].averageRating);
+      }
       console.log('RATING : ', rating);
     } catch (error) {
       alert(error.message);
@@ -232,15 +234,16 @@ const RestoDetail = ({route, navigation}) => {
   };
 
   useEffect(() => {
-    getData();
+    getTopReview();
     addHistory(userDetails.token, detailInfo.id);
     checkWishlist(userDetails.token, detailInfo.id);
     getAvgRating(detailInfo.id);
   }, []);
 
+  // buat refresh datanya, jadi klo navigation ke panggil atau ada perubahan, maka akan getTopReview lagi 
   useEffect(() => {
     const refresh = navigation.addListener('focus', () => {
-      getData();
+      getTopReview();
     });
     return refresh;
   }, [navigation]);
@@ -329,6 +332,10 @@ const RestoDetail = ({route, navigation}) => {
             <View style={styles.restaurantInfoText}>
               <Text style={styles.infoText1}>Cuisine</Text>
               <Text style={styles.infoText2}>
+              {/* "item": merepresentasikan elemen/objek saat ini dalam array categories, yang memiliki properti 'name' yang merepresentasikan nama kategori.
+                "i": merepresentasikan index saat ini dalam array categories.
+                "categories": merepresentasikan array categories yang sedang diproses. 
+                function map ini semacam for each*/}
                 {detailInfo.categories.map(function (item, i, categories) {
                   if (categories.length === i + 1) {
                     return item['name'];
